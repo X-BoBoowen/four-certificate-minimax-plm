@@ -2,7 +2,7 @@
 
 This project characterizes optimal coefficient estimation in bounded partially linear models, showing how nuisance approximation error and statistical complexity jointly determine the achievable accuracy.
 
-[Read the paper](paper/main.pdf) · [LaTeX source](paper/main.tex) · [Proof appendices](paper/appendices) · [Overleaf ZIP](overleaf/four-certificate-minimax-plm.zip)
+[Read the paper](paper/main.pdf) · [LaTeX source](paper/main.tex) · [Proof appendices](paper/appendices) · [Overleaf ZIP](overleaf/four-certificate-minimax-plm.zip) · [历史版本与内部审查](history/README.md)
 
 本项目研究有界部分线性模型中的最优估计速率，揭示两个干扰函数各自的近似误差与统计复杂度如何共同决定估计精度。
 
@@ -31,6 +31,7 @@ The figure illustrates analytic formulas, with no empirical benchmark or simulat
 | [`paper/appendices/`](paper/appendices) | Proofs and technical details |
 | [`paper/figures/`](paper/figures) | Analytic figure generator and canonical PDF/PNG |
 | [`overleaf/four-certificate-minimax-plm.zip`](overleaf/four-certificate-minimax-plm.zip) | Existing Overleaf source archive, unchanged |
+| [`history/README.md`](history/README.md) | 历史稿件、投稿候选稿与内部审查记录索引 |
 
 To reproduce the figure, use Python 3.11 and the pinned NumPy/Matplotlib dependencies. From the repository root:
 

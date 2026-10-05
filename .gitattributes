@@ -1,9 +1,11 @@
 # Preserve the supplied manuscript and archive bytes across checkouts.
 /paper/** -text
 /overleaf/** -text
+/history/**/*.zip -text
 
 # Normalize only repository-level documentation and configuration.
 /README.md text eol=lf
+/history/README.md text eol=lf
 /requirements.txt text eol=lf
 /.gitignore text eol=lf
 /.gitattributes text eol=lf
