@@ -1,0 +1,1543 @@
+\section{Complete proof of the global upper bound}
+\label{app:upper}
+
+This appendix defines the estimator and proves every stochastic and
+deterministic step used in Proposition~\ref{prop:upper}.  No result from an
+internal proof package is an assumption below.  Throughout, \(P_j\) denotes
+the empirical average on half \(\cD_j\), \(j=1,2\).  Every unnamed proof
+constant depends only on the fixed tuple \(\rho\).  Throughout, put
+\(v:=\E u^2\in[v_-,v_+]\); no constant or positive pointwise
+conditional treatment variance is assumed.  Put
+\[
+ \norm{f}_{1,n}:=(P_1f^2)^{1/2},\qquad
+ \norm{f}_{2,n}:=(P_2f^2)^{1/2}.
+\]
+These half-indexed symbols are used for fitted functions of \(X\).  A vector
+norm whose sample half is already fixed by its definition retains the shorter
+notation \(\norm\cdot_n\).
+Put
+\[
+ C_f=1+\frac{B_0}{\sqrt{v_-}},\qquad
+ C_J=1+3C_f+\frac{B_0}{c_{\rm rad}\sqrt{v_-}}.
+\]
+Let \(K_{1,\star}\) be the maximum of the primitive radius constants in
+Lemma~\ref{lem:localized-process} for the seven calls listed explicitly in
+the event ledger below.  They use only the two public difference cores and
+the joint class, on a specified sample half, with a specified multiplier or
+square process, before any fitted index is substituted.  Fix
+\[
+ C_{\rm rad}:=1+K_{1,\star}(1+C_J),\qquad
+ K_\lambda:=1,\qquad K_d:=8.
+\]
+Here the model parameter \(c_{\rm rad}>0\) is distinct from the
+proof/estimator inflation constant \(C_{\rm rad}\).  Also put
+\[
+ B_\pi=B_0+B_{\mathcal G},\qquad
+ B_{\rm all}=B_0+4B_{\mathcal G},\qquad
+ \vartheta_\rho=\frac{B_\pi}{8},\qquad
+ \delta_\rho=\frac{\vartheta_\rho}{C_{\rm rad}}.
+\]
+These quantities are fixed before \(n,(a,s,b,t),\Gamma,P\), and the data;
+they are never enlarged or redefined by a later proof constant.  Finally set
+\[
+ h_n=\sqrt{\frac{\log(en)}n},\quad
+ \bar s=C_{\rm rad}(s\vee h_n),\quad
+ \bar t=C_{\rm rad}(t\vee h_n),\quad
+ \rho_n=n^{-6},\quad \tau_n=n^{-12}.
+\]
+
+\subsection{Elementary concentration and countable optimization}
+
+\begin{lemma}[Bounded Bernstein inequality]
+\label{lem:bernstein}
+Let \(\mathcal F\) be a sigma-field.  Suppose \(W_1,\ldots,W_n\) are
+conditionally independent given \(\mathcal F\) and conditionally centered
+given \(\mathcal F\), with \(\abs{W_i}\le B\), and
+\(n^{-1}\sum_i\E(W_i^2\mid\mathcal F)\le\sigma^2\), then, conditionally on
+\(\mathcal F\), with probability at least \(1-2e^{-z}\),
+\[
+ \abs{P_nW}\le \sqrt{\frac{2\sigma^2z}{n}}+\frac{2Bz}{3n}.
+ \tag{B.1}
+\]
+\end{lemma}
+\begin{proof}
+For \(0<\lambda<3/B\), the power series and
+\(k!\ge2\,3^{k-2}\) for \(k\ge2\) give
+\[
+ \E(e^{\lambda W_i}\mid\mathcal F)
+ \le1+\frac{\lambda^2\E(W_i^2\mid\mathcal F)}
+ {2(1-\lambda B/3)}.
+\]
+Use \(1+x\le e^x\).  Conditional independence given \(\mathcal F\) permits
+multiplication of the conditional moment generating functions.  Apply
+Markov's inequality and optimize in \(\lambda\).  This gives the
+upper tail in (B.1); apply the same argument to \(-W_i\) for the lower tail.
+\end{proof}
+
+We also use the following weighted form, which does not require a bound on
+the largest weight.  If \(c_1,\ldots,c_n\) are \(\mathcal F\)-measurable and,
+conditionally on \(\mathcal F\), the \(\xi_i\) are conditionally independent
+given \(\mathcal F\), conditionally centered given \(\mathcal F\), and satisfy
+\(\abs{\xi_i}\le B\), then
+\[
+ \abs{P_n(\xi c)}
+ \le B\norm c_n\sqrt{\frac{2z}{n}}
+ \tag{B.1a}
+\]
+with conditional failure at most \(2e^{-z}\).  Indeed, Hoeffding's
+one-variable exponential bound and conditional independence give
+\(\E[\exp\{\lambda\sum_i c_i\xi_i\}\mid\mathcal F]
+\le\exp\{\lambda^2B^2\sum_i c_i^2/2\}\); optimize the two Chernoff tails.
+
+\begin{lemma}[Localized supremum concentration]
+\label{lem:supremum-bernstein}
+Let \(\mathcal W\) be a countable class of centered functions of an iid
+observation, with \(\abs{W(w)}\le B\) and
+\(\E W(w)^2\le\sigma^2\), uniformly in \(w\).  Put
+\[
+ \mathcal R_n(\mathcal W)
+ =\E_{\mathrm{data},\epsilon}\sup_{w\in\mathcal W}
+   \abs{\frac1n\sum_{i=1}^n\epsilon_iW_i(w)}.
+\]
+If \(Z=\sup_{w\in\mathcal W}\abs{P_nW(w)}\), then
+\[
+ \Pp\!\left\{Z>4\mathcal R_n(\mathcal W)
+            +\sqrt{\frac{2\sigma^2z}{n}}
+            +\frac{8Bz}{3n}\right\}\le2e^{-z}.
+ \tag{B.2}
+\]
+\end{lemma}
+\begin{proof}
+This is an exact transfer of Theorem 2.1 of
+\citet[pp. 1503--1504]{bartlett2005local}.  Enlarge \(\mathcal W\) by its
+negatives and map the source theorem's \([a,b]\), variance parameter \(r\),
+confidence \(x\), and tuning \(\alpha\) to
+\([-B,B]\), \(\sigma^2\), \(z\), and \(1\), respectively.  Its one-sided
+supremum is then exactly \(Z\); its Rademacher term is
+\(\mathcal R_n(\mathcal W)\); and its range term is
+\(2B(1/3+1)z/n=8Bz/(3n)\).  The source probability is \(1-e^{-z}\), so
+the displayed \(2e^{-z}\) is conservative.  The source assumes measurable
+suprema; countability supplies this here.  Thus every source assumption
+has been mapped, and no project-internal concentration certificate is used.
+\end{proof}
+
+\begin{lemma}[Localized multiplier and square processes]
+\label{lem:localized-process}
+Let \(\mathcal H\) be a countable class with envelope \(B\), containing zero,
+and suppose
+\[
+ \mathfrak R_{n,P_X}(r;\mathcal H)\le c_{\rm rad}r_0r,
+ \qquad r\ge r_0,\quad r>0.
+ \tag{B.2a}
+\]
+Let \(\xi\) be bounded and satisfy \(\E(\xi\mid X)=0\).  For
+\(\delta_z=K_1(r_0\vee h_n)+\sqrt{z/n}\) and \(1\le z\le n\), an event
+of probability at least \(1-K_2e^{-z}\) satisfies, simultaneously for every
+\(f\in\mathcal H\),
+\begin{align}
+ \abs{(P_n-P)(\xi f)}
+ &\le K_3\{\delta_z\norm f_2+\delta_z^2\},\tag{B.3}\\
+ \abs{(P_n-P)f^2}
+ &\le K_3\{\delta_z\norm f_2+\delta_z^2\}.\tag{B.4}
+\end{align}
+The same conclusion holds when \(\xi\) is a fixed bounded multiplier, with
+the centered process in (B.3).
+\end{lemma}
+\begin{proof}
+Write \(L=\norm\xi_\infty\).  Define the inner ball and dyadic shells by
+\[
+ \mathcal H_0=\{f:\norm f_2\le\delta_z\},\qquad
+ \mathcal H_j=\{f:2^{j-1}\delta_z<\norm f_2
+       \le\min(2^j\delta_z,B)\},\quad j\ge1,
+\]
+and set
+\[
+ J=\left\lceil\log_2(B/\delta_z)\right\rceil_+.
+\]
+The envelope gives \(\mathcal H=\bigcup_{j=0}^J\mathcal H_j\); if
+\(\delta_z\ge B\), then \(J=0\).  Since \(\delta_z\ge h_n\),
+\begin{equation}
+ J\le \left\lceil\log_2(B/h_n)\right\rceil_+
+ \le C_B\log(en),\qquad
+ \sqrt{j/n}\le C_Bh_n,\qquad j/n\le C_Bh_n^2.
+ \tag{B.2b}
+\end{equation}
+
+For \(j\ge1\), put \(R_j=2^j\delta_z\), and put
+\(R_0=\delta_z\).  On \(\mathcal H_j\), conditional Rademacher
+contraction bounds the multiplier mean by
+\(L\mathfrak R_n(R_j;\mathcal H)\).  If the multiplier is fixed rather
+than conditionally centered, centering adds at most \(LR_j/\sqrt n\).
+Thus its centered Rademacher mean is at most
+\(C(r_0+h_n)R_j\le C\delta_zR_j\), its variance is at most
+\(L^2R_j^2\), and its centered range is at most \(2LB\).
+These multiplier bounds use only boundedness, not a constant conditional
+variance.
+
+For the square process,
+\[
+ \operatorname{Var}(f^2)\le \E f^4\le B^2R_j^2.
+\]
+The map \(u\mapsto u^2\) is \(2B\)-Lipschitz on \([-B,B]\), so
+symmetrization and contraction bound the uncentered Rademacher term by
+\(CB\mathfrak R_n(R_j;\mathcal H)\).  By localization and the envelope,
+the centering contribution satisfies
+\[
+ \sup_{f\in\mathcal H_j}Pf^2\,\E_\epsilon
+ \abs{\frac1n\sum_{i=1}^n\epsilon_i}
+ \le\frac{\min\{R_j^2,B^2\}}{\sqrt n}
+ \le\frac{BR_j}{\sqrt n}\le Bh_nR_j.
+\]
+Its centered mean is therefore at most
+\(C\delta_zR_j\), and its centered range is at most \(2B^2\).
+
+For each process and every \(0\le j\le J\), apply
+Lemma~\ref{lem:supremum-bernstein} with
+\(x_j=z+2j+\log8\).  The multiplier and square-process failures form the
+geometric sum
+\begin{equation}
+ 4\sum_{j=0}^Je^{-x_j}
+ \le\frac12e^{-z}\sum_{j=0}^\infty e^{-2j}<e^{-z}.
+ \tag{B.2c}
+\end{equation}
+The shellwise variance and range terms satisfy, respectively,
+\[
+ R_j\sqrt{x_j/n}
+ \le CR_j\{\sqrt{z/n}+\sqrt{j/n}+n^{-1/2}\}
+ \le C\delta_zR_j,
+\]
+and
+\begin{equation}
+ Cx_j/n\le C\{z/n+j/n+1/n\}\le C\delta_z^2.
+ \tag{B.2d}
+\end{equation}
+For \(j\ge1\), \(R_j<2\norm f_2\); on the inner ball,
+\(R_0=\delta_z\).  These inequalities prove (B.3)--(B.4).
+Finally, \(\delta_z\ge r_0\), so the sub-\(r_0\) region is contained in
+the actual positive-radius \(\delta_z\)-ball.  No function is rescaled, and
+no star-shapedness or scaling closure is used.  The same calculation covers
+\(n=1\), zero stochastic budgets, \(z=1\), the maximum-radius shell, and the
+case in which the inner ball is the whole class.  Countability makes every
+supremum measurable.
+\end{proof}
+
+Apply Lemma~\ref{lem:localized-process} before inserting fitted indices.  Its
+complete primitive call list is:
+\begin{enumerate}
+\item \(\mathsf P_{\pi,2}^{u}(z)\): on \(\cD_2\), the countable
+represented core of \(\Delta\cG_\pi\), with multiplier \(u\) and with the
+square process;
+\item \(\mathsf P_{\mu,2}^{\rm sq}(z)\): on \(\cD_2\), the countable
+represented core of \(\Delta\cG_\mu\), retaining the square process;
+\item \(\mathsf P_{J,2}^{\varepsilon}(z)\): on \(\cD_2\), the joint
+class \(\mathcal J_\mu\) defined below, with multiplier \(\varepsilon\)
+and with the square process;
+\item \(\mathsf P_{\mu,1}^{u}(z)\): on \(\cD_1\), the countable
+represented core of \(\Delta\cG_\mu\), with multiplier \(u\) and with the
+square process;
+\item \(\mathsf P_{\pi,2}^{\xi}(z)\): on \(\cD_2\), the countable
+represented core of \(\Delta\cG_\pi\), with multiplier
+\(\xi=Y-m_0(X)\);
+\item \(\mathsf P_{\pi,2}^{m_0}(z)\): on \(\cD_2\), the countable
+represented core of \(\Delta\cG_\pi\), with the fixed multiplier
+\(m_0(X)\); and
+\item \(\mathsf P_{\pi,1}^{m_0}(z)\): on \(\cD_1\), the countable
+represented core of \(\Delta\cG_\pi\), with the fixed multiplier
+\(m_0(X)\) and with the square process.
+\end{enumerate}
+The model-field certificate (A.1) is an outer-expectation bound for the full
+difference class.  The pointwise inclusion in Appendix~\ref{app:model}
+therefore gives the ordinary countable-core bound needed in (B.2a).  The
+seven calls use the following explicit core base radii:
+\begin{center}
+\begin{tabular}{ll}
+\(\mathsf P_{\pi,2}^{u}(z)\) & \(3t\) \\
+\(\mathsf P_{\mu,2}^{\rm sq}(z)\) & \(3s\) \\
+\(\mathsf P_{J,2}^{\varepsilon}(z)\) & \(C_J(s\vee h_n)\) \\
+\(\mathsf P_{\mu,1}^{u}(z)\) & \(3s\) \\
+\(\mathsf P_{\pi,2}^{\xi}(z)\) & \(3t\) \\
+\(\mathsf P_{\pi,2}^{m_0}(z)\) & \(3t\) \\
+\(\mathsf P_{\pi,1}^{m_0}(z)\) & \(3t\) \\
+\end{tabular}
+\end{center}
+Indeed, (A.1) gives (B.2a) with \(r_0=3s\) or \(r_0=3t\)
+for each simple core.  Consequently
+\[
+ K_1(3s\vee h_n)\le3K_1(s\vee h_n),\qquad
+ K_1(3t\vee h_n)\le3K_1(t\vee h_n).
+\]
+Since \(C_J\ge4\), the already frozen \(C_{\rm rad}\) in the opening
+display absorbs both \(3K_{1,\star}\) and \(K_{1,\star}C_J\); no downstream
+tuning is changed.
+If \(s=0\) or \(t=0\), the relevant call uses \(r_0=3s=0\) or
+\(r_0=3t=0\) and the zero full-class certificate directly.  There is no radius-zero quotient.
+Repeated downstream uses reuse these uniform events; they are not new calls
+at fitted random indices.  Let
+\[
+ \mathcal F_2=\sigma(\cD_2),\quad
+ \mathcal F_X=\mathcal F_2\vee\sigma(X_{1:n}),\quad
+\mathcal F_T=\mathcal F_X\vee\sigma(T_{1:n}).
+\]
+These primitive calls are unconditional iid empirical-process calls.  The
+nested sigma-fields are used later for the fitted weighted inequality
+(B.1a) and, in the case of \(\mathcal F_2\), for the R denominator:
+given \(\mathcal F_X\), the \(u_i\)'s remain independent and centered, and
+given \(\mathcal F_T\), the \(\varepsilon_i\)'s do.  Let
+\(\mathcal E_z^{\rm proc}\) be the finite intersection of the seven listed
+uniform process events.  Apply every primitive call at the same admissible
+confidence parameter \(z\); a finite union bound absorbs the seven fixed
+failure multipliers into \(K_4\) and gives
+\begin{equation}
+ \Pp\{(\mathcal E_z^{\rm proc})^c\}\le K_4e^{-z},
+ \qquad 1\le z\le n.
+ \tag{B.5}
+\end{equation}
+This localized-process event is constructed separately for each \(z\);
+simultaneity in \(z\) is not used.  It does not contain the comparator,
+scalar-Bernstein, denominator, or fitted weighted events defined below.
+
+\begin{lemma}[Sequential M1 transfer]
+\label{lem:sequential-density-transfer}
+Let \(\cG^{\rm rep}=\{g_j:j\in\mathbb N\}\subset\cG\) obey the common
+envelope and suppose that, for every \(g\in\cG\), some represented sequence
+converges pointwise everywhere to \(g\).  Then, for every \(P_X\), bounded
+truth, and finite sample: (i) full-class and represented population infima
+coincide; (ii) full-class and represented empirical infima coincide for every
+continuous fit objective used here; (iii) full and represented
+difference-class suprema coincide for the calibration objectives; and (iv)
+the ordered first-within-tolerance represented selector is Borel.
+\end{lemma}
+\begin{proof}
+The common envelope dominates squared differences, so pointwise convergence
+and dominated convergence give \(L_2(P_X)\) convergence and hence (i).
+Convergence of the finite evaluation vectors, followed by continuity of
+finite sums, products, absolute values, and squares, gives (ii).  Pair
+representing sequences for \(g,g'\) to approximate \(g-g'\); the same
+finite-vector argument gives (iii).  Finally, if \(L_j(D)\) are the countable
+Borel objectives, then \(L_*(D)=\inf_jL_j(D)\) is Borel and the least index
+with \(L_j(D)\le L_*(D)+\tau_n\) has Borel level sets, proving (iv).
+\end{proof}
+
+For every empirical infimum over a public class, use its supplied countable
+representation and select the first index within \(\tau_n\).  A countable
+infimum of Borel functions and its first qualifying index are Borel.  The
+set is nonempty by the definition of infimum, even without attainment.
+Lemma~\ref{lem:sequential-density-transfer} transfers all full-class
+population and finite-sample objectives used below to that representation.
+
+\subsection{Initial fits}
+\label{app:upper-initial}
+
+On \(\cD_2\), let \(\widehat\pi\) be the first
+\(\tau_n\)-minimizer of \(P_2(T-g)^2\) over \(\cG_\pi\), and let
+\((\widehat\beta_0,\widehat\mu)\) be the first \(\tau_n\)-minimizer of
+\(P_2(Y-\beta T-g)^2\) over the rational representation of
+\([-3,3]\times\cG_\mu\).  For arbitrary
+\(\varepsilon_{\rm cmp,\pi}>0\),
+Lemma~\ref{lem:sequential-density-transfer} supplies a deterministic
+represented comparator \(g_\pi\) satisfying
+\(\norm{g_\pi-\pi_0}_2\le b+\varepsilon_{\rm cmp,\pi}\).  With
+\(h=\widehat\pi-g_\pi\) and \(r_\pi=g_\pi-\pi_0\), the basic inequality is
+\[
+ P_2h^2\le2P_2(uh)-2P_2\{(g_\pi-\pi_0)h\}+\tau_n.
+ \tag{B.6}
+\]
+For this fixed comparator, define the one-sided scalar-Bernstein event
+\[
+\begin{split}
+ \mathcal E_{\pi,z}^{\rm cmp}(\varepsilon_{\rm cmp,\pi})
+ :=\bigg\{P_2r_\pi^2\le{}&\norm{r_\pi}_2^2
+ +B_\pi\norm{r_\pi}_2\sqrt{2z/n}
+ +\frac{2B_\pi^2z}{3n}\bigg\}.
+\end{split}
+\]
+Indeed, \(r_\pi^2\le B_\pi^2\) and
+\(\operatorname{Var}(r_\pi^2)\le B_\pi^2\norm{r_\pi}_2^2\), so its
+failure is at most \(2e^{-z}\), uniformly in the positive slack.  On
+\(\mathcal E_z^{\rm proc}\cap
+\mathcal E_{\pi,z}^{\rm cmp}(\varepsilon_{\rm cmp,\pi})\),
+put \(w_z=\sqrt{z/n}\) and
+\[
+ \delta_{\pi,z}:=K_{1,\star}(3t\vee h_n)+w_z
+ \le \bar t+w_z.
+\]
+Because \(h\) belongs to the represented treatment difference core and
+\(P(uh)=0\), equations (B.3)--(B.4) give
+\begin{equation}
+ \begin{split}
+ |P_2(uh)|&\le C_\rho\{\delta_{\pi,z}\norm h_2
+                         +\delta_{\pi,z}^2\},\\
+ P_2h^2&\ge \norm h_2^2
+       -C_\rho\{\delta_{\pi,z}\norm h_2+\delta_{\pi,z}^2\}.
+ \end{split}
+ \tag{B.6a}
+\end{equation}
+Writing \(R_\pi=\norm{r_\pi}_{2,n}\), the fixed-comparator event and
+\(\norm{r_\pi}_2\le b+\varepsilon_{\rm cmp,\pi}\) imply
+\begin{equation}
+ R_\pi\le C_\rho\{b+\varepsilon_{\rm cmp,\pi}+w_z\}.
+ \tag{B.6b}
+\end{equation}
+Indeed, this follows by taking square roots in the displayed Bernstein bound
+and using \(\sqrt{x^2+xy+y^2}\le x+y\) after absorbing the fixed envelope
+coefficients into \(C_\rho\).  The upper side of (B.4) similarly gives the
+population-to-empirical square-process conversion
+\begin{equation}
+ \norm h_{2,n}\le C_\rho(\norm h_2+\delta_{\pi,z}).
+ \tag{B.6c}
+\end{equation}
+Thus (B.6), (B.6a), empirical Cauchy--Schwarz, and (B.6c) yield
+\begin{align}
+ \norm h_2^2
+ &\le C_\rho\{\delta_{\pi,z}\norm h_2+\delta_{\pi,z}^2\}
+      +2R_\pi\norm h_{2,n}+\tau_n \nonumber\\
+ &\le C_\rho\{(\delta_{\pi,z}+R_\pi)\norm h_2
+              +(\delta_{\pi,z}+R_\pi)^2+\tau_n\}.
+ \tag{B.6d}
+\end{align}
+Specifically, Young's inequality gives
+\[
+ C_\rho(\delta_{\pi,z}+R_\pi)\norm h_2
+ \le \frac12\norm h_2^2
+      +C_\rho(\delta_{\pi,z}+R_\pi)^2,
+\]
+so the quadratic term is absorbed into the left-hand side.  Using
+\(\sqrt{\tau_n}=\rho_n\), (B.6b), and
+\(\delta_{\pi,z}\le\bar t+w_z\) gives
+\begin{equation}
+ \norm h_2\le C_\rho\{b+\varepsilon_{\rm cmp,\pi}
+                         +\bar t+w_z+\rho_n\}.
+ \tag{B.6e}
+\end{equation}
+Finally, the triangle inequality
+\(\norm{\widehat\pi-\pi_0}_2\le\norm h_2+\norm{r_\pi}_2\)
+gives, with a failure bound independent of
+\(\varepsilon_{\rm cmp,\pi}\),
+\[
+ \norm{\widehat\pi-\pi_0}_2
+ \le K_5\{b+t+\bar t+\sqrt{z/n}+\rho_n\}
+      +C_\rho\varepsilon_{\rm cmp,\pi}.
+\]
+The resulting scalar tail inequality is uniform in the positive comparator
+slack.  Letting \(\varepsilon_{\rm cmp,\pi}\downarrow0\) by continuity of
+the scalar tail probabilities gives
+\begin{equation}
+ \norm{\widehat\pi-\pi_0}_2
+ \le K_5\{b+t+\bar t+\sqrt{z/n}+\rho_n\}.
+ \tag{B.7}
+\end{equation}
+with failure at most \(K_{\pi,2}e^{-z}\).  This limit does not intersect
+the comparator-specific events.
+
+For the joint fit first record the population curvature.  For every
+\(\gamma\in\mathbb R\) and measurable \(f:\mathcal X\to\mathbb R\),
+conditional centering gives
+\[
+ P(\gamma T+f)^2=\gamma^2\E u^2+\norm{\gamma\pi_0+f}_2^2
+ \ge \frac{v_-}{2(1+B_0)^2}\{\gamma^2+\norm f_2^2\}.
+\tag{B.8}
+\]
+Indeed, if \(q=\norm{\gamma\pi_0+f}_2\), then
+\[
+ \gamma^2+\norm f_2^2
+ \le (1+2B_0^2)\gamma^2+2q^2.
+\]
+For \(c=v_-/\{2(1+B_0)^2\}\), one has
+\(c(1+2B_0^2)\le v_-\le v\) and \(2c<1\), so
+\(c\{\gamma^2+\norm f_2^2\}\le v\gamma^2+q^2\), proving (B.8).
+The transfer to a joint class requires a separate localization argument.
+Let \(\Delta\cG_\mu^{\rm rep}\) be the supplied countable difference core and
+define
+\[
+ \mathcal J_\mu=\{\gamma T+f(X):
+ \gamma\in\mathbb Q\cap[-6,6],\ f\in\Delta\cG_\mu^{\rm rep}\}.
+\]
+This class is countable, contains zero, and has the fixed envelope
+\(B_{\mathcal J}=6B_0+2B_{\mathcal G}\).  If
+\(j=\gamma T+f(X)\) and \(\norm j_2\le R\), then the orthogonal identity
+\[
+ \norm j_2^2=v\gamma^2+\norm{\gamma\pi_0+f}_2^2
+\]
+implies
+\(\abs\gamma\le R/\sqrt{v_-}\) and \(\norm f_2\le C_fR\).  Hence, for
+\(R\ge r_{0,\mu}:=C_J(s\vee h_n)\),
+\[
+\begin{aligned}
+ \mathfrak R_{n,P}(R;\mathcal J_\mu)
+ &\le \frac{R}{\sqrt{v_-}}\E\left|\frac{1}{n}
+       \sum_{i=1}^n\epsilon_iT_i\right| \\
+ &\quad +\mathfrak R_{n,P_X}(C_fR;\Delta\cG_\mu^{\rm rep}) \\
+ &\le\left\{\frac{B_0}{\sqrt{v_-}}h_n
+             +3c_{\rm rad}C_fs\right\}R \\
+ &\le c_{\rm rad}r_{0,\mu}R,
+\end{aligned}
+\]
+where the last inequality follows from the definition of \(C_J\).  This uses
+the public outcome-class budget only at admissible positive radii; when
+\(s=0\), the floor \(C_Jh_n\) remains positive.
+Lemma~\ref{lem:localized-process}, with
+base observation \((X,T)\) and conditionally centered multiplier
+\(\varepsilon\), therefore supplies both the multiplier and square-process
+bounds uniformly over \(\mathcal J_\mu\).
+
+For completeness, here is the full basic-inequality step.  For arbitrary
+\(\varepsilon_{\rm cmp,\mu}>0\),
+Lemma~\ref{lem:sequential-density-transfer} supplies deterministic represented
+comparators \(\beta^\circ\in\mathbb Q\cap[-3,3]\) and
+\(g^\circ\in\cG_\mu\) satisfying
+\(\abs{\beta^\circ-\beta_0}\le\varepsilon_{\rm cmp,\mu}\) and
+\(\norm{g^\circ-\mu_0}_2\le a+\varepsilon_{\rm cmp,\mu}\), and put
+\[
+ e^\circ=(\beta^\circ-\beta_0)T+(g^\circ-\mu_0),\qquad
+ j=(\widehat\beta_0-\beta^\circ)T+(\widehat\mu-g^\circ).
+\]
+The approximate empirical minimization gives exactly
+\[
+ P_2j^2\le2P_2(\varepsilon j)-2P_2(e^\circ j)+\tau_n.
+\]
+For this fixed pair of comparators, let
+\(B_{\rm cmp,\mu}:=7B_0+B_{\mathcal G}\) and define
+\[
+\begin{split}
+ \mathcal E_{\mu,z}^{\rm cmp}(\varepsilon_{\rm cmp,\mu})
+ :=\bigg\{P_2(e^\circ)^2\le{}&\norm{e^\circ}_2^2
+ +B_{\rm cmp,\mu}\norm{e^\circ}_2\sqrt{2z/n}
+ +\frac{2B_{\rm cmp,\mu}^2z}{3n}\bigg\}.
+\end{split}
+\]
+Here \(\abs{e^\circ}\le B_{\rm cmp,\mu}\) and
+\(\operatorname{Var}\{(e^\circ)^2\}\le
+B_{\rm cmp,\mu}^2\norm{e^\circ}_2^2\), so its failure is at most
+\(2e^{-z}\), uniformly in the positive slack.
+Put \(w_z=\sqrt{z/n}\) and
+\(\delta_{\mu,z}=C_{\rm rad}(s\vee h_n)+w_z\).  Since \(j\) belongs to the
+countable joint class \(\mathcal J_\mu\), the multiplier and square parts of
+\(\mathsf P_{J,2}^{\varepsilon}(z)\), before insertion of the fitted index,
+give, using \(P(\varepsilon j)=0\),
+\begin{equation}
+ \begin{split}
+ |P_2(\varepsilon j)|+|(P_2-P)j^2|
+ &\le C_\rho\{\delta_{\mu,z}\norm j_2+\delta_{\mu,z}^2\},\\
+ \norm j_{2,n}&\le C_\rho(\norm j_2+\delta_{\mu,z}).
+ \end{split}
+ \tag{B.8a}
+\end{equation}
+The deterministic comparator residual obeys
+\[
+ \norm{e^\circ}_2
+ \le B_0|\beta^\circ-\beta_0|+\norm{g^\circ-\mu_0}_2
+ \le a+(1+B_0)\varepsilon_{\rm cmp,\mu}.
+\]
+Consequently the fixed-comparator Bernstein event gives, for
+\(E_\mu:=\norm{e^\circ}_{2,n}\),
+\begin{equation}
+ E_\mu\le C_\rho\{a+(1+B_0)\varepsilon_{\rm cmp,\mu}+w_z\}.
+ \tag{B.8b}
+\end{equation}
+The joint basic inequality, the lower square-process comparison in (B.8a),
+and empirical Cauchy--Schwarz now give
+\begin{align}
+ \norm j_2^2
+ &\le |(P_2-P)j^2|+2|P_2(\varepsilon j)|
+      +2E_\mu\norm j_{2,n}+\tau_n \nonumber\\
+ &\le C_\rho\{(\delta_{\mu,z}+E_\mu)\norm j_2
+              +(\delta_{\mu,z}+E_\mu)^2+\tau_n\}.
+ \tag{B.8c}
+\end{align}
+Here the explicit quadratic absorption is
+\[
+ C_\rho(\delta_{\mu,z}+E_\mu)\norm j_2
+ \le\frac12\norm j_2^2
+     +C_\rho(\delta_{\mu,z}+E_\mu)^2.
+\]
+Together with \(\sqrt{\tau_n}=\rho_n\), it yields
+\begin{equation}
+ \norm j_2\le C_\rho\{a+(1+B_0)\varepsilon_{\rm cmp,\mu}
+                         +\bar s+w_z+\rho_n\}.
+ \tag{B.8d}
+\end{equation}
+Set \(\Gamma=\widehat\beta_0-\beta_0\) and
+\(F=\widehat\mu-\mu_0\).  Since \(\Gamma T+F=e^\circ+j\), the population
+comparator bound, the triangle inequality, and (B.8) imply
+\begin{equation}
+ \begin{split}
+ |\Gamma|+\norm F_2
+ &\le \sqrt2\{\Gamma^2+\norm F_2^2\}^{1/2}\\
+ &\le \frac{2(1+B_0)}{\sqrt{v_-}}\norm{\Gamma T+F}_2\\
+ &\le C_\rho\{a+(1+B_0)\varepsilon_{\rm cmp,\mu}
+                +\bar s+w_z+\rho_n\}.
+ \end{split}
+ \tag{B.8e}
+\end{equation}
+Equations (B.8a)--(B.8e) use only the already listed joint process call and
+the fixed-comparator event; they add no joint-complexity certificate.  Their
+failure bound is independent of the positive comparator slack.  Letting
+\(\varepsilon_{\rm cmp,\mu}\downarrow0\) by continuity of the scalar tail
+probabilities
+yields
+\begin{equation}
+ \abs{\widehat\beta_0-\beta_0}+\norm{\widehat\mu-\mu_0}_2
+ \le K_6\{a+s+\bar s+\sqrt{z/n}+\rho_n\}.
+ \tag{B.9}
+\end{equation}
+with failure at most \(K_{\mu,2}e^{-z}\).  Again, no infinite
+comparator-event intersection is formed.
+The proof-only comparator slack is not an estimator tuning parameter.  Thus
+the proof uses neither an uncountable fitted-index insertion nor a new joint
+complexity assumption.
+No exact minimizer, convexity, or population oracle is used by the learner.
+
+\paragraph{Empirical initial-fit radii.}
+Let \(K_{\rm sq}\) be the maximum, after the preceding radius rescaling, of
+the square-process coefficients for the represented treatment and outcome
+difference cores, and put
+\[
+ c_{\rm sq}=K_{\rm sq}+\sqrt{K_{\rm sq}},\qquad
+ L_\pi=K_5+c_{\rm sq}+B_\pi+2,\qquad
+ L_\mu=K_6+c_{\rm sq}+B_\pi+2.
+\]
+The square-process event is uniform over each countable difference core before
+the fitted index is inserted and implies, on either named half,
+\(\norm{f}_{j,n}\le\norm f_2+c_{\rm sq}\Delta\).  For a deterministic
+comparator residual \(r\), bounded by \(B_\pi\), scalar Bernstein gives
+\(\norm{r}_{j,n}\le\norm r_2+C_\rho B_\pi\sqrt{z/n}\).
+Applying this first on the fitting half \(\cD_2\), for every positive
+comparator slack,
+\[
+ \|\widehat\pi-\pi_0\|_{2,n}
+ \le L_\pi\{b+t+\bar t+\sqrt{z/n}+\rho_n\}
+       +2\varepsilon_{\rm cmp,\pi},
+\]
+and
+\[
+ |\widehat\beta_0-\beta_0|+\|\widehat\mu-\mu_0\|_{2,n}
+ \le L_\mu\{a+s+\bar s+\sqrt{z/n}+\rho_n\}
+       +2\varepsilon_{\rm cmp,\mu}.
+\]
+For each display the failure bound is independent of the slack.  Taking the
+corresponding slack down to zero in the scalar tail probabilities, rather than intersecting comparator-specific events, yields the same displays without the
+final slack terms.  Define \(\mathcal E_{\pi,z}^{\rm fit,2}\) to be the event
+on which (B.7) and the exact \(\cD_2\) empirical treatment-fit display both
+hold, and define \(\mathcal E_{\mu,z}^{\rm fit,2}\) analogously using (B.9).
+Their failure bounds are
+\[
+ \Pp\{(\mathcal E_{\pi,z}^{\rm fit,2})^c\}
+ \le K_{\pi,\rm fit,2}e^{-z},\qquad
+ \Pp\{(\mathcal E_{\mu,z}^{\rm fit,2})^c\}
+ \le K_{\mu,\rm fit,2}e^{-z}.
+\]
+These are events defined by the displayed exact inequalities, not
+intersections over comparator choices.
+
+The downstream edits instead require \(\cD_1\) empirical norms.  Condition on
+\(\mathcal F_2=\sigma(\cD_2)\).  Then each fitted represented index and hence
+\(h=\widehat\pi-g_\pi\) and \(f=\widehat\mu-g^\circ\) is conditionally fixed,
+while \(\cD_1\) remains iid.  Before conditioning, the uniform square parts of
+\(\mathsf P_{\pi,1}^{m_0}(z)\) and
+\(\mathsf P_{\mu,1}^{u}(z)\) were already formed over their entire represented
+difference cores.  Thus they may be evaluated at these conditionally fixed
+indices and give
+\[
+ \norm{h}_{1,n}\le\norm h_2+c_{\rm sq}
+   \{C_{\rm rad}(t\vee h_n)+\sqrt{z/n}\},\qquad
+ \norm{f}_{1,n}\le\norm f_2+c_{\rm sq}
+   \{C_{\rm rad}(s\vee h_n)+\sqrt{z/n}\}.
+\]
+For each fixed positive proof slack, apply scalar Bernstein on \(\cD_1\) to
+the fixed comparator residuals \(r_\pi=g_\pi-\pi_0\) and
+\(r_\mu=g^\circ-\mu_0\).  Denote the resulting events by
+\(\mathcal E_{\pi,z}^{\rm cmp,1}(\varepsilon_{\rm cmp,\pi})\) and
+\(\mathcal E_{\mu,z}^{\rm cmp,1}(\varepsilon_{\rm cmp,\mu})\); each has
+failure at most \(2e^{-z}\), \(1\le z\le n\), and supplies the preceding
+fixed-residual norm conversion.  Combining these events with (B.7)--(B.9),
+the triangle inequality, and then taking each proof slack down to zero by
+scalar tail-probability continuity gives
+\begin{align}
+ \norm{\widehat\pi-\pi_0}_{1,n}
+ &\le L_\pi\{b+t+\bar t+\sqrt{z/n}+\rho_n\},\tag{B.9a}\\
+ |\widehat\beta_0-\beta_0|+
+ \norm{\widehat\mu-\mu_0}_{1,n}
+ &\le L_\mu\{a+s+\bar s+\sqrt{z/n}+\rho_n\}.
+ \tag{B.9b}
+\end{align}
+No infinite comparator-event intersection is used, and neither slack is an
+estimator input.  Let \(\mathcal E_{\pi,z}^{\rm tr,1}\) and
+\(\mathcal E_{\mu,z}^{\rm tr,1}\) be the exact events defined respectively
+by (B.7),(B.9a) and by (B.9),(B.9b).  The finite unions just described give
+\[
+ \Pp\{(\mathcal E_{\pi,z}^{\rm tr,1})^c\}
+ \le K_{\pi,\rm tr,1}e^{-z},\qquad
+ \Pp\{(\mathcal E_{\mu,z}^{\rm tr,1})^c\}
+ \le K_{\mu,\rm tr,1}e^{-z},\qquad 1\le z\le n.
+\]
+These are population-to-\(\cD_1\) transfer events; they are distinct from
+the \(\cD_2\) fit events above and change only fixed failure multipliers.
+
+\subsection{The O edit: definition, normalization, and calibration}
+\label{app:upper-o-calibration}
+
+Put \(x=a+s\), \(y=b+t\), and recall the frozen envelope \(B_\pi\).  Put
+\[
+ d_\pi=\min\{B_\pi,8(y+\bar s+\rho_n)\},\qquad
+ \lambda_O=(\bar s/d_\pi)^2.
+\]
+The cap is fixed because
+\(\abs{\widehat\pi-\pi_0}\le B_{\mathcal G}+B_0=B_\pi\)
+pointwise.
+On the O-safe cell
+\[
+ x\le y,\qquad \bar s\le\vartheta_\rho,
+\]
+both arguments in the minimum are at least \(8\bar s\).  Hence
+\[
+ d_\pi\ge8\bar s,\qquad0<\lambda_O\le1/64<1/16.
+\]
+Define
+\[
+ \widetilde D_O=(v_-/2)\vee P_1\{T(T-\widehat\pi)\},\qquad
+ \widetilde a_i=\frac{T_i-\widehat\pi(X_i)}{\widetilde D_O}.
+\]
+For \(f\in\Delta\cG_\mu\), \(\gamma\in\R\), and \(a\in\R^n\), let
+\begin{align*}
+ \Phi_\mu(f,\gamma,a)
+ &=\abs{P_1\{(\gamma T+f)a\}-\gamma}-P_1f^2,\\
+ H_\mu(a)&=\sup_{\gamma\in\R,\,f\in\Delta\cG_\mu}
+ \Phi_\mu(f,\gamma,a),\\
+ F_O(a)&=\lambda_O\norm{a-\widetilde a}_n^2+H_\mu(a).
+\end{align*}
+Here and below, the code takes the supremum over the countable represented
+core.  On a finite sample, Lemma~\ref{lem:sequential-density-transfer}(iii)
+identifies its value with the displayed full-class supremum.
+Because \(0\in\Delta\cG_\mu\), \(H_\mu(a)<\infty\) if and only if
+\(P_1(Ta)=1\).  On this hyperplane,
+\[
+ H_\mu(a)=\sup_f\{\abs{P_1(fa)}-P_1f^2\}.
+ \tag{B.10}
+\]
+For \(a,a'\) on this normalization hyperplane, the uniform envelope gives
+\[
+ |H_\mu(a)-H_\mu(a')|
+ \le\sup_{f\in\Delta\cG_\mu}|P_1\{f(a-a')\}|
+ \le2B_{\mathcal G}\norm{a-a'}_n.
+\]
+Hence the reduced objective is continuous on the hyperplane; no continuity
+of the extended-valued \(H_\mu\) on all of \(\R^n\) is asserted.
+If \(T_{1:n}=0\), set
+\[
+ \widehat a:=0,\qquad
+ \widehat\beta_O^{\rm raw}:=0.
+\]
+On \(T_{1:n}\ne0\), choose the first largest-magnitude coordinate \(j\),
+enumerate rational values of the other coordinates, and set
+\[
+ a_j=\frac{n-\sum_{i\ne j}T_ia_i}{T_j}.
+ \tag{B.11}
+\]
+This is a Borel dense chart of the exact hyperplane, even for irrational
+\(T_j\).  The objective is continuous and coercive there.  The first point
+within \(\tau_n\) of its countable infimum is a Borel
+\(\tau_n\)-minimizer \(\widehat a\) satisfying \(P_1(T\widehat a)=1\), and
+we put
+\[
+ \widehat\beta_O^{\rm raw}=P_1\{(Y-\widehat\mu)\widehat a\}.
+\]
+Finally define
+\[
+ \widehat\beta_O=\Pi_{[-3,3]}(\widehat\beta_O^{\rm raw}).
+\]
+With \(p_\rho=v_-/B_0^2\),
+\[
+ \E T^2=\E\pi_0(X)^2+v\ge v_-,\qquad
+ \Pr(T\ne0)\ge\frac{\E T^2}{B_0^2}\ge p_\rho.
+\]
+Independence of the D1 observations therefore gives
+\[
+ \Pr(T_{1:n}=0)\le e^{-p_\rho n},
+\]
+and projection bounds the loss on this event by three.  Therefore
+\[
+ 3\Pr(T_{1:n}=0)
+ \le 3e^{-p_\rho n}
+ \le \frac{3}{\sqrt{2ep_\rho}}\,n^{-1/2}.
+\]
+The O proof below is on \(T_{1:n}\ne0\); this display accounts separately
+for the zero-vector branch.
+
+For the proof-only comparator let \(D_0=P_1(Tu)\) and \(a_0=u/D_0\).
+Since \(\E(Tu)=v\), \(\abs{Tu}\le B_0^2\), and
+\(\operatorname{Var}(Tu)\le \E(T^2u^2)\le B_0^2v\), define
+\[
+ \mathcal E_{D_0,z}:=
+ \left\{\abs{D_0-v}\le
+ B_0\sqrt{\frac{2vz}{n}}+\frac{4B_0^2z}{3n}\right\}.
+\]
+Lemma~\ref{lem:bernstein} gives
+\(\Pp(\mathcal E_{D_0,z}^c)\le2e^{-z}\): the centered range satisfies
+\(\abs{Tu-v}\le2B_0^2\), which gives the displayed \(4/3\) linear
+coefficient.  With
+\(c_0=v_-/(32B_0^2)\), the square-root and linear deviations are at most
+\(v/4\) and \(v/24\), respectively, whenever
+\(1\le z\le c_0n\).  Hence \(D_0\ge17v/24\ge v_-/2\) on
+\(\mathcal E_{D_0,z}\), and \(P_1(Ta_0)=1\).  On
+\(\mathcal E_z^{\rm proc}\cap\mathcal E_{D_0,z}\), apply the localized
+multiplier and square bounds to (B.10).  Because
+\(\E\{f(X)u\}=0\), with \(w_z=\sqrt{z/n}\) they give
+\[
+ \abs{P_1(fa_0)}\le C_\rho\{(\bar s+w_z)\norm f_2
+                  +(\bar s+w_z)^2\},
+ \quad
+ P_1f^2\ge\norm f_2^2-C_\rho\{(\bar s+w_z)\norm f_2
+                  +(\bar s+w_z)^2\}.
+\]
+Maximizing the resulting concave quadratic gives the all-\(z\) benchmark
+\begin{equation}
+ H_\mu(a_0)\le K_7\{\bar s^2+z/n\}.
+ \tag{B.12}
+\end{equation}
+Projection of the fitted denominator onto \([v_-/2,\infty)\) is
+one-Lipschitz and leaves \(D_0\) fixed.  With
+\(e_\pi=\widehat\pi-\pi_0\),
+\[
+ \abs{\widetilde D_O-D_0}\le\abs{P_1(Te_\pi)}
+ \le B_0\norm{e_\pi}_{1,n}.
+\]
+On \(D_0\ge v_-/2\), put
+\[
+ C_u:=\frac2{v_-}+\frac{4B_0^2}{v_-^2}.
+\]
+The same denominator algebra gives
+\[
+ \|\widetilde a-a_0\|_n
+ \le C_u\|\widehat\pi-\pi_0\|_{1,n}.
+\]
+If the cap in \(d_\pi\) is inactive,
+ \(\mathcal E_{\pi,z}^{\rm tr,1}\) and (B.9a),
+\(\bar t\le C_{\rm rad}y+\bar s\) bound the deterministic part by a fixed
+multiple of \(d_\pi\).  If the cap is active, the pointwise envelope gives
+\(\abs{\widehat\pi-\pi_0}\le B_\pi=d_\pi\).  Put
+\[
+ K_8^*:=C_u\max\left\{1,L_\pi,
+              \frac{L_\pi(1+C_{\rm rad})}{8}\right\}.
+\]
+Thus, including cap equality,
+\begin{equation}
+ \norm{\widetilde a-a_0}_n
+ \le K_8^*\{d_\pi+\sqrt{z/n}\}.
+ \tag{B.13}
+\end{equation}
+This covers active and inactive caps.
+
+Compare the approximate objective at \(\widehat a\) and \(a_0\).  Since
+\(H_\mu\ge0\),
+\begin{align}
+ \norm{\widehat a-\widetilde a}_n
+ &\le K_9\{d_\pi+\sqrt{z/n}
+      +(d_\pi/\bar s)\sqrt{z/n}
+      +\sqrt{\tau_n/\lambda_O}\},\tag{B.14}\\
+ H_\mu(\widehat a)
+ &\le K_9\{\bar s^2+z/n
+       +\lambda_O(d_\pi+\sqrt{z/n})^2+\tau_n\}.
+ \tag{B.15}
+\end{align}
+Indeed, approximate optimality first bounds
+\(\lambda_O\norm{\widehat a-\widetilde a}_n^2+H_\mu(\widehat a)\) by
+\(K_\rho\{\lambda_O(d_\pi+w_z)^2+\bar s^2+w_z^2+\tau_n\}\);
+only the norm bound divides by \(\lambda_O\), and
+\(\sqrt{\lambda_O}\asymp_\rho\bar s/d_\pi\).  This is the source of the
+amplified term in (B.14).
+Exact normalization and (B.10) now give, for every represented \(f\),
+\begin{equation}
+ \abs{P_1(f\widehat a)}
+ \le P_1f^2+H_\mu(\widehat a).
+ \tag{B.16}
+\end{equation}
+Thus the one-sided O calibration inequality has been proved rather than
+assumed.
+Equations (B.12)--(B.16) hold on the finite intersection
+\(\mathcal E_z^{\rm proc}\cap\mathcal E_{D_0,z}\cap
+\mathcal E_{\pi,z}^{\rm tr,1}\), for
+\(1\le z\le(c_0\wedge1)n\); each fitted substitution is made only after
+the corresponding uniform or exact-fit event has been formed.
+
+\subsection{The O all-z oracle inequality and expectation}
+\label{app:upper-o-oracle}
+
+Recall the piecewise raw O output and its clipped version defined above.
+Choose a deterministic represented \(g_\mu\), available by
+Lemma~\ref{lem:sequential-density-transfer}, such that
+\(\norm{g_\mu-\mu_0}_2\le a+\rho_n\), and put \(w=u/v\) and
+\(r_\mu=\mu_0-g_\mu\).
+Exact normalization gives the exhaustive identity
+\begin{align}
+ \widehat\beta_O^{\rm raw}-\beta_0
+={}&P_1(\varepsilon w)+P_1\{\varepsilon(\widehat a-w)\}
+ +P_1\{(\mu_0-g_\mu)w\}\nonumber\\
+ &+P_1\{(\mu_0-g_\mu)(\widehat a-w)\}
+ +P_1\{(g_\mu-\widehat\mu)\widehat a\}.
+ \tag{B.17}
+\end{align}
+Let \(r=\bar s\), \(d=d_\pi\), \(w_z=\sqrt{z/n}\), and
+\(\ell=\sqrt{\tau_n/\lambda_O}\).  On \(\mathcal E_{D_0,z}\), the
+preceding deviation bound and \(\norm u_n\le B_0\) give
+\(\norm{a_0-w}_n\le K_\rho w_z\), hence (B.13)--(B.14) imply
+\[
+ \norm{\widehat a-w}_n\le K\{d+w_z+(d/r)w_z+\ell\}.
+\]
+For this fixed comparator, let
+\[
+ \mathcal E_{O,z}^{\rm cmp}
+ :=\{\norm{r_\mu}_{1,n}\le K_{O,\rm cmp}(a+\rho_n+w_z)\}.
+\]
+Bounded scalar Bernstein applied to \(r_\mu(X)^2\) gives
+\(\Pp\{(\mathcal E_{O,z}^{\rm cmp})^c\}\le2e^{-z}\), after one fixed
+enlargement of \(K_{O,\rm cmp}\).  No fitted index occurs in this event.
+Define the fitted weighted event
+\[
+\begin{split}
+ \mathcal E_{O,z}^{\rm wt}:=\bigg\{&
+ \abs{P_1(\varepsilon w)}\le K_{O,\rm wt}w_z,\\
+ &\abs{P_1\{\varepsilon(\widehat a-w)\}}
+ \le K_{O,\rm wt}\norm{\widehat a-w}_n w_z,\\
+ &\abs{P_1(r_\mu w)}
+ \le K_{O,\rm wt}\norm{r_\mu}_{1,n} w_z\bigg\}.
+\end{split}
+\]
+The first two inequalities follow from (B.1a) conditional on
+\(\mathcal F_T\); the last follows from (B.1a) conditional on
+\(\mathcal F_X\), because \(\E(u\mid X)=0\).  Taking expectations of
+each conditional failure over its own conditioning field and then applying
+an unconditional union bound gives failure at most \(6e^{-z}\).
+
+On the finite event
+\[
+ \mathcal E_{O,z}:=
+ \mathcal E_z^{\rm proc}\cap\mathcal E_{\pi,z}^{\rm tr,1}\cap
+ \mathcal E_{\mu,z}^{\rm tr,1}\cap\mathcal E_{D_0,z}\cap
+ \mathcal E_{O,z}^{\rm cmp}\cap\mathcal E_{O,z}^{\rm wt},
+ \qquad \Pp(\mathcal E_{O,z}^c)\le K_{O,0}e^{-z},
+\]
+Equation (B.1a), the exact fit events, and (B.15)--(B.16) give the five
+separate bounds
+\begin{align*}
+ \abs{P_1(\varepsilon w)}&\le Kw_z,\\
+ \abs{P_1\{\varepsilon(\widehat a-w)\}}
+   &\le K\{d+w_z+(d/r)w_z+\ell\}w_z,\\
+ \abs{P_1\{(\mu_0-g_\mu)w\}}
+   &\le K(aw_z+w_z^2),\\
+ \abs{P_1\{(\mu_0-g_\mu)(\widehat a-w)\}}
+   &\le K(a+w_z)\{d+w_z+(d/r)w_z+\ell\},\\
+ \abs{P_1\{(g_\mu-\widehat\mu)\widehat a\}}
+   &\le K\{(x+r+w_z)^2+r^2+w_z^2
+             +\lambda_O(d+w_z)^2+\tau_n\}.
+\end{align*}
+Adding these inequalities gives the displayed bound first for the raw output.
+Projection cannot increase distance to the legal target
+\(\beta_0\in[-3,3]\), so the same tail bound holds for the clipped
+\(\widehat\beta_O\).  Retaining a common nonnegative amplification envelope
+for the subsequent layer-cake calculation gives
+\begin{align}
+ \abs{\widehat\beta_O-\beta_0}
+ \le K_{10}\bigg[&ad+x^2+r^2+\lambda_Od^2+\tau_n+\ell(a+r)\nonumber\\
+ &+(1+a+d+x+r)w_z+\frac{ad}{r}w_z
+  +\left(1+\frac d r\right)w_z^2+w_z^3+\ell w_z\bigg]
+ \tag{B.18}
+\end{align}
+on \(\mathcal E_{O,z}\).  Choose the fixed endpoint
+\(c_2\le c_0\wedge1\) and \(K_{11}\ge K_{O,0}\); then its failure is at
+most \(K_{11}e^{-z}\), \(1\le z\le c_2n\).
+The displayed \(d w_z\) is the edited-noise contribution.  The amplified
+terms \((ad/r)w_z\) and \((d/r)w_z^2\) are required by the corrected
+intermediate norm bound (B.14), rather than decorative padding: respectively,
+they arise when \((d/r)w_z\) is multiplied by \(a\) and by \(w_z\) in the
+five-term identity.  There is no standalone \((d/r)w_z\), no
+\((d/r)w_z^3\), and no \(\lambda_O^{-1}w_z^2\).  The denominator perturbation
+is in (B.13) and is not counted twice.
+
+\begin{lemma}[O all-\(z\) absorption certificate]
+\label{lem:o-all-z-absorption}
+On the O-safe cell, every monomial in (B.18), integrated against its
+pointwise tail, is bounded by \(K(q+ay+x^2)\).  The complete accounting is
+\[
+\begin{array}{c|c|c}
+\text{tail monomial}&\text{layer-cake scale}&\text{deterministic control}\\ \hline
+(1+a+d+x+r)w_z&q&Kq\\
+\frac{ad}{r}w_z&\frac{ad}{r}q&K(q+ay+x^2)\\
+w_z^2&q^2&Kq\\
+\frac d r w_z^2&\frac d{nr}&Kq\\
+w_z^3&q^3&Kq\\
+\ell w_z&\ell q&K(q+ay+x^2).
+\end{array}
+\tag{B.19}
+\]
+The deterministic terms \(ad,x^2,r^2,\lambda_Od^2,\tau_n\), and
+\(\ell(a+r)\) obey the same target bound.  This statement includes zero
+budgets, both cap branches, and cap equality.  It is pointwise in \(z\), not
+simultaneous in \(z\); unsafe cells are handled only by the later fallback.
+\end{lemma}
+\begin{proof}
+Use
+\[
+ h_n^2\le2q,\quad r\ge C_{\rm rad}h_n,\quad
+ d\le B_\pi,\quad d\le K_d(y+r+\rho_n),\quad
+ \lambda_Od^2=K_\lambda r^2.
+\]
+Because \(s\le x\le y\), \(r^2\le K(x^2+q)\),
+\(\rho_n\le q\le Kr\), and \(ad\le K(ay+x^2+q)\): when
+\(h_n\le y\), send \(ah_n\) to \(ay\); when \(y<h_n\), use
+\(a\le x\le y<h_n\) and \(ah_n\le h_n^2\le2q\).
+Since \(q/r\le K\), the same split proves
+\((ad/r)q\le K(q+ay+x^2)\), while
+\[
+ \frac d{nr}\le
+ \frac{B_\pi}{C_{\rm rad}\sqrt{n\log(en)}}\le Kq,\qquad
+ \ell=\frac{\rho_n}{\sqrt{\lambda_O}}
+ =\frac{\rho_nd}{r}.
+\]
+Thus \(\ell(a+r)+\ell q\) has the claimed bound.  The remaining rows use
+\(q^2,q^3\le q\) and the fixed envelopes.  The positive floor
+\(r=C_{\rm rad}(s\vee h_n)\) makes every ratio defined when \(s=0\), and
+the two inequalities for \(d\) cover the active, inactive, and equality
+cases of the cap.  Finally,
+\(\int_1^\infty z^{p/2}e^{-z}\,dz\le\Gamma(1+p/2)\) gives the listed
+scales.  The interval below \(z=1\) uses the \(z=1\) threshold; clipping
+handles \(z>c_2n\); and if \(c_2n<1\), then \(q>\sqrt{c_2}\) absorbs the
+bounded loss.  This uses a separate event for each \(z\), never one
+simultaneous event.
+\end{proof}
+
+Applying Lemma~\ref{lem:o-all-z-absorption} to (B.18) and adding the zero-vector contribution
+\(3/\sqrt{2ep_\rho}\,n^{-1/2}\) to the fixed O constant, we obtain
+\begin{equation}
+ \sup_{P\in\cP(\Gamma)}
+ \E_P\abs{\widehat\beta_O-\beta(P)}
+ \le C_O\{q+ay+x^2\}.
+ \tag{B.20}
+\end{equation}
+
+\subsection{The R edit and two-sample calibration}
+\label{app:upper-r-calibration}
+
+This R proof is an independent replay, not by symmetry with O.  It uses only
+the generic public-class process lemma and the corrected initial-fit bounds;
+the O instrument, normalization, and functional \(H_\mu\) do not enter.
+Let \(m_0(X)=\E(Y\mid X)=\beta_0\pi_0(X)+\mu_0(X)\),
+and recall the frozen envelope \(B_{\rm all}\).  Put
+\[
+ d_{\rm all}=\min\{B_{\rm all},8(x+y+\bar t+\rho_n)\},\qquad
+ \lambda_R=(\bar t/d_{\rm all})^2.
+\]
+Here \(\abs{m_0}\le B_0\) by conditional expectation of the bounded
+response, while
+\(\abs{\widehat\beta_0\widehat\pi+\widehat\mu}\le4B_{\mathcal G}\).
+Thus \(B_{\rm all}\) is a fixed envelope for their discrepancy.
+On the R-safe cell \(y<x\), \(\bar t\le\vartheta_\rho\), both arguments in
+the minimum are at least \(8\bar t\), so
+\[
+ d_{\rm all}\ge8\bar t,\qquad0<\lambda_R\le1/64<1/16.
+\]
+On D1 covariates set
+\(\widetilde m_i=\widehat\beta_0\widehat\pi(X_i)+\widehat\mu(X_i)\).
+For \(f\in\Delta\cG_\pi\), define
+\[
+ H_\pi(m)=\sup_f\{\abs{P_2(Yf)-P_1(mf)}-P_1f^2\}.
+\]
+For every \(m,m'\in\R^n\), the uniform envelope similarly gives
+\[
+ |H_\pi(m)-H_\pi(m')|
+ \le\sup_{f\in\Delta\cG_\pi}|P_1\{f(m-m')\}|
+ \le2B_{\mathcal G}\norm{m-m'}_n.
+\]
+Thus \(H_\pi\) is continuous on \(\R^n\); together with the positive
+quadratic penalty and coercivity below, this supports first-within-tolerance
+selection on the rational dense chart.
+The implemented supremum is over the represented difference core and equals
+the full-class display by Lemma~\ref{lem:sequential-density-transfer}(iii).
+Over the rational enumeration of \(\R^n\), select the first
+\(\tau_n\)-minimizer \(\widehat m\) of
+\(\lambda_R\norm{m-\widetilde m}_n^2+H_\pi(m)\).  The positive quadratic is
+coercive, so this Borel selection is well defined.
+
+Put \(\xi=Y-m_0(X)\) and
+\(\delta_z=K(\bar t+\sqrt{z/n})\).  On
+\(\mathcal E_z^{\rm proc}\), uniformly in
+\(f\in\Delta\cG_\pi\), (B.3)--(B.4) give
+\begin{align}
+ &\abs{P_2(\xi f)}+\abs{(P_2-P)(m_0f)}
+ +\abs{(P_1-P)(m_0f)}+\abs{(P_1-P)f^2}\nonumber\\
+ &\hspace{35mm}\le K\{\delta_z\norm f_2+\delta_z^2\}.
+ \tag{B.21}
+\end{align}
+Inserting \(m=m_0(X_{1:n})\) and maximizing
+\(K\delta_zr-r^2/2\) proves
+\begin{equation}
+ H_\pi(m_0(X_{1:n}))\le K\delta_z^2.
+ \tag{B.22}
+\end{equation}
+The exact decomposition
+\[
+ \widetilde m-m_0=(\widehat\beta_0-\beta_0)\widehat\pi
+ +\beta_0(\widehat\pi-\pi_0)+(\widehat\mu-\mu_0)
+\]
+and \(\mathcal E_{\pi,z}^{\rm tr,1}\cap
+\mathcal E_{\mu,z}^{\rm tr,1}\), together with (B.9a)--(B.9b) and
+\(\bar s\le C_{\rm rad}x+\bar t\) on \(y<x\), give the following bound after
+putting
+\[
+ L_R:=(B_{\mathcal G}+1)L_\mu(1+C_{\rm rad})+3L_\pi:
+\]
+\[
+ \|\widetilde m-m_0\|_{1,n}
+ \le L_R\{x+y+\bar t+\rho_n+\sqrt{z/n}\}.
+\]
+If the cap is inactive, the deterministic base is a fixed multiple of
+\(d_{\rm all}\); if active, the pointwise envelope gives
+\(\abs{\widetilde m-m_0}\le B_{\rm all}=d_{\rm all}\).  Put
+\(K_m^*:=1+L_R\).  Hence, including equality,
+\[
+ \|\widetilde m-m_0\|_{1,n}\le K_m^*\{d_{\rm all}+\sqrt{z/n}\}.
+\]
+Objective comparison therefore yields
+\begin{align}
+ H_\pi(\widehat m)&\le K\{\delta_z^2+
+ \lambda_R(d_{\rm all}+\delta_z)^2+\tau_n\},\tag{B.23}\\
+ \norm{\widehat m-m_0}_n&\le K\{d_{\rm all}+\delta_z+
+ \delta_z/\sqrt{\lambda_R}+\sqrt{\tau_n/\lambda_R}\}.
+ \tag{B.24}
+\end{align}
+For every represented \(f\), the identity
+\[
+ P_1\{(m_0-\widehat m)f\}
+ =[P_2(Yf)-P_1(\widehat mf)]-[P_2(Yf)-P_1(m_0f)]
+\]
+and (B.21)--(B.23) imply
+\begin{equation}
+ \abs{P_1\{(m_0-\widehat m)f\}}
+ \le K\{\norm f_2^2+\delta_z^2+
+ \lambda_R(d_{\rm all}+\delta_z)^2+\tau_n\}.
+ \tag{B.25}
+\end{equation}
+The event is uniform before substitution, so (B.25) applies legally to
+\(f=\widehat\pi-g_\pi\).  The edit uses D2 outcomes and D1 covariates only;
+conditioning has not frozen the D1 treatments.
+Equations (B.21)--(B.25) hold on
+\(\mathcal E_z^{\rm proc}\cap\mathcal E_{\pi,z}^{\rm tr,1}\cap
+\mathcal E_{\mu,z}^{\rm tr,1}\).
+
+\subsection{The R denominator, oracle inequality, and expectation}
+\label{app:upper-r-oracle}
+
+Let \(e_\pi=\widehat\pi-\pi_0\), \(r_m=\widehat m-m_0\), and
+\(D=P_1(T-\widehat\pi)^2=P_1(u-e_\pi)^2\).  Conditional on
+\(\mathcal F_2\), the function \(e_\pi\) is fixed and the variables
+\[
+ W_i=(u_i-e_\pi(X_i))^2=(T_i-\widehat\pi(X_i))^2
+\]
+are conditionally iid.  Their conditional center is
+\[
+ m_\pi:=\E(W_i\mid\mathcal F_2)
+ =v+\norm{e_\pi}_2^2,
+ \tag{B.26}
+\]
+where sample-split independence and \(\E(u\mid X)=0\) were used,
+with \(v=\E u^2\).  Put \(B_D:=B_0+B_{\mathcal G}=B_\pi\).  Since
+\(0\le W_i\le B_D^2\), also
+\(\abs{W_i-m_\pi}\le B_D^2\), and
+\[
+ \operatorname{Var}(W_i\mid\mathcal F_2)
+ \le\E(W_i^2\mid\mathcal F_2)\le B_D^2m_\pi.
+\]
+Lemma~\ref{lem:bernstein}, conditionally on \(\mathcal F_2\), therefore
+uses \(B=B_D^2\), \(\sigma^2=B_D^2m_\pi\), and defines the event
+\[
+ \mathcal E_{R,z}^{\rm den}:=
+ \left\{\abs{D-m_\pi}\le
+ B_D\sqrt{\frac{2m_\pi z}{n}}+\frac{2B_D^2z}{3n}\right\},
+ \qquad
+ \Pp\{(\mathcal E_{R,z}^{\rm den})^c\mid\mathcal F_2\}\le2e^{-z}.
+\]
+The same failure bound holds unconditionally.  With
+\(c_{\rm den}:=v_-/(32B_D^2)\), the square-root term is at most
+\(m_\pi/4\), and the linear term is at most
+\(v_-/48\le m_\pi/48\), whenever
+\(1\le z\le c_{\rm den}n\).  Consequently, on this event,
+\begin{equation}
+ v_-/2\le m_\pi/2\le D\le K_{\rm den}:=B_D^2,
+ \qquad 1\le z\le c_{\rm den}n.
+ \tag{B.27}
+\end{equation}
+The upper bound is also immediate from \(D=P_1W\le B_D^2\).  Thus the
+floor \((v_-/2)\vee D\) is inactive on
+\(\mathcal E_{R,z}^{\rm den}\) and defines the estimator on its complement.
+
+The raw R estimator is
+\[
+ \widehat\beta_R^{\rm raw}
+ =\frac{P_1\{(Y-\widehat m)(T-\widehat\pi)\}}
+ {(v_-/2)\vee P_1(T-\widehat\pi)^2}.
+\]
+Define its clipped version by
+\[
+ \widehat\beta_R=\Pi_{[-3,3]}(\widehat\beta_R^{\rm raw}).
+\]
+On (B.27), direct substitution gives the exact signed identity
+\begin{align}
+ D(\widehat\beta_R^{\rm raw}-\beta_0)
+ ={}&P_1\{\varepsilon(u-e_\pi)\}-P_1\{r_m(u-e_\pi)\}\nonumber\\
+ &+\beta_0\{P_1(ue_\pi)-P_1e_\pi^2\}.
+\tag{B.28}
+\end{align}
+This R identity is derived independently, not by symmetry: it follows from
+direct substitution into the R ratio after the denominator event, and it
+contains no O-specific object.
+With \(r=\bar t\), \(d=d_{\rm all}\), \(w_z=\sqrt{z/n}\), and
+\(\ell=\sqrt{\tau_n/\lambda_R}\), (B.9a), (B.24), and
+\(\delta_z=K(r+w_z)\) give
+\[
+ \norm{e_\pi}_{1,n}\le K(y+r+w_z),\qquad
+ \norm{r_m}_{1,n}\le
+ K\{d+r+w_z+(d/r)w_z+\ell\}.
+\]
+Choose a deterministic represented \(g_\pi\), available by
+Lemma~\ref{lem:sequential-density-transfer}, such that
+\(\norm{g_\pi-\pi_0}_2\le b+\rho_n\).  Its fixed-comparator event is
+\[
+ \mathcal E_{R,z}^{\rm cmp}:=
+ \{\norm{g_\pi-\pi_0}_{1,n}\le K_{R,\rm cmp}(b+\rho_n+w_z)\}.
+\]
+Bounded scalar Bernstein applied to \((g_\pi-\pi_0)^2\) gives
+\(\Pp\{(\mathcal E_{R,z}^{\rm cmp})^c\}\le2e^{-z}\).  Define also
+\[
+\begin{split}
+ \mathcal E_{R,z}^{\rm wt}:=\bigg\{&
+ \abs{P_1\{\varepsilon(u-e_\pi)\}}
+ \le K_{R,\rm wt}\norm{u-e_\pi}_{1,n} w_z,\\
+ &\abs{P_1(r_m u)}\le K_{R,\rm wt}\norm{r_m}_{1,n} w_z,\\
+ &\abs{P_1(ue_\pi)}\le K_{R,\rm wt}\norm{e_\pi}_{1,n} w_z\bigg\}.
+\end{split}
+\]
+The first inequality follows from (B.1a) conditional on
+\(\mathcal F_T\); the other two follow from (B.1a) conditional on
+\(\mathcal F_X\).  Taking expectations of each conditional failure over
+its own conditioning field and then applying an unconditional union bound
+gives failure at most \(6e^{-z}\).  The remaining fitted propensity calibration is
+supplied by (B.25).  Decomposing
+\(e_\pi=(\widehat\pi-g_\pi)+(g_\pi-\pi_0)\), (B.1a), (B.25), and empirical
+Cauchy--Schwarz yield
+\begin{align*}
+ \abs{P_1\{\varepsilon(u-e_\pi)\}}
+  &\le K(1+y+r+w_z)w_z,\\
+ \abs{P_1(r_mu)}
+  &\le K\{d+r+w_z+(d/r)w_z+\ell\}w_z,\\
+ \abs{P_1(r_me_\pi)}
+  &\le K\{(y+r+w_z)^2+(r+w_z)^2
+       +\lambda_R(d+r+w_z)^2+\tau_n\\
+  &\hspace{22mm} +(b+w_z)[d+r+w_z+(d/r)w_z+\ell]\},\\
+ \abs{P_1(ue_\pi)}+P_1e_\pi^2
+  &\le K\{(y+r+w_z)w_z+(y+r+w_z)^2\}.
+\end{align*}
+On the finite event
+\[
+ \mathcal E_{R,z}:=
+ \mathcal E_z^{\rm proc}\cap\mathcal E_{\pi,z}^{\rm tr,1}\cap
+ \mathcal E_{\mu,z}^{\rm tr,1}\cap\mathcal E_{R,z}^{\rm den}\cap
+ \mathcal E_{R,z}^{\rm cmp}\cap\mathcal E_{R,z}^{\rm wt},
+ \qquad \Pp(\mathcal E_{R,z}^c)\le K_{R,0}e^{-z},
+\]
+the uniform events precede every fitted substitution, so no random D1
+index enters a pointwise event.  Adding the four displays and dividing by
+the floor \(D\ge v_-/2\) gives the complete tail for the raw output.
+Projection cannot increase distance to \(\beta_0\in[-3,3]\), so the same
+tail holds for the clipped \(\widehat\beta_R\):
+\begin{align}
+ \abs{\widehat\beta_R-\beta_0}
+ \le K_{12}\bigg[&bd+y^2+r^2+\lambda_Rd^2+\tau_n+\ell(b+r)\nonumber\\
+ &+(1+b+d+y+r)w_z+\frac{bd}{r}w_z
+ +\left(1+\frac d r\right)w_z^2+w_z^3+\ell w_z\bigg],
+ \tag{B.29}
+\end{align}
+Choose \(c_3\le c_{\rm den}\wedge1\) and
+\(K_{13}\ge K_{R,0}\).  Then (B.29) has failure at most
+\(K_{13}e^{-z}\), for \(1\le z\le c_3n\).  The possible amplification is
+explicit.
+\begin{lemma}[R all-\(z\) absorption certificate]
+\label{lem:r-all-z-absorption}
+On the R-safe cell, the complete stochastic accounting for (B.29) is
+\[
+\begin{array}{c|c|c}
+\text{tail monomial}&\text{layer-cake scale}&\text{deterministic control}\\ \hline
+(1+b+d+y+r)w_z&q&Kq\\
+\frac{bd}{r}w_z&\frac{bd}{r}q&K(q+bx+y^2)\\
+w_z^2&q^2&Kq\\
+\frac d r w_z^2&\frac d{nr}&Kq\\
+w_z^3&q^3&Kq\\
+\ell w_z&\ell q&K(q+bx+y^2).
+\end{array}
+\]
+The deterministic terms \(bd,y^2,r^2,\lambda_Rd^2,\tau_n\), and
+\(\ell(b+r)\) obey the same bound, including zero budgets, both cap
+branches, and cap equality.  The events are pointwise in \(z\), not
+simultaneous in \(z\); unsafe cells use the public fallback.
+\end{lemma}
+\begin{proof}
+From
+\[
+ r\ge C_{\rm rad}h_n,\quad d\le B_{\rm all},\quad
+ d\le K_d(x+y+r+\rho_n),\quad \lambda_Rd^2=K_\lambda r^2,
+\]
+we get
+\[
+ bd\le K(bx+y^2+q),\qquad
+ \frac{bd}{r}q\le K(bx+y^2+q),\qquad
+ \frac d{nr}\le\frac{B_{\rm all}}
+ {C_{\rm rad}\sqrt{n\log(en)}}\le Kq.
+\]
+Indeed, \(h_n\le x\) sends \(bh_n\) to \(bx\), whereas
+\(x<h_n\) and \(b\le y<x\) send it to \(h_n^2\le2q\).
+Also \(r^2\le K(y^2+q)\) and \(\ell=\rho_nd/r\), so the same split
+controls \(\ell(b+r)+\ell q\).  The other rows follow from fixed envelopes
+and \(q^2,q^3\le q\).  The floor \(r=C_{\rm rad}(t\vee h_n)>0\) covers
+\(t=0\), and the two bounds on \(d\) cover both cap branches and equality.
+The layer-cake moments are the same gamma integrals as in
+Lemma~\ref{lem:o-all-z-absorption}.  Below \(z=1\) use the \(z=1\)
+threshold; above \(c_3n\) use clipping; if \(c_3n<1\), then
+\(q>\sqrt{c_3}\) absorbs the bounded loss.  No simultaneous-in-\(z\) event
+is asserted.
+\end{proof}
+Lemma~\ref{lem:r-all-z-absorption} and (B.29) prove
+\begin{equation}
+ \sup_{P\in\cP(\Gamma)}
+ \E_P\abs{\widehat\beta_R-\beta(P)}
+ \le C_R\{q+bx+y^2\}.
+ \tag{B.30}
+\end{equation}
+
+\subsection{Proof-event ledger}
+\label{app:upper-event-ledger}
+
+For auditability, the following is the complete event ledger used above.
+Each item records the definition, conditioning field, random variables,
+failure bound, admissible \(z\)-range, and downstream use.  The ledger is a
+cross-reference, not an additional intersection or a claim of simultaneity
+over \(z\).
+
+\begin{enumerate}
+\item \(\mathsf P_{\pi,2}^{u}(z)\) is the simultaneous (B.3)--(B.4)
+event from Lemma~\ref{lem:localized-process} for the represented treatment
+difference core on \(\cD_2\), with random multiplier \(u\).  It is
+unconditional, concerns the iid \(\cD_2\) observations, has failure
+\(K_{\pi,2}^{u}e^{-z}\) for \(1\le z\le n\), and is used in
+(B.6)--(B.7) and the treatment empirical-radius conversion.
+
+\item \(\mathsf P_{\mu,2}^{\rm sq}(z)\) is the (B.4) event for the
+represented outcome difference core on \(\cD_2\).  It is unconditional,
+concerns the \(\cD_2\) covariates, has failure
+\(K_{\mu,2}^{\rm sq}e^{-z}\) for \(1\le z\le n\), and is used in the
+outcome empirical-radius conversion following (B.9).
+
+\item \(\mathsf P_{J,2}^{\varepsilon}(z)\) is the simultaneous
+(B.3)--(B.4) event for \(\mathcal J_\mu\) on \(\cD_2\), with multiplier
+\(\varepsilon\).  It is unconditional, concerns the \((X,T,Y)\) variables
+in \(\cD_2\), has failure \(K_{J,2}^{\varepsilon}e^{-z}\) for
+\(1\le z\le n\), and is used in (B.8)--(B.9).
+
+\item \(\mathsf P_{\mu,1}^{u}(z)\) is the simultaneous (B.3)--(B.4)
+event for the represented outcome difference core on \(\cD_1\), with
+multiplier \(u\).  It is unconditional, concerns the iid \(\cD_1\)
+observations, has failure \(K_{\mu,1}^{u}e^{-z}\) for
+\(1\le z\le n\), and its square part is used in (B.9b), while its
+multiplier and square parts are used in (B.12)--(B.16).
+
+\item \(\mathsf P_{\pi,2}^{\xi}(z)\) is the (B.3) event for the
+represented treatment difference core on \(\cD_2\), with
+\(\xi=Y-m_0(X)\).  It is unconditional, concerns \(\cD_2\), has failure
+\(K_{\pi,2}^{\xi}e^{-z}\) for \(1\le z\le n\), and is used in
+(B.21)--(B.22).
+
+\item \(\mathsf P_{\pi,2}^{m_0}(z)\) is the centered (B.3) event for
+the same represented core on \(\cD_2\), with fixed multiplier \(m_0(X)\).
+It is unconditional, concerns \(\cD_2\), has failure
+\(K_{\pi,2}^{m_0}e^{-z}\) for \(1\le z\le n\), and is used in
+(B.21)--(B.22).
+
+\item \(\mathsf P_{\pi,1}^{m_0}(z)\) is the simultaneous fixed-multiplier
+(B.3) and square (B.4) event for the represented treatment difference core
+on \(\cD_1\).  It is unconditional, concerns \(\cD_1\), has failure
+\(K_{\pi,1}^{m_0}e^{-z}\) for \(1\le z\le n\), and is used in
+ (B.9a) and (B.21)--(B.25).
+
+\item \(\mathcal E_z^{\rm proc}\) is exactly the finite intersection of
+the preceding seven primitive events.  It is unconditional, involves both
+sample halves as just itemized, satisfies (B.5) for \(1\le z\le n\), and
+is used by the initial fits, O calibration, and R calibration.  It contains
+none of the scalar, comparator, denominator, or fitted weighted events.
+
+\item For each fixed positive proof slack,
+\(\mathcal E_{\pi,z}^{\rm cmp}(\varepsilon_{\rm cmp,\pi})\) is the
+displayed one-sided bound on \(P_2r_\pi^2\).  It is unconditional, involves
+only the fixed comparator residual on \(\cD_2\), has failure at most
+\(2e^{-z}\) for \(1\le z\le n\), and is used in (B.6)--(B.7).
+The exact treatment-fit event \(\mathcal E_{\pi,z}^{\rm fit,2}\) is then
+defined by (B.7) and its \(\cD_2\) empirical analogue after scalar
+tail-probability continuity; it is unconditional, concerns
+\(\widehat\pi\) and \(\cD_2\), and has failure
+\(K_{\pi,\rm fit,2}e^{-z}\) for \(1\le z\le n\).
+
+\item For each fixed positive proof slack,
+\(\mathcal E_{\mu,z}^{\rm cmp}(\varepsilon_{\rm cmp,\mu})\) is the
+displayed one-sided bound on \(P_2(e^\circ)^2\).  It is unconditional,
+involves the fixed joint comparator on \(\cD_2\), has failure at most
+\(2e^{-z}\) for \(1\le z\le n\), and is used in (B.8)--(B.9).
+The exact joint-fit event \(\mathcal E_{\mu,z}^{\rm fit,2}\) is defined by
+(B.9) and its \(\cD_2\) empirical analogue after scalar tail-probability
+continuity; it is unconditional, concerns
+\((\widehat\beta_0,\widehat\mu)\) and \(\cD_2\), and has failure
+\(K_{\mu,\rm fit,2}e^{-z}\) for \(1\le z\le n\).
+
+\item For each fixed positive slack, the D1 fixed-residual events
+\(\mathcal E_{\pi,z}^{\rm cmp,1}(\varepsilon_{\rm cmp,\pi})\) and
+\(\mathcal E_{\mu,z}^{\rm cmp,1}(\varepsilon_{\rm cmp,\mu})\) are scalar
+Bernstein events for \(g_\pi-\pi_0\) and \(g^\circ-\mu_0\) on
+\(\cD_1\), each with failure at most \(2e^{-z}\).  Conditional on
+\(\mathcal F_2\), the fitted represented indices are fixed, while the D1
+square-process events are uniform before insertion.  Combining these facts
+with (B.7)--(B.9), then using scalar tail-probability continuity rather than
+an infinite event intersection, defines
+\(\mathcal E_{\pi,z}^{\rm tr,1}\) and
+\(\mathcal E_{\mu,z}^{\rm tr,1}\).  They are unconditional, have failures
+\(K_{\pi,\rm tr,1}e^{-z}\) and \(K_{\mu,\rm tr,1}e^{-z}\) for
+\(1\le z\le n\), and supply (B.9a)--(B.9b) at every D1 use site:
+(B.13), (B.18)--(B.20), (B.23)--(B.25), and (B.29)--(B.30).
+
+\item \(\mathcal E_{D_0,z}\) is the displayed scalar Bernstein event for
+\(D_0=P_1(Tu)\).  It is unconditional, involves \((T,u)\) on \(\cD_1\),
+has failure at most \(2e^{-z}\), and for \(1\le z\le c_0n\) supplies the
+normalization and denominator bounds used in (B.12)--(B.18).
+
+\item \(\mathcal E_{O,z}^{\rm cmp}\) is the displayed empirical-norm
+event for the fixed \(r_\mu=\mu_0-g_\mu\).  It is unconditional, involves
+the \(\cD_1\) covariates, has failure at most \(2e^{-z}\) for
+\(1\le z\le n\), and is used in the third and fourth terms of (B.17).
+The event
+\(\mathcal E_{O,z}^{\rm wt}\) is the displayed intersection of three
+weighted inequalities: the first two are conditional on \(\mathcal F_T\)
+and the third on \(\mathcal F_X\); they involve respectively
+\(\varepsilon w\), \(\varepsilon(\widehat a-w)\), and \(r_\mu w\).
+After integrating each conditional bound, their unconditional union failure
+is at most \(6e^{-z}\) for \(1\le z\le n\); they are used in
+(B.17)--(B.18).
+
+\item \(\mathcal E_{O,z}\) is exactly the displayed six-event finite
+intersection of \(\mathcal E_z^{\rm proc}\), the two D1 transfer events,
+\(\mathcal E_{D_0,z}\), and the O comparator and weighted events.  It is
+unconditional after integrating the conditional bounds, has failure
+\(K_{O,0}e^{-z}\) for \(1\le z\le c_2n\), and supports (B.18), whose
+layer-cake integration gives (B.20).
+
+\item \(\mathcal E_{R,z}^{\rm den}\) is the displayed conditional
+Bernstein event for \(W_i=(T_i-\widehat\pi(X_i))^2\), conditional on
+\(\mathcal F_2\).  Because \(e_\pi\) is \(\mathcal F_2\)-measurable,
+conditioning fixes it and leaves the \(\cD_1\) variables \(W_i\)
+conditionally iid, with center
+\(m_\pi=v+\norm{e_\pi}_2^2\), envelope \(0\le W_i\le B_D^2\), and
+variance proxy
+\(\operatorname{Var}(W_i\mid\mathcal F_2)\le B_D^2m_\pi\).  The event
+has conditional and unconditional failure at most \(2e^{-z}\) for
+\(1\le z\le c_{\rm den}n\); the choices
+\(c_{\rm den}=v_-/(32B_D^2)\) and \(K_{\rm den}=B_D^2\) imply (B.27) and
+supply the denominator in (B.28)--(B.29).
+
+\item \(\mathcal E_{R,z}^{\rm cmp}\) is the displayed empirical-norm
+event for the fixed \(g_\pi-\pi_0\).  It is unconditional, involves the
+\(\cD_1\) covariates, has failure at most \(2e^{-z}\) for
+\(1\le z\le n\), and is used after the decomposition following (B.28).
+The event
+\(\mathcal E_{R,z}^{\rm wt}\) is the displayed intersection of three
+weighted inequalities: the first is conditional on \(\mathcal F_T\) and
+the other two on \(\mathcal F_X\); they involve
+\(\varepsilon(u-e_\pi)\), \(r_m u\), and \(ue_\pi\).  After integrating
+each conditional bound, their unconditional union failure is at most
+\(6e^{-z}\) for \(1\le z\le n\); they are used in (B.29).
+
+\item \(\mathcal E_{R,z}\) is exactly the displayed six-event finite
+intersection of \(\mathcal E_z^{\rm proc}\), the two D1 transfer events,
+and the R denominator, comparator, and weighted events.  It is unconditional
+after integrating the conditional bounds, has failure
+\(K_{R,0}e^{-z}\) for \(1\le z\le c_3n\), and supports (B.29), whose
+layer-cake integration gives (B.30).
+\end{enumerate}
+
+\subsection{Public four-cell selector and Q1 lift}
+\label{app:upper-selector}
+
+Define \(T_\mu=ay+x^2\), \(T_\pi=bx+y^2\), and
+\[
+ I_O=\ind\{x\le y,\ \bar s\le\vartheta_\rho\},\qquad
+ I_R=\ind\{y<x,\ \bar t\le\vartheta_\rho\}.
+\]
+Define
+\[
+ \widehat\beta_\Gamma=I_O\widehat\beta_O+I_R\widehat\beta_R.
+\]
+When both indicators vanish the value is zero.  Ties go to O and safe
+equalities remain safe.  Since the indicators are disjoint and zero belongs
+to \([-3,3]\), branchwise clipping equals clipping after selection.
+
+Let \(W=T_\mu\wedge T_\pi\).  If \(x\le y\), then
+\(T_\mu\le2xy\le2T_\pi\); the mirror holds when \(y<x\).  Put
+\(V=\min\{a+s^2,xy,T_\mu,T_\pi\}\).  Directly,
+\[
+ V\le W\le4V,\qquad X/5\le V\le6X.
+ \tag{B.31}
+\]
+For the last inequality, use the following six exhaustive weak-order cells,
+with the stated boundary convention:
+\[
+\begin{array}{c|c}
+ (a\ge t,b\le s)&T_\pi\le6X\\
+ (a\le t,b\ge s)&T_\mu\le6X\\
+ (a\ge t,b\ge s,a\ge b)&T_\pi\le6X\\
+ (a\ge t,b\ge s,a<b)&T_\mu\le6X\\
+ (a\le t,b\le s,s\le t)&T_\mu\le6X\\
+ (a\le t,b\le s,t<s)&T_\pi\le6X.
+\end{array}
+\]
+Weak equalities are assigned by the displayed first matching row, so the
+cells cover all zeros and ties without changing the bound.  This proves
+\begin{equation}
+ T_{\rm selected}\le2W\le48X.
+ \tag{B.32}
+\end{equation}
+
+For the zero fallback use the already frozen \(\delta_\rho\).  If
+\(h_n>\delta_\rho\), then \(\delta_\rho^2<h_n^2\le2q\).  If
+\(h_n\le\delta_\rho\) and the O-oriented cell is unsafe, then
+\(s>\delta_\rho\).  Either \(t\ge s/2\) and \(M\ge s^2/4\), or
+\(t<s/2\) and \(x\le y\) imply \(P>s^2/2\).  The R-oriented argument is
+the exact mirror.  Since clipped zero loses at most three, on every unsafe
+cell
+\begin{equation}
+ \abs{0-\beta(P)}\le12\delta_\rho^{-2}(q+X)
+ \tag{B.33}
+\end{equation}
+on every unsafe cell.
+
+Equations (B.20), (B.30), (B.32), and (B.33) prove, uniformly for every
+fixed legal \(\Gamma\),
+\[
+ \sup_{P\in\cP(\Gamma)}
+ \E_P\abs{\widehat\beta_\Gamma-\beta(P)}\le C_\rho(q+X).
+\]
+Every fit, edit, indicator, fallback, and clipping operation is Borel by the
+countable and finite-dimensional constructions above.  Therefore this rule
+is a legal competitor inside the fixed-\(\Gamma\) infimum.  Taking the outer
+supremum only after the uniform fixed-pair inequality proves the upper half
+of Theorem~\ref{thm:main}; no \(\sup/\inf\) exchange and no cross-pair
+estimator is used.
+
+
+\subsection{Proof of the allocation corollary}
+\label{app:allocation-proof}
+\begin{proof}
+Theorem~\ref{thm:main} and \(W\le T_{\rm selected}\le2W\), \(X/5\le W\le24X\), give \(\risk\asymp_\rho q+T_{\rm selected}\). Division by \(xy>0\) gives the first assertion, including necessity because all three terms are nonnegative.
+For the allocation bounds, \(X\le4xy\): each of \(AB,M,O,P\) is at most \(xy\). Also \(X\ge x^2/4\): one of \(a,s\) is at least \(x/2\), and one of \(b,t\) is at least \(y/2\); the four combinations force respectively \(ab,O,P,M\ge x^2/4\). Finally the allocations \((0,x,y,0)\) and \((x,0,y,0)\) have \(X=x^2(1+y)\) and \(X=xy\), respectively.
+\end{proof}

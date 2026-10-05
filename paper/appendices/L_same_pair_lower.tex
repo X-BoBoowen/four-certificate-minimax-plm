@@ -1,0 +1,600 @@
+\section{A single public pair for the five component lower inequalities}
+\label{app:same-pair}
+
+\begin{proposition}[Level-2 same-public-pair lower]
+\label{prop:same-pair-lower}
+The displayed quantifiers are
+\[
+\forall \rho\text{ in the strict-interior field }0<v_-<B_0^2,\quad
+\forall n\ge1,\quad
+\forall(a,s,b,t)\in[0,1]^4,\quad
+\exists(\Gamma^\star,P_X^\star),
+\]
+where \(\Gamma^\star=\Gamma^\star_{\rho,n,a,s,b,t}\) is one finite sequential-M1 public pair and \(P_X^\star\) is one covariate law, such that
+\[
+\inf_{\delta_{\Gamma^\star}\ {\rm Borel}}
+\sup_{P\in\cP(\Gamma^\star)}
+\E_P\abs{\delta_{\Gamma^\star}(Z_{1:2n})-\beta(P)}
+\ge c_\rho^\star(q+X)
+\]
+for a constant \(c_\rho^\star>0\) depending only on fixed \(\rho\).  Its compatible-law family contains \(q\) and every active native P/O/\(ab\)/M family; inactive component inequalities use the common \(q\) splice.  Thus the five inequalities hold on one covariate support and marginal \(P_X^\star\), without an explicit component tag.  The pair is fixed before Nature chooses component, coordinate, sign, label, or data, and the inequality covers every arbitrary Borel rule that knows the entire pair.
+\end{proposition}
+
+This appendix proves Proposition~\ref{prop:same-pair-lower}.  It reuses the
+native nonparametric raw laws proved in Appendices~\ref{app:qp}--\ref{app:m}
+and constructs the following common-host q variant, but not an
+external certificate: we define the enlarged pair, verify its complete
+sequential-M1 and budget interface, check that the component laws remain in
+the same compatible-law set, and apply testing directly to a rule that knows
+the enlarged pair.
+
+\subsection{Host, active branches, and public pair}
+
+Fix \(0<v_-<B_0^2\), \(n\ge1\), and
+\((a,s,b,t)\in[0,1]^4\).  Write \(N=2n\), \(v_0=v_-\), and
+\[
+ m_\rho=\min\left\{\frac1{64},\frac{v_0}{4B_0},
+                \frac{B_0-\sqrt{v_0}}4\right\},\qquad
+ \lambda_\rho=\min\left\{1,\frac{192c_{\rm rad}}{23},
+                128B_{\mathcal G}\right\}.
+\]
+Both constants are strictly positive and depend only on fixed \(\rho\).
+Declare a large P, O, \(ab\), or M branch, respectively, when
+\[
+\begin{array}{c|c|c}
+\text{branch}&\text{large-branch predicate}&\text{dictionary size}\\ \hline
+P&n\ge16,\ s^2\ge q,\ s(b\wedge s)>0&
+ p_P=\lceil\exp(64Ns^2)\rceil\\
+O&n\ge16,\ t^2\ge q,\ t(a\wedge t)>0&
+ p_O=\lceil\exp(64Nt^2)\rceil\\
+ab&n\ge16,\ a^2+b^2\ge q,\ ab>0&
+ p_{ab}=\lceil\exp(64N(a^2+b^2))\rceil\\
+M&n\ge16,\ (s\wedge t)^2\ge q,\ s\wedge t>0&
+ p_M=\lceil\exp(64N(s\wedge t)^2)\rceil .
+\end{array}
+\]
+An inactive branch has count zero.  Put
+\[
+ K=p_P+p_O+p_{ab}+p_M,\qquad
+ m_\star=\max\{1,\lceil\log_2(K+1)\rceil\}.
+\]
+The group \((\mathbb Z/2\mathbb Z)^{m_\star}\) has at least \(K\)
+distinct nonzero Walsh characters.  Partition \(K\) of them into four
+disjoint frequency sets
+\(\mathcal J_P,\mathcal J_O,\mathcal J_{ab},\mathcal J_M\) of the
+displayed sizes.  By the fixed-infinite-space convention of
+Appendix~\ref{app:model}, preselect a measurable injection of this finite
+group into \(\mathcal X\), extend every character by zero outside the
+image, and let \(P_X^\star\) be uniform on the whole image.  Thus every
+allocated character \(\phi_j\) is Rademacher-valued, mean zero, and
+unit-norm under \(P_X^\star\), and distinct frequencies are orthogonal.
+The support and \(P_X^\star\) are identical for every component, coordinate,
+sign, and label.  No component coordinate or disjoint-support event is
+observed.
+
+For an active P branch, let \(w_P=b\wedge s\) and set
+\[
+ \eta_P=\frac{m_\rho w_P}{4},\quad
+ \gamma_P=\frac{\lambda_\rho s}{256},\quad
+ \Delta_P=\frac{2\eta_P\gamma_P}{v_0},\quad
+ \kappa_P=\gamma_P+\Delta_P\eta_P.
+\]
+For active O and M branches, put
+\[
+\begin{aligned}
+ w_O&=a\wedge t,&
+ \gamma_O&=\frac{\lambda_\rho m_\rho t}{4},&
+ \eta_O&=\frac{w_O}{256},&
+ \Delta_O&=\frac{\gamma_O\eta_O}{v_0+\gamma_O^2},\\
+ w_M&=s\wedge t,&
+ \gamma_M&=\frac{\lambda_\rho m_\rho w_M}{4},&
+ \eta_M&=\frac{\lambda_\rho w_M}{256},&
+ \Delta_M&=\frac{\gamma_M\eta_M}{v_0+\gamma_M^2}.
+\end{aligned}
+\]
+For an active \(ab\) branch, retain
+\[
+ \eta_{ab}=\frac{m_\rho b}{4},\quad
+ \gamma_{ab}=\frac{a}{512},\quad
+ \Delta_{ab}=\frac{2\eta_{ab}\gamma_{ab}}{v_0},\quad
+ \kappa_{ab}=\gamma_{ab}+\Delta_{ab}\eta_{ab}.
+\]
+Terms from inactive branches are omitted from the following definitions.
+
+% C6-OUTCOME-CLASS-BEGIN
+\[
+\mathcal G_\mu^\star
+=\{0\}
+\cup\{\sigma\gamma_P\phi_j,\sigma\kappa_P\phi_j:
+          j\in\mathcal J_P,\ \sigma\in\{-1,1\}\}
+\cup\{\sigma\eta_M\phi_j:
+          j\in\mathcal J_M,\ \sigma\in\{-1,1\}\}.
+\]
+% C6-OUTCOME-CLASS-END
+% C6-PROPENSITY-CLASS-BEGIN
+\[
+\mathcal G_\pi^\star
+=\{0\}
+\cup\{\sigma\gamma_O\phi_j:
+          j\in\mathcal J_O,\ \sigma\in\{-1,1\}\}
+\cup\{\sigma\gamma_M\phi_j:
+          j\in\mathcal J_M,\ \sigma\in\{-1,1\}\}.
+\]
+% C6-PROPENSITY-CLASS-END
+Fix ordered countable representations
+\(\mathbf g_\mu^\star=(g_{\mu,j}^\star)_{j\in\mathbb N}\) and
+\(\mathbf g_\pi^\star=(g_{\pi,j}^\star)_{j\in\mathbb N}\) by listing every
+element of the corresponding finite class and then repeating zero, and set
+\[
+ \Gamma^\star=(\mathcal G_\mu^\star,\mathcal G_\pi^\star,
+                 \mathbf g_\mu^\star,\mathbf g_\pi^\star).
+\]
+Each class is a finite union, not a linear span.  Taking spans would permit
+additive combinations across bands, change the pointwise envelope, and make
+the following finite-cardinality complexity certificate inapplicable.
+The \(ab\) band is deliberately absent from both public classes because its
+size is controlled by \(a^2+b^2\), not by \(s^2\) or \(t^2\).
+
+\subsection{Sequential-M1, envelopes, and stochastic budgets}
+
+These deterministic enumerations are sequential M1 representations; their
+measurable evaluation maps are well-defined because the embedded finite-block
+characters are measurable.  Pointwise convergence and the common candidate
+envelope are immediate.  The component bounds in Appendices~\ref{app:qp} and
+\ref{app:m} give
+\[
+ \kappa_P\le2\gamma_P\le\frac{\lambda_\rho s}{128}\le B_{\mathcal G},
+ \qquad
+ \eta_M,\gamma_O,\gamma_M\le\frac{\lambda_\rho}{256}\le B_{\mathcal G}.
+\]
+Because the classes are unions rather than sums, their envelopes are the
+largest displayed amplitudes.
+
+Suppose the outcome class is nontrivial and put
+\(p_s=\lceil\exp(64Ns^2)\rceil\).  Active M implies \(p_M\le p_s\), while
+active P gives \(p_P=p_s\).  Counting the full difference class, including
+cross-band differences, yields
+\[
+ |\mathcal G_\mu^\star|\le1+4p_P+2p_M\le7p_s,\qquad
+ |\Delta\mathcal G_\mu^\star|\le49p_s^2
+ \le196\exp(128Ns^2).
+\]
+Nontriviality implies \(Ns^2\ge8\); hence
+\(\log|\Delta\mathcal G_\mu^\star|<129Ns^2=258ns^2\).
+The difference-class envelope is at most twice
+\(H_\mu=\max\{\kappa_P,\eta_M\}\le\lambda_\rho s/128\).
+The finite-class Massart inequality from Lemma~\ref{lem:massart}, applied
+globally and hence to every localized subset, gives
+\[
+ \mathfrak R_n(r;\Delta\mathcal G_\mu^\star)
+ <46H_\mu s\le\frac{23\lambda_\rho}{64}s^2,
+ \qquad
+ \frac{\mathfrak R_n(r;\Delta\mathcal G_\mu^\star)}{3r}
+ \le\frac{23\lambda_\rho s}{192}\le c_{\rm rad}s
+\]
+for every \(r\ge s>0\).
+
+Similarly, with \(p_t=\lceil\exp(64Nt^2)\rceil\),
+\[
+ |\mathcal G_\pi^\star|\le1+2p_O+2p_M\le5p_t,\qquad
+ |\Delta\mathcal G_\pi^\star|\le25p_t^2
+ \le100\exp(128Nt^2).
+\]
+Nontriviality implies
+\(\log|\Delta\mathcal G_\pi^\star|<258nt^2\), and the difference envelope
+is twice \(H_\pi\le\lambda_\rho t/256\).  Therefore
+\[
+ \mathfrak R_n(r;\Delta\mathcal G_\pi^\star)
+ <46H_\pi t\le\frac{23\lambda_\rho}{128}t^2,
+ \qquad
+ \frac{\mathfrak R_n(r;\Delta\mathcal G_\pi^\star)}{3r}
+ \le\frac{23\lambda_\rho t}{384}\le c_{\rm rad}t
+\]
+for every \(r\ge t>0\).  If \(s=0\), neither P nor M is active, so
+\(\mathcal G_\mu^\star=\{0\}\) when \(s=0\); if \(t=0\), neither O nor
+M is active, so \(\mathcal G_\pi^\star=\{0\}\) when \(t=0\).  The
+corresponding difference class is then exactly zero at every positive
+radius, and no radius-zero quotient is used.
+
+\subsection{Approximation and raw-law membership}
+
+For an off-class truth \(c\phi_j\) and a nonzero public candidate
+\(d\phi_k\) from another band,
+\[
+ \|c\phi_j-d\phi_k\|_2^2=c^2+d^2>c^2
+ =\|c\phi_j\|_2^2.
+\]
+Consequently the added bands preserve the P/O/ab approximation distances
+exactly.  In detail, q has two zero truths; P has its outcome truth in
+\(\mathcal G_\mu^\star\) and propensity distance \(\eta_P\le b\);
+O has its propensity truth in \(\mathcal G_\pi^\star\) and outcome distance
+\(\eta_O\le a\); \(ab\) uses \(\mathcal J_{ab}\) off both public classes
+and has the original distances bounded by \(a,b\); M has both truths in
+the corresponding public classes.
+
+We now audit the q/P/O/ab/M raw laws.  For q, use \(X\sim P_X^\star\)
+independently of
+\[
+ T\in\{-L,0,L\},\qquad L=\sqrt{v_0}+2m_\rho,\qquad
+ \E[T]=0,\quad \E[T^2]=v_0,
+\]
+with explicit masses
+\[
+ \Pr(T=L)=\Pr(T=-L)=\frac{v_0}{2L^2},\qquad
+ \Pr(T=0)=1-\frac{v_0}{L^2}.
+\]
+Because \(L^2\ge v_0\), these probabilities are nonnegative.  They sum to
+one since \(v_0/L^2+1-v_0/L^2=1\), and
+\[
+ \E T=L\,v_0/(2L^2)-L\,v_0/(2L^2)=0,
+ \qquad
+ \E T^2=L^2v_0/L^2=v_0.
+\]
+Thus \(\E T=0\) and \(\E T^2=v_0\) exactly.  Set the target
+\(\theta=\pm d_\rho^\star/\sqrt n\), where
+\[
+ d_\rho^\star=\min\left\{3,\frac{B_0}{16},
+                  \frac{B_0}{16\sqrt{v_0}}\right\}.
+\]
+Conditional on \((X,T)=(x,t)\), let \(R\in\{-1,+1\}\) satisfy
+\[
+ \Pr(R=r\mid X,T=t)=\frac12\left(1+\frac{2r\theta t}{B_0}\right),
+ \qquad r\in\{-1,+1\},
+\]
+and set \(Y=B_0R/2\).
+This is the three-point common-host variant of the scalar q experiment in
+Appendix~\ref{app:q-lower}.  The bounds defining \(m_\rho\) imply
+\[
+ L\le\frac{B_0+\sqrt{v_0}}2<B_0,\qquad
+ \frac{L}{\sqrt{v_0}}\le1+\frac{\sqrt{v_0}}{2B_0}<\frac32,
+ \qquad \abs{\frac{2\theta T}{B_0}}\le\frac3{16}.
+\]
+Thus the two response probabilities lie in \([13/32,19/32]\),
+\(\E(R\mid X,T)=2\theta T/B_0\), and
+\(\E(Y\mid X,T)=\theta T\).  With zero nuisances,
+\(\varepsilon=Y-\theta T\) is conditionally centered and obeys
+\(\abs\varepsilon\le B_0/2+3B_0/32<B_0\); the target, treatment, outcome,
+and treatment residual obey the same shared envelope, and the latter has
+constant variance \(v_0\).  With this displayed response likelihood held
+fixed, the likelihood-energy calculation's dependence on the treatment
+marginal uses only this second moment \(\E T^2=v_0\).  The response likelihood
+itself is still used.  Consequently its \(K_q\), testing constant, and rate
+are unchanged.
+
+For P, O, \(ab\), and M, use respectively the raw conditional masses from
+Appendices~\ref{app:p-raw}, \ref{app:o}, \ref{app:ab}, and \ref{app:m},
+replacing only their Walsh coordinate by a coordinate in
+\(\mathcal J_P,\mathcal J_O,\mathcal J_{ab},\mathcal J_M\).  A nonzero
+character on the larger host is still a mean-zero unit Rademacher variable,
+so every atom probability, normalization identity, conditional-centering
+identity, response-centering identity, target range, treatment/response/
+nuisance/residual envelope, and constant conditional variance calculation
+is unchanged.  In particular the common reference laws remain valid because
+\[
+ \Delta(v_0+\eta^2)=\eta(\kappa+\gamma)
+ \quad\text{for P and \(ab\)},\qquad
+ \Delta(v_0+\gamma^2)=\gamma\eta
+ \quad\text{for O and M}.
+\]
+Thus the \(q\) family and every active native P/O/\(ab\)/M hard subfamily lie
+in the single \(\mathcal P(\Gamma^\star)\).  An inactive component inequality
+reuses the common \(q\) splice; hence all five component lower inequalities
+hold within the pair even though the named subfamilies need not be five
+distinct laws at every cell.  The proof uses strict lower-endpoint slack
+only through \(m_\rho>0\) and the component atom envelopes; constant
+conditional variance is inherited from the raw laws; the fixed infinite
+ambient space is used only to embed the finite host; and known pre-data upper certificates are
+used only to choose the bands and amplitudes before data.
+
+\subsection{Likelihood distance and arbitrary-rule reduction}
+
+For two different coordinates in any component band,
+\(\E_{P_X^\star}\phi_j\phi_k=0\); equal coordinates with equal or opposite
+signs give the same \(1\pm K_\ell\) likelihood inner products as in the
+component appendices.  Hence their exact finite Gram-mixture
+\(\chi^2\)/Hellinger bounds, and therefore their product-law total-variation
+bounds, are unchanged.  For q, the exact one-sample likelihood energy is
+\[
+ K_q=\frac{4(d_\rho^\star)^2v_0}{nB_0^2}\le\frac1{64n},
+\]
+so the original \(2n\)-sample testing threshold also remains strict.
+
+Fix the fully disclosed \(\Gamma^\star\), frequency allocation, \(P_X^\star\),
+and budgets.  Any allowed \(\delta_{\Gamma^\star}\) is now an ordinary Borel
+statistic of \(Z_{1:2n}\).  The two-mixture expected-loss inequality applies
+to every arbitrary Borel rule after disclosure of the full pair:
+\[
+ \max_{\ell\in\{0,1\}}
+ \E_{\Pi_{i,\ell}}\!
+ \left|\delta_{\Gamma^\star}-\theta_{i,\ell}\right|
+ \ge \frac{\Delta_i}{4}
+ \{1-\operatorname{TV}(\Pi_{i,0},\Pi_{i,1})\}.
+\]
+Every \(\Pi_{i,\ell}\) is supported on a subfamily of the same
+\(\mathcal P(\Gamma^\star)\).  Evaluating unused public functions at observed
+\(X\) is deterministic post-processing of \(X\); it is already available to
+the arbitrary statistic and creates no label-dependent side channel.  Thus
+the richer dictionary cannot invalidate a certified testing distance.
+
+\subsection{All-sample-size splice and fixed-pair assembly}
+
+When a large branch is inactive, its named splice subfamily is the same q
+subfamily inside the same pair.  If \(s^2<q\), then
+\(P=s(b\wedge s)\le s^2<q\); if \(n<16\), then \(P\le1\le4q\).
+The O statement is the exact mirror.  If \(a^2+b^2<q\), then
+\(ab\le(a^2+b^2)/2<q/2\); if \(n<16\), then \(ab\le1\le4q\).
+If \((s\wedge t)^2<q\), then \(M<q\); if \(n<16\), then
+\(M\le1\le4q\).  The equality boundaries belong to the large branch by
+definition, and zero terms require no division or limiting argument.
+
+Use \(c_{\min,\rho}\) from Appendix~\ref{app:assembly}, the minimum of the q
+testing constant, the four fixed large-branch constants, and all four q-splice
+constants.  It depends only on fixed
+\(\rho\), not on \(n,a,s,b,t,\Gamma^\star\), or a compatible law.  Because
+all five inequalities hold for every rule on the same pair, the infimum is
+taken only after their maximum:
+\[
+\begin{split}
+ \inf_{\delta_{\Gamma^\star}\ {\rm Borel}}
+ \sup_{P\in\mathcal P(\Gamma^\star)}
+ \E_P|\delta_{\Gamma^\star}-\beta(P)|
+ &\ge c_{\min,\rho}\max\{q,ab,M,O,P\}\\
+ &\ge\frac{c_{\min,\rho}}5(q+S_0)
+ \ge\frac{c_{\min,\rho}}{10}(q+X),
+\end{split}
+\]
+where \(S_0=ab+M+O+P\) and \(S_0\le X\le2S_0\) by
+\eqref{eq:budget-equivalence}.  Setting
+\(c_\rho^\star=c_{\min,\rho}/10\) proves
+Proposition~\ref{prop:same-pair-lower}.  This is maximum-to-sum within one fixed
+public pair.  Taking the outer supremum in \eqref{eq:risk} then proves the
+I-stratum lower of Theorem~\ref{thm:main}, but no change of pair is used in
+the substantive argument.
+
+\subsection{Every prescribed atomless covariate marginal}
+\label{app:fixed-nu}
+
+Let \(\nu\) be a probability measure on the fixed standard Borel space
+\(\mathcal X\), prescribed before the public pair is chosen.  Define
+\[
+ \mathcal P_\nu(\Gamma)
+ =\{P\in\mathcal P(\Gamma):P_X=\nu\},\qquad
+ \mathfrak G_\nu=\{\Gamma\text{ legal}:\mathcal P_\nu(\Gamma)\ne\varnothing\},
+\]
+and define the fixed-marginal experiment by
+\begin{equation}
+ \mathfrak R_{\nu,n}(a,s,b,t)
+ =\sup_{\Gamma\in\mathfrak G_\nu}
+   \inf_{\delta_{\Gamma,\nu}\ {\rm Borel}}
+   \sup_{P\in\mathcal P_\nu(\Gamma)}
+   \E_P\left|\delta_{\Gamma,\nu}(Z_{1:2n})-\beta(P)\right|.
+ \label{eq:risk-fixed-nu}
+\end{equation}
+The learner may know \(\nu\) as well as the entire represented pair.
+Nonemptiness here is with respect to this prescribed marginal, rather than
+compatibility with some other covariate law.
+
+\begin{proposition}[Same-pair lower for every prescribed atomless marginal]
+\label{prop:fixed-nu-lower}
+For each fixed strict-interior \(\rho\), there are constants
+\(0<c_\rho\le C_\rho<\infty\), independent of \(\nu\), such that
+\[
+ \forall\nu\text{ atomless on }\mathcal X,\quad
+ \forall n\ge1,\quad\forall(a,s,b,t)\in[0,1]^4,\quad
+ \exists\Gamma^\star_{\nu,\rho,n,a,s,b,t}\in\mathfrak G_\nu
+\]
+with finite sequential-M1 classes and
+\begin{equation}
+ \inf_{\delta_{\Gamma^\star,\nu}\ {\rm Borel}}
+ \sup_{P\in\mathcal P_\nu(\Gamma^\star)}
+ \E_P|\delta_{\Gamma^\star,\nu}-\beta(P)|
+ \ge c_\rho(q+X).
+ \label{eq:fixed-nu-same-pair}
+\end{equation}
+This single compatible-law set contains the q family and all active native
+P/O/\(ab\)/M families, and supplies the inactive inequalities by the q
+splice.  Consequently
+\[
+ c_\rho(q+X)\le\mathfrak R_{\nu,n}(a,s,b,t)
+ \le C_\rho(q+X).
+\]
+At saturation \(v_-=B_0^2\), for every prescribed marginal \(\nu\),
+including atomic marginals,
+\[
+ \frac{3}{128\sqrt n}\le\mathfrak R_{\nu,n}(a,s,b,t)
+ \le\frac1{\sqrt{2n}}.
+\]
+If \(v_->B_0^2\), every \(\mathcal P_\nu(\Gamma)\) is empty.
+\end{proposition}
+
+\begin{proof}
+We first construct measurable Walsh functions for the prescribed atomless
+\(\nu\).  A standard Borel space has a countable Borel family
+\((A_k)_{k\ge1}\) separating its points: take the pullbacks of a countable
+base under a Borel realization in a Polish space.  The map
+\[
+ e(x)=\sum_{k=1}^{\infty}2\,3^{-k}\mathbf1_{A_k}(x)\in[0,1]
+\]
+is Borel as a limit of Borel partial sums and is injective.  Indeed, at the
+first differing digit \(k\), the difference \(2\,3^{-k}\) exceeds the
+largest possible opposing tail \(\sum_{j>k}2\,3^{-j}=3^{-k}\).
+Thus \(\mu=e_\#\nu\) has no atoms: every fiber of \(e\) is empty or a
+singleton.  Its distribution function
+\(F(z)=\mu(( -\infty,z])\) is continuous, since the jump at \(z\) equals
+\(\mu\{z\}=0\).  Set
+\[
+ U(x)=F(e(x)).
+\]
+This is Borel and \(U_\#\nu\) is uniform on \([0,1]\).  To see the
+probability integral transform directly, for \(0<t<1\) continuity and the
+limits of \(F\) give a point with \(F(z)=t\).  The right endpoint
+\(b_t=\sup\{z:F(z)\le t\}\) is finite, satisfies \(F(b_t)=t\), and
+\(\{z:F(z)\le t\}=(-\infty,b_t]\).  Hence
+\(\nu\{U\le t\}=F(b_t)=t\); the endpoints follow by limits.
+
+For \(0\le u<1\) define
+\[
+ b_k(u)=\lfloor2^ku\rfloor-2\lfloor2^{k-1}u\rfloor,\qquad
+ r_k(u)=(-1)^{b_k(u)},
+\]
+and set \(b_k(1)=0\) and \(r_k(1)=1\).  These Borel bits are defined even at dyadic
+endpoints; our convention changes no distributional identity.  The first
+\(m\) bits have each binary pattern on one half-open interval of length
+\(2^{-m}\), so their vector is uniform on \(\{0,1\}^m\).
+Enumerate the nonempty finite subsets \(H\subset\mathbb N\) and put
+\[
+ w_H(u)=\prod_{k\in H}r_k(u),\qquad \phi_H(x)=w_H(U(x)).
+\]
+Every \(\phi_H\) is Borel, everywhere sign-valued, centered under \(\nu\),
+and has squared norm one.  For distinct \(H,J\),
+\(\phi_H\phi_J=\phi_{H\triangle J}\), so
+\(\E_\nu\phi_H\phi_J=0\).  These characters are orthogonal; we do not
+require them to be jointly independent.
+
+Use precisely the active predicates, band counts, \(m_\star\), amplitudes,
+and finite unions already defined in this appendix.  Allocate the bands
+among the nonempty subsets of \(\{1,\ldots,m_\star\}\), identifying such
+a subset with its nonzero binary frequency.  Replace each finite-host
+character by the corresponding \(\phi_H\).  The entire finite vector of
+allocated characters under \(\nu\) then has exactly the same joint law
+as under the earlier uniform finite host, because the first \(m_\star\)
+bits are uniform.  Define \(\Gamma^\star_{\nu,\rho,n,a,s,b,t}\) using the
+same ordered finite lists followed by repetitions of zero.  This is a
+public choice made before the component, coordinate, sign, and label.
+
+All functions are measurable, and these representations satisfy sequential
+M1 with their finite classes.  Their pointwise envelopes remain
+\(H_\mu\le\lambda_\rho s/128\) and
+\(H_\pi\le\lambda_\rho t/256\).  Orthogonality gives exactly the same
+off-band approximation calculation
+\(\|c\phi_H-d\phi_J\|_{L^2(\nu)}^2=c^2+d^2\) for \(H\ne J\).
+Thus the P/O/\(ab\) distances are preserved, the M truths remain in
+class, and the q truths remain zero.  The complete difference classes,
+including cross-band differences, still obey
+\[
+ |\Delta\mathcal G_\mu^\star|\le49p_s^2,\qquad
+ |\Delta\mathcal G_\pi^\star|\le25p_t^2
+\]
+whenever the corresponding class is nontrivial.  The same global Massart
+calculation therefore gives, at every positive radius in the stated ranges,
+\[
+ \begin{aligned}
+ \frac{\mathfrak R_n(r;\Delta\mathcal G_\mu^\star)}{3r}
+ &\le\frac{23\lambda_\rho s}{192}\le c_{\rm rad}s
+ &&(r\ge s>0),\\
+ \frac{\mathfrak R_n(r;\Delta\mathcal G_\pi^\star)}{3r}
+ &\le\frac{23\lambda_\rho t}{384}\le c_{\rm rad}t
+ &&(r\ge t>0).
+ \end{aligned}
+\]
+Zero stochastic budgets again give singleton zero classes, with zero
+complexity at every positive radius.  There is no dependence on \(\nu\)
+in these bounds.
+
+For each active component, retain the original conditional kernel of
+\((T,Y)\) given its signed Walsh value, and let \(X\sim\nu\).
+This is a Borel probability kernel because it has finitely many atoms with
+Borel masses.  At each \(x\), the signed value is either \(-1\) or \(1\),
+so the original atom positivity, normalization, target range, all shared
+envelopes, both conditional-centering identities, and exact constant
+treatment-residual variance \(v_0\) hold pointwise.  In particular this
+argument preserves the raw laws, rather than only their reduced moments.
+Together with the class calculations it proves membership in
+\(\mathcal P_\nu(\Gamma^\star)\).
+
+We check testing on the full observation space.  For each active component
+\(i\in\{P,O,ab,M\}\), let \(Q_i\) be its native finite-atom reference
+law on \((T,Y)\).  A different component may use a different \(Q_i\), but
+the two labels within component \(i\) use the same \(Q_i\), by the
+reference identities verified above.  On
+\(\mathcal X\times\mathbb R^2\) take
+\(\widetilde Q_i=\nu\otimes Q_i\).  The full one-observation likelihood
+is exactly
+\[
+ \frac{dP_{i,\ell,j,\sigma}}{d\widetilde Q_i}(x,t,y)
+ =1+\sigma\phi_j(x)h_{i,\ell}(t,y),\qquad
+ \E_{Q_i}h_{i,\ell}=0,\quad
+ K_{i,\ell}=\E_{Q_i}h_{i,\ell}^2.
+\]
+Consequently, for a fixed label, its full Gram entries are
+\[
+ \E_{\widetilde Q_i}
+ [(1+\sigma\phi_jh_{i,\ell})(1+\tau\phi_kh_{i,\ell})]
+ =1+\sigma\tau K_{i,\ell}\E_\nu(\phi_j\phi_k).
+\]
+They equal \(1\) off the coordinate diagonal and \(1\pm K_{i,\ell}\)
+on it.  For the uniform coordinate/sign mixture of \(N=2n\) independent
+observations, Lemma~\ref{lem:testing-tools} gives exactly
+\[
+ \chi^2(\overline P_{i,\ell}^{\,N},\widetilde Q_i^{\,N})
+ =\frac{\{(1+K_{i,\ell})^N+(1-K_{i,\ell})^N\}/2-1}{p_i}.
+\]
+The native energy bounds and all ensuing Hellinger and total-variation
+bounds are therefore unchanged.  This calculation is for the full \(X\),
+not a projection onto its first bits.  Extra digits and evaluations of all
+public functions are measurable information already included in this
+experiment.  Thus an arbitrary Borel learner knowing both \(\nu\) and the
+full pair is covered by the same testing inequality.
+
+For q use the three-point variant proved in this appendix, independently
+of \(X\sim\nu\), with \(\theta=\pm d_\rho^\star/\sqrt n\).
+The zero truths belong to the enlarged classes.  Its full reference is
+\(\nu\otimes Q_q\), where \(Q_q\) has the displayed three-point
+treatment marginal and an independent uniform response sign.  Its
+likelihood is \(1\pm2d_\rho^\star rt/(B_0\sqrt n)\), with unchanged
+energy \(K_q\le1/(64n)\).  Hence the same q lower constant holds.
+This also proves \(\mathcal P_\nu(\Gamma^\star)\ne\varnothing\) for
+every budget cell.  All inactive-branch comparisons with q are numerical
+and unchanged, including \(n<16\), zero budgets, and equality boundaries.
+Taking the maximum of the five within-pair inequalities before taking the
+infimum over Borel rules gives
+\[
+ \inf_\delta\sup_{P\in\mathcal P_\nu(\Gamma^\star)}
+ \E_P|\delta-\beta(P)|
+ \ge\frac{c_{\min,\rho}}{10}(q+X).
+\]
+This proves \eqref{eq:fixed-nu-same-pair} with the same constant as for the
+finite host.  The global upper of Proposition~\ref{prop:upper} applies to
+each restricted compatible-law set, and its pair-specific Borel estimator
+is allowed in \eqref{eq:risk-fixed-nu}; the upper constant is likewise
+independent of \(\nu\).
+
+For saturation, the pairwise upper (H.1)--(H.4) requires no assumption on
+the marginal.  In the lower experiment of Appendix~\ref{app:boundary},
+replace only its constant covariate by an independent \(X\sim\nu\).
+Keep the singleton zero classes, \(T=\pm B_0\) equiprobably,
+\(\delta_n=3/(32\sqrt n)\), and exactly the response probabilities
+in (H.5).  All raw-law and zero-budget checks remain valid.  The common
+factor \(\nu\) contributes affinity one, so the product-law calculation
+still gives \(\operatorname{TV}^2\le72/1024<1/4\), and (H.6) gives
+\(3/(128\sqrt n)\).  These saturation constants are not obtained by
+continuing the interior constants.  Finally the envelope contradiction
+when \(v_->B_0^2\) holds for every marginal.
+\end{proof}
+
+The interior strengthening is not claimed for arbitrary atomic marginals.
+For example,
+if \(\nu\) is a Dirac mass, the model reduces to bounded scalar regression
+with an intercept, and \(\beta=\operatorname{Cov}(T,Y)/\operatorname{Var}(T)\)
+with \(\operatorname{Var}(T)\ge v_-\).  Clipping the empirical covariance
+divided by the empirical variance truncated below at \(v_-/2\) gives
+uniform expected error \(O_\rho(q)\): bounded empirical first and second
+moments have expected error \(O_\rho(q)\), the truncated denominator is
+bounded away from zero, and truncation cannot increase its error from the
+true variance.  The q family gives the matching lower.  Thus fixed
+positive nuisance budgets cannot force the interior nonparametric terms
+for this marginal.  The original finite-host proposition remains valid
+on every fixed infinite standard Borel host, including countably infinite
+hosts that admit no atomless probability measure.
+
+\subsection{Scope of the strengthening}
+
+The construction is Level-2 common-support multiplexing.  It is not an
+observable tagged direct sum, because all laws have the same \(X\) marginal
+on the same support and cross-band differences are paid in the public
+complexity.  It is also not Level 3: \(\Gamma^\star\) is engineered, may
+depend on public \(n\) and the budget cell, and supplies no unknown-budget,
+common-rule, computational, or unrestricted heteroskedastic extension.
+The original finite-host result applies to countably infinite hosts; the
+fixed-marginal interior result assumes an atomless marginal.  Walsh multiplexing is a proof construction, not an algorithmic
+design recommendation or a generic lower-bound claim.

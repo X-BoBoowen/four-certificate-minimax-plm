@@ -1,0 +1,151 @@
+\section{Complete approximation-product ab certificate}
+\label{app:ab}
+
+Assume first \(n\ge16\), \(S=a^2+b^2\ge q\), and \(ab>0\).  Let
+\[
+ N=2n,\quad p=\left\lceil e^{64NS}\right\rceil,\quad A=B_0/2,\quad
+ \eta=\frac{m_\rho b}{4},\quad \gamma=\frac a{512},
+\]
+\[
+ \Delta=\frac{2\eta\gamma}{v_0}
+ =\frac{m_\rho ab}{1024v_0},\qquad
+ \kappa=\gamma+\Delta\eta.
+ \tag{E.1}
+\]
+Use the fixed-space, finite-support Walsh convention in Appendix~\ref{app:qp}
+with this value of \(p\), and write \(z=\sigma\phi_j\).  Before any latent choice, publish the
+singleton pair
+\[
+ \cG_\mu=\cG_\pi=\{0\}.
+ \tag{E.2}
+\]
+The labels are
+\[
+ (\beta_0,\pi_0,\mu_0)=(0,z\eta,z\gamma),\qquad
+ (\beta_1,\pi_1,\mu_1)=(\Delta,-z\eta,z\kappa).
+ \tag{E.3}
+\]
+Treatment uses (C.6) at means \(\pm z\eta\), and the binary response channel
+is (C.12).
+
+\subsection{Raw-law, model, and public-budget certificates}
+
+For \(t\in\{-L,0,L\}\), set
+\[
+ \alpha_{\pm L}=\frac{v_0+\eta^2}{2L^2},\quad
+ \alpha_0=1-\frac{v_0+\eta^2}{L^2},\quad
+ \xi_t=\frac{\eta t}{2L^2}.
+\]
+With \(c=\gamma/A\), \(k=\kappa/A\), and \(d_t=\Delta t/A\), the six raw
+masses are
+\begin{align}
+ P_{0,z}(t,r)&=\tfrac12(\alpha_t+z\xi_t)(1+rzc),\nonumber\\
+ P_{1,z}(t,r)&=\tfrac12(\alpha_t-z\xi_t)(1+r(d_t+zk)).
+ \tag{E.4}
+\end{align}
+The three-point and outcome factors are strictly positive; summing the
+conditional factors proves normalization.  The treatment residual has exact
+variance \(v_0\) under both labels, and
+\(\E(Y\mid X,T)=\beta_\ell T+\mu_\ell(X)\), so the PLM equations hold.
+The inequalities
+\[
+ \eta\le b,\quad \gamma\le a,\quad
+ \kappa=\gamma(1+2\eta^2/v_0)\le129a/65536\le a
+ \tag{E.5}
+\]
+certify both approximation budgets relative to (E.2).  Both difference
+classes are \(\{0\}\), so every localized stochastic complexity is zero for
+all \(s,t\), including zero radii.  Repeating zero gives the countable M1
+representation.  The Walsh functions index legal off-class truths; they
+are not public classes or learner side information.
+
+The scales also give
+\(\Delta\le1/(4096B_0)\),
+\(\kappa<1\), and \(\Delta L+\kappa<1<A\).  Hence all outcome
+probabilities and every authoritative envelope are legal.
+
+\subsection{Common reference and G1/G2 calculations}
+
+Put \(D_{t,r}=\alpha_t+r\xi_tc\).  The sign average of label zero is
+\(D_{t,r}/2\).  The label-one average is the same precisely when
+\[
+ \Delta\alpha_tt=\xi_t(\kappa+\gamma).
+ \tag{E.6}
+\]
+At \(t=\pm L\), this is
+\(\Delta(v_0+\eta^2)=\eta(\kappa+\gamma)\), which follows from (E.1);
+at \(t=0\), both sides vanish.  Thus
+\[
+ Q(t,r)=D_{t,r}/2
+ \tag{E.7}
+\]
+is common and positive.  Indeed,
+\((\abs{\xi_t}/\alpha_t)c<1/12288\) on side atoms and is zero in the
+middle.
+
+Direct division of (E.4) gives centered coefficients
+\[
+ h_0=\frac{\xi_t+r\alpha_tc}{\alpha_t+r\xi_tc},\qquad
+ h_1=\frac{r\alpha_tk-\xi_t(1+rd_t)}
+ {\alpha_t+r\xi_tc}.
+ \tag{E.8}
+\]
+Summing \(Qh_0\) over \(r\) leaves \(\xi_t\), while summing \(Qh_1\)
+leaves \(-\xi_t\); both sum to zero over \(t\).  Since
+\(\abs{\xi_t}/\alpha_t<b/16\), \(c\le a/768\),
+\(k<2c\), and \(\abs{d_t}\le c/8\),
+\[
+ K_0=\E_Qh_0^2\le S/32,\qquad
+ K_1=\E_Qh_1^2\le S/8.
+ \tag{E.9}
+\]
+
+For an independent raw derivation, let
+\[
+ E_0(t,r)=\xi_t+r\alpha_tc,\qquad
+ E_1(t,r)=r\alpha_tk-\xi_t(1+rd_t).
+\]
+Since \(P_{\ell,+}-P_{\ell,-}=E_\ell\) and
+\((P_{\ell,+}+P_{\ell,-})/2=Q\), raw multiplication gives
+\[
+ \sum_{t,r}\frac{P_{\ell,z}P_{\ell,z'}}Q
+ =1+zz'\sum_{t,r}\frac{E_\ell(t,r)^2}{4Q(t,r)}.
+ \tag{E.10}
+\]
+The energy in (E.10) equals \(K_\ell\) in (E.9) atom by atom, without
+assuming the likelihood calculation.  Walsh orthogonality again gives
+entries \(1+K_\ell\), \(1-K_\ell\), and one.
+
+\subsection{Mixture distance, testing, and all-n closure}
+
+Mix uniformly over \(2p\) latent coordinate/sign pairs within each label.
+Equations (C.3) and (E.9) give
+\[
+ \chi^2(\overline P_\ell^N,Q^N)
+ \le \frac{e^{NK_\ell}}p
+ \le e^{-(64-1/8)NS}\le e^{-511},
+ \tag{E.11}
+\]
+because \(NS\ge2\sqrt n\ge8\).  Hence cross-label TV is below \(1/4\).
+All label-zero components have target zero; all label-one components have
+the gap in (E.1).  Applying (C.1) inside the one public singleton pair gives
+\[
+ \risk(a,s,b,t)\ge\frac{3m_\rho}{16384v_0}ab
+ \tag{E.12}
+\]
+on this branch.
+
+If \(ab=0\), the desired lower is zero.  If \(n<16\), then
+\(ab\le1\le4q\); if \(n\ge16\) and \(a^2+b^2<q\), then
+\(ab<q/2\).  In both cases (C.9), used as a maximum and not added to the
+fuzzy Bayes risk, closes the claim.  Thus, for every \(n\ge1\),
+\[
+ \risk(a,s,b,t)\ge c_{ab,\rho}ab,\qquad
+ c_{ab,\rho}=
+ \min\left\{\frac{3m_\rho}{16384v_0},
+             \frac{3d_\rho^\star}{32}\right\}>0.
+ \tag{E.13}
+\]
+The construction covers \(a=t\), \(b=s\), all zero stochastic budgets,
+and singleton variance intervals.  Its public pair is literally (E.2), so
+no latent label or dictionary is exposed.

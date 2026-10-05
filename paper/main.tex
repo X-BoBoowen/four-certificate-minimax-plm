@@ -1,0 +1,604 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{iclr2027_conference,times}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm,booktabs,graphicx,microtype,array}
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{hidelinks,hypertexnames=false}
+\input{macros}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{Four-Certificate Minimax Rates over Public Class Pairs\\for Bounded Partially Linear Models}
+\author{Anonymous Authors}
+% \iclrfinalcopy
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study estimation of a bounded partially linear coefficient from two public nuisance classes with separate approximation and stochastic complexity certificates. In the strict envelope interior, the worst-public-pair expected absolute risk for \((a,s,b,t)\in[0,1]^4\) has rate
+\(n^{-1/2}+(a+s^2)(b+t^2)+(s\wedge t)^2+t(a\wedge t)+s(b\wedge s)\).
+Matching directional lower bounds close the gap between the Gu--Yin--Cai--Fan lower envelope and TAME's calibration upper. We also construct one rule attaining this rate without any of the four budget inputs. Double calibration removes approximation-dependent orientation, and empirical local Rademacher fixed points calibrate the stochastic radii. The general rate persists over full finite dictionary \(\ell_1\) balls and finite unions of rank-one balls. Full interval boxes instead have sharp rate \(n^{-1/2}+(a+s^2)(b+t^2)\), and full affine Hilbert balls have rate \(n^{-1/2}+ab\); both are attained without any budget input. The model requires only positive average residual variance and bounded envelopes. Results include all sample sizes and zero budgets; a uniform upper connects to saturation. The guarantees are statistical; effective optimization requires additional interfaces.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+A black-box nuisance class has two distinct limitations: its closest candidate can miss the truth, and learning within the class costs statistical error. How do these two limitations on each side of a partially linear model determine the best possible coefficient estimate? We characterize the risk using four upper certificates, then ask which certificates the estimating rule actually needs.
+
+The closest results leave a precise gap. Write \(q=n^{-1/2}\), \(A=a+s^2\), \(B=b+t^2\), and \(M=(s\wedge t)^2\), where \(a,b\) are approximation budgets and \(s,t\) are stochastic budgets. Gu--Yin--Cai--Fan establish the lower envelope \(q+AB+M\) \citep{gu2026tamingbiases}. TAME's two-learner calibration construction supplies the leading upper expression
+\[
+ q+W,\qquad W=\min\{a(b+t)+(a+s)^2,\ b(a+s)+(b+t)^2\}
+\]
+\citep{gu2026optimalblackbox}. We close this gap in the bounded public-class experiment by proving matching necessity of
+\[
+ O=t(a\wedge t),\qquad P=s(b\wedge s).
+\]
+Since \(W\asymp AB+M+O+P\), these bounds establish optimality of the known two-branch rate in the stated experiment. Public budget-based orientation is already part of TAME, including its equation (3.6).
+
+On the O ray \((a,s,b,t)=(r,0,0,r)\), the old nuisance lower is \(r^3\), while the known upper and our lower are of order \(r^2\). Taking \(r=n^{-1/8}\) makes \(q=o(r^3)\). The aggregate-error product \(xy=(a+s)(b+t)\) already equals \(r^2\) here: the improvement closes a lower-bound gap.
+
+Convexity alone does not remove the directional terms: the same general rate holds over full finite dictionary \(\ell_1\) balls. Section~\ref{sec:adaptation} contrasts these with full interval boxes and affine Hilbert balls, whose sharp rates \(q+AB\) and \(q+ab\) are attained without budget inputs. On the ray above the three rates are \(q+r^2\), \(q+r^3\), and \(q\). These compare worst risks under different geometries with the same certificates. The distinction has a precise envelope cost: enclosing the signed dictionary \(\{0,\pm h\phi_j:j\le p\}\), with orthonormal sign functions \(\phi_j\), in a full Hilbert ball requires pointwise radius at least \(h\sqrt p\).
+
+Section~\ref{sec:upper} supplies a second contribution: one rule attains \(q+W\) without any budget input or additional class geometry. An empirical constraint and two comparisons of the true propensity give both directions for the same rule. An independent covariate block estimates the needed complexity radii. Double calibration and empirical local complexity have established antecedents \citep{liu2023doublecalibration,bartlett2005local}; we prove the uniform expected-loss guarantee under arbitrary M1 classes. The lower also holds under every preassigned atomless covariate marginal.
+
+\section{Experiment and four public certificates}
+\label{sec:setup}
+Fix a nonempty infinite standard Borel space \((\mathcal X,\mathcal A)\), shared by every law and public class below. Observe independent halves \(\cD_1,\cD_2\), each containing \(n\) iid copies of \(Z=(X,T,Y)\), with
+\begin{equation}
+ T=\pi_0(X)+u,\qquad Y=\beta_0T+\mu_0(X)+\varepsilon,
+ \label{eq:plm}
+\end{equation}
+where \(\mu_0,\pi_0:\mathcal X\to\mathbb R\) are measurable, \(\E(u\mid X)=0\), \(\E(\varepsilon\mid X,T)=0\), and \(v(P):=\E u^2\in[v_-,v_+]\). Fix
+\(\rho=(B_0,B_{\mathcal G},v_-,v_+,c_{\rm rad})\), with \(B_0\ge3\), \(B_{\mathcal G}>0\), \(0<v_-\le v_+\), and \(c_{\rm rad}>0\). Require
+\[
+ |Y|,|T|,|\mu_0(X)|,|\pi_0(X)|,|u|,|\varepsilon|\le B_0,
+ \qquad \beta_0\in[-3,3].
+\]
+The positive average residual variance identifies the statistical coefficient: \(\E(uY)=\beta_0\E u^2\). Conditional treatment variance may vary with \(X\) and vanish on a set of positive mass.
+
+A public instance \(\Gamma=(\cG_\mu,\cG_\pi,\mathbf g_\mu,\mathbf g_\pi)\) supplies two classes and ordered countable cores with measurable evaluations. Every full-class and represented function obeys \(|g(x)|\le B_{\mathcal G}\) for every \(x\). Our sequential M1 convention requires every full-class element to be the pointwise-everywhere limit of a sequence from its core. The common envelope transfers population approximation infima by dominated convergence and continuous finite-sample objectives by pointwise convergence.
+
+For \(\|f\|_2=\|f\|_{L_2(P_X)}\), the approximation certificates are
+\begin{equation}
+ \inf_{g\in\cG_\mu}\|g-\mu_0\|_2\le a,\qquad
+ \inf_{g\in\cG_\pi}\|g-\pi_0\|_2\le b.
+ \label{eq:approx}
+\end{equation}
+Define \(\Delta\cG=\{g-g':g,g'\in\cG\}\) and the full-class localized complexity
+\[
+ \mathfrak R^*_{n,P_X}(r;\mathcal H)
+ =\E^*_{X_{1:n},\epsilon_{1:n}}
+ \sup_{h\in\mathcal H:\|h\|_2\le r}
+ \left|\frac1n\sum_{i=1}^n\epsilon_i h(X_i)\right|.
+\]
+Here the \(\epsilon_i\) are independent Rademacher signs, independent of \(X_{1:n}\sim P_X^n\), and outer expectation is the infimum of expectations of measurable majorants. The stochastic certificates are exactly
+\[
+ \sup_{r\ge r_\nu,\ r>0}
+ \frac{\mathfrak R^*_{n,P_X}(r;\Delta\cG_\nu)}{3r}
+ \le c_{\rm rad}r_\nu,
+ \qquad (\nu,r_\nu)\in\{(\mu,s),(\pi,t)\}.
+\]
+At zero budget this requires vanishing complexity at every positive radius. No quotient at zero is used. The countable represented difference core has measurable supremum and complexity at most the full outer complexity; equality is unnecessary and is not implied by M1.
+
+Let \(\cP(\Gamma)=\mathcal P_{\rho,n,a,s,b,t}(\Gamma)\) be all probability laws on \(\mathcal X\times\mathbb R^2\) satisfying these model, envelope, approximation, and complexity conditions, and let \(\GammaSet_{\rho,n}(a,s,b,t)\) contain the represented pairs with \(\cP(\Gamma)\ne\varnothing\). For \((a,s,b,t)\in[0,1]^4\), define
+\begin{equation}
+\risk(a,s,b,t)=
+\sup_{\Gamma\in\GammaSet_{\rho,n}(a,s,b,t)}
+\inf_{\delta_\Gamma\ {\rm Borel}}
+\sup_{P\in\cP(\Gamma)}
+\E_P\abs{\delta_\Gamma(Z_{1:2n})-\beta(P)}.
+\label{eq:risk}
+\end{equation}
+In the baseline risk \eqref{eq:risk}, the four budgets are known pre-data upper certificates, not exact errors. For each \(n\) and budget cell, the pair can change, but is fixed before Nature selects a compatible law, latent hard label, or data. The Borel rule knows \(\Gamma,\rho\) and the budgets and is fixed before the law. This order allows pair-specific rules on the one fixed ambient space. All statements include every \(n\ge1\) and every zero-budget boundary; Appendix~\ref{app:model} collects the formal measurable conventions.
+
+\section{Sharp rate and the envelope boundary}
+\label{sec:theorem}
+Put
+\begin{align}
+ q&=n^{-1/2},& A&=a+s^2,& B&=b+t^2,\nonumber\\
+ M&=(s\wedge t)^2,& O&=t(a\wedge t),& P&=s(b\wedge s),
+ \label{eq:terms}
+\end{align}
+and write \(X=AB+M+O+P\) for the rate polynomial (distinct from the covariate).
+\begin{theorem}[Three-stratum minimax law]
+\label{thm:main}
+Fix a nonempty infinite standard Borel measurable space
+\((\mathcal X,\mathcal A)\), and fix \(B_0\ge3\), \(B_{\mathcal G}>0\),
+\(0<v_-\le v_+\), and \(c_{\rm rad}>0\).  Use the sequential M1 interface above.
+\begin{enumerate}
+\item[\textnormal{E.}] If \(v_->B_0^2\), the experiment is empty and no minimax rate is assigned.
+\item[\textnormal{I.}] If \(0<v_-<B_0^2\), there are \(0<c_\rho\le C_\rho<\infty\), depending only on fixed \(\rho\), such that, for every \(n\ge1\) and budget tuple,
+\begin{equation}
+c_\rho(q+X)\le\risk(a,s,b,t)\le C_\rho(q+X).
+\label{eq:mainrate}
+\end{equation}
+One valid lower constant is one tenth the minimum of the five component constants in Appendix~\ref{app:assembly}.
+\item[\textnormal{S.}] If \(v_-=B_0^2\), the upper bound holds uniformly for every legal nonempty public pair, while one explicit legal singleton pair witnesses the outer lower bound; consequently
+\begin{equation}
+\frac{3}{128\sqrt n}\le\risk(a,s,b,t)\le\frac1{\sqrt{2n}}.
+\label{eq:saturation}
+\end{equation}
+\end{enumerate}
+The matching constants in I are for fixed \(\rho\); in particular the lower constants need not be uniform as \(v_-\uparrow B_0^2\) or \(c_{\rm rad}\downarrow0\).
+\end{theorem}
+
+\paragraph{Average variance and the envelope boundary.}
+\label{sec:boundary}
+For an explicit zero-variance region, put mass \(p=v_-/B_0^2\in(0,1)\) on one of two covariate points, let \(T=\pm B_0\) equiprobably there and \(T=0\) elsewhere, and take \(\pi_0=\mu_0=\beta_0=Y=0\) and both classes \(\{0\}\). Then \(\E u^2=v_-\), while conditional variance is zero on the second point.
+
+\begin{proposition}[Uniform one-sided envelope bound]
+\label{prop:envelope-bridge}
+Let \(N=2n\), let \(P_N f=N^{-1}\sum_{i=1}^N f(Z_i)\) denote the empirical average over all observations, assume \(0<v_-\le B_0^2\), and set \(\omega=1-v_-/B_0^2\). For every legal public pair and compatible law, the fixed-denominator estimator
+\[
+ \widehat\beta_{\rm env}=\Pi_{[-3,3]}\{P_N(TY)/B_0^2\}
+ \quad\text{satisfies}\quad
+ \E_P|\widehat\beta_{\rm env}-\beta(P)|\le N^{-1/2}+4\omega.
+\]
+The numerical constants are uniform, including in \(B_0\); this estimator uses neither \(v_+\), the four budgets, nor M1.
+\end{proposition}
+The envelope identity \(\E(u^2\mid X)\le B_0(B_0-|\pi_0|)\) implies \(B_0\E|\pi_0|\le B_0^2-v_-\); this controls the population bias by \(4\omega\). Appendix~\ref{app:boundary} gives the proof and the saturation lower bound. In the strict interior, comparison of the two deterministic upper guarantees gives
+\[
+ \risk\le\min\{C_\rho(q+X),\ q/\sqrt2+4\omega\}.
+\]
+This is a one-sided connection, not a matching joint transition rate. The interior lower construction uses positive slack in \(B_0-\sqrt{v_-}\).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/theory_summary.pdf}
+\caption{\textbf{Closing the directional gap and identifying the boundary.} On the O ray \((a,s,b,t)=(r,0,0,r)\), and its P mirror, the old nuisance lower is \(r^3\), while the matching rate has order \(r^2\). The ratio is \(1+r^{-1}\). Taking \(r=n^{-1/8}\) keeps \(q=o(r^3)\). The aggregate product \(xy\) already has order \(r^2\) here. The uniform upper \(q/\sqrt2+4\omega\), with \(\omega=1-v_-/B_0^2\), connects the interior to saturation; no matching joint transition rate is asserted.}
+\label{fig:summary}
+\end{figure}
+
+\section{Directional lower bounds: laws, cancellation, and learning budgets}
+\label{sec:lower}
+Work in \(0<v_-<B_0^2\). The common treatment channel is the device that preserves exact variance while moving its mean. Set
+\[
+ m_\rho=\min\left\{\frac1{64},\frac{v_-}{4B_0},\frac{B_0-\sqrt{v_-}}4\right\},
+ \quad\lambda_\rho=\min\left\{1,\frac{192c_{\rm rad}}{23},128B_{\mathcal G}\right\},
+ \quad L=\sqrt{v_-}+2m_\rho.
+\]
+For \(|m|\le m_\rho\), assign treatment masses
+\begin{equation}
+ p_{\pm L}(m)=\frac{v_-+m^2\pm Lm}{2L^2},\qquad
+ p_0(m)=1-\frac{v_-+m^2}{L^2}.
+ \label{eq:treatment-channel}
+\end{equation}
+Indeed \(Lm_\rho\le v_-/4\), \(v_-+m_\rho^2<L^2\), and \(L+m_\rho<B_0\); thus every mass is positive and both treatment and residual envelopes hold. Direct summation gives
+\[
+ \E(T\mid X)=m,\qquad \E(T^2\mid X)=v_-+m^2,
+ \qquad\operatorname{Var}(T\mid X)=v_-.
+\]
+Let \(A_Y=B_0/2\). Under each label \(\ell\), use this treatment channel at \(m=\pi_\ell(X)\) and set \(Y=A_YR\), with
+\begin{equation}
+ \Pr_\ell(R=r\mid X,T=\zeta)=\frac12\left[1+r\frac{\beta_\ell \zeta+\mu_\ell(X)}{A_Y}\right],
+ \qquad r\in\{-1,1\}.
+ \label{eq:response-channel}
+\end{equation}
+This specifies the entire observation law and gives the PLM conditional mean, not just a matched observable moment.
+
+\paragraph{Two public dictionaries and their labels.}
+Let \(N=2n\), and initially suppose \(n\ge16\), \(\nu^2\ge q\), with \(\nu=s\) for P and \(\nu=t\) for O, and a positive directional term. Set \(p=\lceil\exp(64N\nu^2)\rceil\). Embed a finite binary group with at least \(p\) nonzero Walsh characters into the fixed \(\mathcal X\), let \(P_X\) be uniform on its image, and extend the selected characters \(\phi_j\) by zero elsewhere. They are measurable, mean zero and orthonormal under \(P_X\). Write \(z=\sigma\phi_j(X)\).
+
+For P, take
+\[
+ \eta=\frac{m_\rho(b\wedge s)}4,\quad
+ \gamma=\frac{\lambda_\rho s}{256},\quad
+ \Delta=\frac{2\eta\gamma}{v_-},\quad \kappa=\gamma+\Delta\eta.
+\]
+For O, take
+\[
+ \gamma=\frac{\lambda_\rho m_\rho t}4,\quad
+ \eta=\frac{a\wedge t}{256},\quad
+ \Delta=\frac{\gamma\eta}{v_-+\gamma^2}.
+\]
+Each dictionary contains the listed functions for every \(j\) and both signs, and is fixed before a label is selected:
+\begin{center}
+\begin{tabular}{c c c c}
+\toprule
+Branch & Label 0: \((\beta,\pi,\mu)\) & Label 1: \((\beta,\pi,\mu)\) & Public classes \((\cG_\mu,\cG_\pi)\)\\
+\midrule
+P & \((0,z\eta,z\gamma)\) & \((\Delta,-z\eta,z\kappa)\) & \((\{\pm\gamma\phi_j,\pm\kappa\phi_j\},\{0\})\)\\
+O & \((0,z\gamma,z\eta)\) & \((\Delta,z\gamma,0)\) & \((\{0\},\{\pm\gamma\phi_j\})\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+In P, the propensity approximation error is \(\eta\le b\) and the outcome truth is represented. In O, the outcome approximation error is at most \(\eta\le a\) and the propensity is represented. The remaining approximation distances and difference-class complexities are zero. The amplitudes give \(\kappa\le2\gamma\) and \(\Delta L+\kappa<A_Y\) in P, and \(\Delta L\le\eta/4<A_Y\) in O. Consequently the response probabilities are positive, \(|\varepsilon|\le B_0\), \(\beta\in[-3,3]\), and both public envelopes hold (Appendices~\ref{app:qp} and \ref{app:o}). Both labels have variance exactly \(v_-\), including when \(v_-=v_+\).
+
+\paragraph{Atomwise cancellation.}
+Here is why observing \((X,T,Y)\) cannot easily distinguish the coefficients. For either branch write \(d=\eta\) in P and \(d=\gamma\) in O, and define
+\[
+ \alpha_{\pm L}=\frac{v_-+d^2}{2L^2},\quad
+ \alpha_0=1-\frac{v_-+d^2}{L^2},\quad b_\zeta=\frac{d\zeta}{2L^2}.
+\]
+Conditional on \(X\), the six-atom masses from \eqref{eq:treatment-channel}--\eqref{eq:response-channel} are
+\begin{align*}
+ \text{P: }& P_{0,z}(\zeta,r)=\tfrac12(\alpha_\zeta+zb_\zeta)(1+rz\gamma/A_Y),\\
+ &P_{1,z}(\zeta,r)=\tfrac12(\alpha_\zeta-zb_\zeta)(1+r(\Delta \zeta+z\kappa)/A_Y);\\
+ \text{O: }&P_{0,z}(\zeta,r)=\tfrac12(\alpha_\zeta+zb_\zeta)(1+rz\eta/A_Y),\\
+ &P_{1,z}(\zeta,r)=\tfrac12(\alpha_\zeta+zb_\zeta)(1+r\Delta \zeta/A_Y).
+\end{align*}
+Averaging over the sign gives the same reference under the two labels precisely when
+\[
+ \begin{array}{ll}
+ \text{P:}&\Delta\alpha_\zeta \zeta=b_\zeta(\kappa+\gamma),\quad
+ \Delta(v_-+\eta^2)=\eta(\kappa+\gamma),\\
+ \text{O:}&\Delta\alpha_\zeta \zeta=b_\zeta\eta,\quad
+ \Delta(v_-+\gamma^2)=\gamma\eta.
+ \end{array}
+\]
+The second identity in each row proves the first on \(\zeta=\pm L\); on \(\zeta=0\), both sides separately vanish. In P the identity follows by substituting \(\kappa=\gamma+\Delta\eta\) and \(\Delta v_-=2\eta\gamma\). Thus the common positive conditional references are
+\[
+ Q_P(\zeta,r)=\tfrac12(\alpha_\zeta+rb_\zeta\gamma/A_Y),\qquad
+ Q_O(\zeta,r)=\tfrac12(\alpha_\zeta+rb_\zeta\eta/A_Y).
+\]
+This is equality of every sign-averaged atom, stronger than equality of \(\E(TY\mid X)\).
+
+\paragraph{From cancellation to testing distance.}
+Include the common marginal \(P_X\) in \(Q\). Expanding the remaining sign-linear term gives
+\[
+ \frac{dP_{\ell,j,\sigma}}{dQ}=1+\sigma\phi_j(X)h_\ell(\zeta,r),\qquad
+ \E_Qh_\ell=0,\qquad K_\ell=\E_Qh_\ell^2.
+\]
+For example, in O, with \(e=\eta/A_Y\),
+\[
+ h_0=\frac{b_\zeta+r\alpha_\zeta e}{\alpha_\zeta+rb_\zeta e},\qquad
+ h_1=\frac{b_\zeta}{\alpha_\zeta},\qquad
+ K_0\le t^2/9,\quad K_1=\frac{\gamma^2}{v_-+\gamma^2}\le t^2/256.
+\]
+The P expansion similarly gives \(K_\ell\le s^2/196\) (Appendix~\ref{app:p-kernel}). Walsh orthogonality now yields the exact one-observation Gram entry
+\[
+ \E_Q\left[\frac{dP_{\ell,j,\sigma}}{dQ}
+              \frac{dP_{\ell,j',\sigma'}}{dQ}\right]
+ =1+\sigma\sigma'\ind\{j=j'\}K_\ell.
+\]
+First fix each component law, take its \(N\)-fold iid product, and only then mix the hidden coordinate and sign:
+\[
+ \overline P_\ell^N=\frac1{2p}\sum_{j=1}^p\sum_{\sigma=\pm1}P_{\ell,j,\sigma}^{\otimes N}.
+\]
+Expanding the mixture square counts \(2p\) equal-sign pairs, \(2p\) opposite-sign pairs and \(4p(p-1)\) different-coordinate pairs, giving
+\begin{equation}
+ \chi^2(\overline P_\ell^N,Q^{\otimes N})
+ =\frac{\{(1+K_\ell)^N+(1-K_\ell)^N\}/2-1}{p}
+ \le\frac{e^{NK_\ell}}p<e^{-511}.
+ \label{eq:mixture-distance}
+\end{equation}
+The two mixtures therefore have TV distance below \(1/2\). Since each label has one common target, the midpoint testing inequality gives maximum expected absolute error at least \(\Delta/8\). Substitution yields \(\risk\gtrsim_\rho P\) and \(\risk\gtrsim_\rho O\).
+
+\paragraph{The same dictionaries satisfy the learning certificates.}
+In P the difference class has at most \(16p^2\) elements and envelope \(2\kappa\). Since \(\log(32p^2)\le258ns^2\), the finite-class Rademacher bound, applied also to every localized subset, gives
+\[
+ \mathfrak R_n(r;\Delta\cG_\mu)<46\kappa s
+ \le\frac{23\lambda_\rho}{64}s^2,
+ \qquad \frac{\mathfrak R_n(r;\Delta\cG_\mu)}{3r}
+ \le\frac{23\lambda_\rho}{192}s\le c_{\rm rad}s
+\]
+for every \(r\ge s>0\). In O, the corresponding bound is
+\(\mathfrak R_n(r;\Delta\cG_\pi)<46\gamma t\), with normalized ratio at most \(23\lambda_\rho t/384\le c_{\rm rad}t\). Thus amplitude times \(\sqrt{\log p/n}\) is of order \(\nu^2\), while the likelihood energy is also of order \(\nu^2\); the exponential dictionary makes both requirements compatible.
+
+When \(\nu^2<q\), the corresponding interaction is at most \(q\). When \(n<16\), it is at most \(1\le4q\). These cases use the scalar lower experiment with zero nuisance classes; zero interactions need no construction. This supplies the all-\(n\) bounds without changing the active-family amplitudes.
+
+\paragraph{Other components and assembly.}
+\label{sec:assembly}
+The scalar experiment perturbs only \(\beta\); the \(ab\) experiment uses two off-class truths; and the M experiment uses two represented stochastic dictionaries. Appendices~\ref{app:qp}--\ref{app:m} prove these three component bounds. The outer supremum in \eqref{eq:risk} dominates each component-specific pair. Put \(S_0=ab+M+O+P\). Expansion gives
+\begin{equation}
+ S_0\le X\le2S_0,
+ \label{eq:budget-equivalence}
+\end{equation}
+since \(at^2\le O\), \(bs^2\le P\), and \(s^2t^2\le M\) on \([0,1]^4\). Taking the maximum of the five lower bounds and then their sum up to a factor five proves \(\risk\gtrsim_\rho q+X\).
+
+Proposition~\ref{prop:same-pair-lower} additionally embeds all specified active P/O/\(ab\)/M families and the scalar family into one finite pair and one \(P_X\). Disjoint frequency bands preserve approximation distances, while the global difference-class bound pays for cross-band differences. Inactive terms use the scalar family. This simultaneous compatibility strengthens the component-wise construction; the outer lower above does not require it.
+
+\paragraph{A preassigned covariate distribution.}
+For any atomless probability \(\nu\) fixed before \(n\) and the budgets, restricting \eqref{eq:risk} to \(P_X=\nu\) preserves rate \(\asymp_\rho q+X\), with constants independent of \(\nu\), even when the learner knows it (Proposition~\ref{prop:fixed-nu-lower}). A Borel uniform coordinate transports the Walsh likelihoods. One pair still contains all specified families, but may depend on \(\nu,\rho,n\) and the budgets. This excludes arbitrary atomic marginals: a Dirac design permits order-\(q\) scalar regression.
+
+\section{Calibration without budget inputs}
+\label{sec:upper}
+Write \(x=a+s\), \(y=b+t\), \(T_\mu=ay+x^2\),
+\(T_\pi=bx+y^2\), and \(W=T_\mu\wedge T_\pi\).
+TAME supplies the calibration branches and budget-based orientation
+\citep{gu2026optimalblackbox}; Appendix~\ref{app:upper} supplies the complete
+known-budget implementation and expected-loss proof.
+\begin{proposition}[Known-budget class-pair upper]
+\label{prop:upper}
+That rule satisfies
+\(\sup_{P\in\cP(\Gamma)}\E_P|\widehat\beta_\Gamma-\beta(P)|
+\le C_\rho(q+X)\) for every fixed legal pair, uniformly in \(n,a,s,b,t\).
+\end{proposition}
+The selector and rate algebra are
+\begin{equation}
+ T_{\rm selected}\le2W\le48X,\qquad X/5\le W\le24X.
+ \label{eq:selector-algebra}
+\end{equation}
+We remove all four inputs by combining double calibration
+\citep[Section 4.1]{liu2023doublecalibration} and classical empirical local
+Rademacher fixed points \citep{bartlett2005local}, with a uniform guarantee
+under the original interface.
+
+\begin{theorem}[Adaptation to all four budgets]
+\label{thm:approximation-main}
+For every fixed \((\Gamma,\rho,n)\), one Borel rule
+\(\widehat\beta_{\rm ad}\), using none of \(a,s,b,t\), satisfies
+\[
+ \forall(a,s,b,t)\in[0,1]^4,\quad
+ \sup_{P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)}
+ \E_P|\widehat\beta_{\rm ad}-\beta(P)|\le C_\rho(q+W)
+\]
+whenever the compatible-law set is nonempty. The constant depends
+only on \(\rho\); no additional class geometry is imposed.
+\end{theorem}
+
+\paragraph{Estimating the two complexity radii.}
+Above a fixed sample threshold, split the \(2n\) observations into three
+blocks of size \(m=\lfloor2n/3\rfloor\), discarding at most two.
+Use only covariates from block \(\mathcal C\) for calibration.
+Let \(Q_{\mathcal C}\) be its empirical average,
+\(L_0=1\vee2B_{\mathcal G}\),
+\(\mathcal F_\nu=\Delta\cG_\nu^{\rm rep}/L_0\), and compute
+\[
+ \widehat\psi_\nu(r)=20\E_\epsilon\sup_{f\in\mathcal F_\nu}
+ \left(1\wedge\sqrt{\frac{2r}{Q_{\mathcal C}f^2}}\right)
+ |Q_{\mathcal C}(\epsilon f)|+\frac{186\log(em)}m .
+\]
+Zero empirical norms contribute zero. This star-hull complexity with a
+positive floor has a unique positive fixed point \(\widehat r_\nu\).
+Set \(\widehat s=1\wedge C_0L_0\sqrt{\widehat r_\mu}\) and
+\(\widehat t=1\wedge C_0L_0\sqrt{\widehat r_\pi}\),
+where \(C_0=1\vee(60c_{\rm rad})^{-1}\).
+Appendix~\ref{app:stochastic-adaptation} proves that, except with probability
+\(8(em)^{-6}\), these are valid size-\(m\) full-class certificates with
+\(c_{\rm rad}\) replaced by \(2c_{\rm rad}\), and
+\(\widehat s\le C_\rho(s+h)\), \(\widehat t\le C_\rho(t+h)\),
+where \(h^2=\log(em)/m\). The public classes are unchanged. Using a first crossing without the
+star hull can fail when smaller localized balls contain only zero.
+
+\paragraph{One calibrated rule for both directions.}
+On the remaining main and fitting blocks, let \(P_1,P_2\) be their
+empirical averages, \(\|w\|_m^2=P_1w^2\), and \(\tau=m^{-12}\).
+All constants below are fixed using
+\(\rho'=(B_0,B_{\mathcal G},v_-,v_+,2c_{\rm rad})\).
+Fit \(\widehat\pi\) and jointly \((\widehat\beta_0,\widehat\mu)\)
+by represented least squares on the fitting block. Its internal
+train/validation split also supplies a fixed-anchor scalar pilot
+\(\bar\beta\). Set
+\(\kappa_\mu=K(\widehat s^2+h^2)\),
+\(\kappa_\pi=K(\widehat t^2+h^2)\), and
+\(A_{\widehat t}=K_A(\widehat t^2+h^2)\).
+First approximately minimize \(\|w-\widehat\mu_X\|_m^2\) over
+\(w\in\mathbb Q^m\), subject to
+\[
+ \sup_{f\in\Delta\cG_\pi^{\rm rep}}
+ \{|P_2[(Y-\bar\beta T)f]-P_1(wf)|-P_1f^2\}<\kappa_\pi,
+ \qquad \|w\|_m<M_{\rho'}.
+\]
+Call the result \(\widehat\eta\), put \(d=\widehat\eta-\widehat\mu_X\),
+and define
+\(H_\nu(r)=\sup_{f\in\Delta\cG_\nu^{\rm rep}}
+\{|P_1(rf)|-P_1f^2\}\).
+Next minimize \(\|z\|_m^2\) over
+\(g\in\cG_\pi^{\rm rep}\), \(z\in\mathbb Q^m\).
+Writing \(\widetilde\pi=g_X+z\), \(r=T_X-\widetilde\pi\) and
+\(D=P_1(Tr)\), impose
+\[
+ \begin{gathered}
+ P_1(g-\widehat\pi)^2<A_{\widehat t},\quad D>v_-/2,\quad
+ \|r\|_m,\|\widetilde\pi\|_m<R_{\rho'},\quad
+ H_\nu(r)<\kappa_\nu\quad(\nu=\mu,\pi),\\
+ |P_1(rw)|<8B_0h\|w\|_m+\tau
+ \quad\text{for }w\in\{d,\widetilde\pi,z\}.
+ \end{gathered}
+\]
+The output is
+\(\widehat\beta_{\rm ad}
+=\Pi_{[-3,3]}\{P_1[r(Y-\widehat\eta)]/D\}\).
+Take the first feasible candidate within \(\tau\) of each infimum;
+infeasibility or small \(n\) gives zero. These choices and the fixed
+points are jointly Borel, without a finite-query optimization guarantee.
+
+\paragraph{Why the guarantee adapts.}
+Given a good calibration block, the remaining samples retain their iid
+law and the radii are valid fixed inputs. The pilot error \(c=\beta_0-\bar\beta\)
+has second moment at most
+\(C_\rho\min\{a^2+\widehat s^2+h^2,b^2+\widehat t^2+h^2\}\).
+The first edit uses fitting data and main covariates, with comparison
+\(\eta_0=\mu_0+c\pi_0\). The second also uses main treatments;
+main outcomes enter only the final ratio. Treatment noise is centered
+against directions fixed by fitting data and main covariates;
+outcome noise after additionally conditioning on main treatments.
+
+On a further event of probability \(1-O_\rho(m^{-4})\),
+\(g=\widehat\pi,z=\pi_0-\widehat\pi\) represents the true propensity
+with zero class cost and strict feasibility margins.
+When \(b\le\widehat t+h\), a fixed close core function \(g_0\) supplies
+the second comparison \(g=g_0,z=\pi_0-g_0\).
+Rational approximation transfers these comparisons to the same
+minimum of \(\|z\|_m^2\). Outcome calibration squares the represented
+fit error; propensity calibration exploits the smaller free residual.
+For larger \(b\), the same rule's product bound applies.
+The split partitions only the proof.
+Appendix~\ref{app:approximation-adaptation} gives the resulting conditional
+risk bound
+\[
+ C_\rho\left[m^{-1/2}+
+ \min\{a(b+\widehat t)+a^2+\widehat s^2,\
+        b(a+\widehat s)+(b+\widehat t)^2\}\right].
+\]
+The radius bounds, \(ah\le(a^2+h^2)/2\),
+\(bh\le(b^2+h^2)/2\), and \(h^2\le4q\) turn this into \(C_\rho(q+W)\).
+Clipping pays for calibration failure. Appendix~\ref{app:stochastic-adaptation}
+proves the transfers and zero-budget cases; only \(\Gamma,\rho,n\) are inputs.
+
+\section{Class geometry and budget adaptation}
+\label{sec:adaptation}
+Restricting the outer supremum in \eqref{eq:risk} to the displayed geometries gives different minimax rates. Write \(\mathcal R_{\rm box}\) and \(\mathcal R_{\rm Hilb}\) for full box and full affine Hilbert pairs. All these rates admit rules without budget inputs; the distinction below is the available class geometry.
+
+\paragraph{Full interval boxes.}
+For each \(\nu\in\{\mu,\pi\}\), allow its own countable Borel partition and
+\[
+ \cG_\nu=\left\{c_\nu+\sum_j\theta_j\mathbf1_{C_{\nu j}}:
+ |\theta_j|\le h_{\nu j}\right\},\qquad
+ |c_\nu(x)|+h_{\nu j}\le B_{\mathcal G}\quad(x\in C_{\nu j}).
+\]
+All coordinate choices are included; the public centers may vary within cells. Recover \(c_\nu,h_\nu\) as the midpoint and half-range of its core evaluations. Group equal centered core profiles, which recover occupied positive-width cells. Set \(N=2n\), \(\alpha=\min\{1/8,v_-/(8B_0^2)\}\), and \(m=\lfloor\alpha N\rfloor\). On each side, trim the \(m\) largest-width singleton rows, or all if fewer exist, resolving ties by sample index. Let \(\mathsf A_\nu\) center repeated groups, vanish on trimmed rows, and retain other singletons. Define
+\[
+ \begin{gathered}
+ \mathsf B=\mathsf A_\pi\mathsf A_\mu,\quad
+ D=(T-c_\pi)'\mathsf BT/N,\quad U=(T-c_\pi)'\mathsf B(Y-c_\mu)/N,\\
+ S=T'\mathsf A_\mu T/N,\qquad V=T'\mathsf A_\mu(Y-c_\mu)/N.
+ \end{gathered}
+\]
+\begin{equation}
+ \widehat\beta_{\rm box}=
+ \begin{cases}
+ \Pi_{[-3,3]}(U/D),&D\ge v_-/32,\\
+ \Pi_{[-3,3]}\{V/(S\vee(v_-/4))\},&D<v_-/32.
+ \end{cases}
+ \label{eq:histogram-estimator}
+\end{equation}
+\begin{proposition}[Sharp box rate without budget inputs]
+\label{prop:histogram-adaptation}
+For every fixed represented box pair and \(n\ge1\), the same Borel rule \eqref{eq:histogram-estimator} satisfies
+\[
+ \E_P|\widehat\beta_{\rm box}-\beta(P)|\le C_\rho\{q+(a+s^2)(b+t^2)\}
+\]
+simultaneously for all four certificate tuples and compatible laws. In the strict interior,
+\(\mathcal R_{\rm box}\asymp_\rho q+AB\).
+\end{proposition}
+The key is selective retention of singletons. For either side put
+\(H=N^{-1}\sum_jh_j\mathbf1_{\{N_j=1\}}\). The complexity certificate and a one-observation replacement bound give
+\[
+ \E H\le C_\rho r^2,\qquad
+ \E H^2\le C_\rho r^4+2B_{\mathcal G}^2/N.
+\]
+After trimming, every retained width is at most \(H/\alpha\); hence each public residual has expected squared norm \(O_\rho(r^4+N^{-1})\). Writing
+\(F_\nu=\|\mathsf A_\nu(\nu_0-c_\nu)_X\|_N\), both the primary bias and the event-weighted fallback bias are controlled by
+\(\E(F_\mu F_\pi)\le C_\rho\{AB+q\}\).
+At most \(2\alpha N\) diagonal entries of \(\mathsf B\) lose the \(1/4\) lower bound. A small cross denominator forces \(F_\pi\) above a fixed constant outside an \(O_\rho(n^{-1})\) event.
+
+For the matching lower, full boxes of widths proportional to \(s^2,t^2\) have global difference complexity bounded by twice their width, regardless of host size. Rescaling the two cancellation channels above yields gaps \(ab,at^2,bs^2,s^2t^2\); an exponential Walsh host hides their mixtures. Appendix~\ref{app:budget-adaptation} supplies both complete proofs. This lower bound concerns the restricted outer supremum, not every fixed box.
+
+\paragraph{Full affine Hilbert balls.}
+Suppose \(\cG_\nu=c_\nu+R_\nu B_{\mathcal H_\nu}\) is an entire reproducing-kernel Hilbert ball obeying the same envelope and M1 interface. The two kernels may differ and have overlapping features or infinite rank. Polarization of centered-core evaluation suprema recovers the normalized kernels \(\ell_\nu=R_\nu^2k_\nu\) without extra inputs. Let \(M_c\) project off the two sampled center vectors and put
+\[
+ H=M_c[\ell_\mu(X_i,X_j)+\ell_\pi(X_i,X_j)]_{i,j}M_c/N,\quad
+ \lambda=\frac{16B_{\mathcal G}^2B_0^2}{Nv_-},\quad
+ A_c=M_c(I+H/\lambda)^{-1}M_c.
+\]
+For \(N\ge16B_0^2/v_-\), use
+\(\widehat\beta_{\rm Hilb}=\Pi_{[-3,3]}\{T'A_cY/(T'A_cT\vee Nv_-/4)\}\);
+otherwise output zero.
+\begin{proposition}[Hilbert-ball comparison]
+\label{prop:hilbert-main}
+The same fixed-\((\Gamma,\rho,n)\) rule satisfies
+\(\E_P|\widehat\beta_{\rm Hilb}-\beta(P)|\le C_\rho(q+ab)\)
+for every certificate tuple and compatible law. In the strict interior,
+\(\mathcal R_{\rm Hilb}\asymp_\rho q+ab\), allowing zero-radius balls.
+\end{proposition}
+In this large-sample branch, \(\operatorname{tr}(I-A_c)\le Nv_-/(4B_0^2)\) and
+\(\sup_{g\in\cG_\mu\cup\cG_\pi}\|A_cg_X\|_N\le\sqrt\lambda/2\).
+These preserve average variance and leave \(ab+O_\rho(q)\) bias.
+Appendix~\ref{app:hilbert-adaptation} proves the result; its outer lower already holds for the zero pair.
+This is a bounded misspecification guarantee for classical penalized partialling-out
+\citep{heckman1986spline,zhao2016partially}, not a new estimator family.
+Finite versions require evaluable centers together with partition labels and widths, or kernel evaluations, respectively; M1 alone gives Borel existence.
+
+\begin{proposition}[Convex hulls and finite unions]
+\label{prop:convex-geometry}
+For full dictionary \(\ell_1\) balls
+\(\{\sum_{j=1}^k\theta_jd_j:\sum_j|\theta_j|\le1\}\), and for segment
+unions \(\bigcup_{j=1}^k\{\tau d_j:|\tau|\le1\}\), both restricted
+outer risks are \(\asymp_\rho q+X\) in the strict interior.
+Zero classes are allowed and \(k\) may grow with \(n\) and the budgets.
+Each segment is a full RKHS ball of rank at most one.
+\end{proposition}
+Enlarging the same-pair dictionaries this way preserves global difference
+complexity \citep[Theorem 12(2)]{bartlett2002rademacher}; off-band truths
+remain orthogonal to the enlarged span. Every certificate and testing
+lower therefore survives. Localized complexities need not be equal.
+Moreover, enclosing \(\{0,\pm h\phi_j:j\le p\}\), for orthonormal sign
+functions \(\phi_j\), in a full affine Hilbert ball requires pointwise radius at least
+\(h\sqrt p\), sharply (Appendix~\ref{app:convex-geometry}).
+Convexity or a finite union alone thus does not give the Hilbert rate.
+
+\section{What the rate says about nuisance imbalance}
+\label{sec:interpretation}
+\label{sec:mechanisms}
+\begin{corollary}[Optimal calibration and certificate allocation]
+\label{cor:allocation}
+Fix \(\rho\) in the interior stratum. Then \(\risk\asymp_\rho q+W\). On \(0<x\le y\),
+\[
+ \frac{\risk}{xy}\asymp_\rho\frac{q}{xy}+\frac ax+\frac xy.
+\]
+Along any such sequence with \(q=o(xy)\), \(\risk=o(xy)\) if and only if \(a=o(x)\) and \(x=o(y)\). For \(0<y<x\), interchange \((a,x)\) and \((b,y)\).
+For \(0<x\le y\le1\), put
+\(\mathcal A(x,y)=\{(a,s,b,t)\in[0,1]^4:a+s=x,\ b+t=y\}\). Then
+\[
+ \inf_{\mathcal A(x,y)}\risk\asymp_\rho q+x^2,
+ \qquad \sup_{\mathcal A(x,y)}\risk\asymp_\rho q+xy.
+\]
+\end{corollary}
+Divide the selected-branch rate by \(xy\). For allocation,
+\(x^2/4\le X\le4xy\), with endpoints \((0,x,y,0)\) and \((x,0,y,0)\);
+see Appendix~\ref{app:allocation-proof}. TAME's sufficient imbalance
+conditions are therefore necessary in this experiment. The benchmark
+\(xy\) describes a guarantee, not a lower bound for a particular DML algorithm.
+
+\section{Related work, limitations, and conclusion}
+\label{sec:related}
+Gu--Yin--Cai--Fan Theorem A.1 gives \(q+AB+M\) in a fixed-covariate, constant-variance field \citep{gu2026tamingbiases}. TAME Corollary 3.2, equations (3.6)--(3.7), gives the orientation, tuning, and leading upper \(q+W\); Condition 2.1(b) already uses average residual variance \citep{gu2026optimalblackbox}. SADE Theorem 2.1 and Remark 2.1 give budget-free single-outcome-class adaptation \citep{gu2026tamingbiases}; our results concern the sharp two-class risk and simultaneous adaptation to its four certificates.
+
+Jin--Mackey--Syrgkanis Theorem 3.1 gives squared-radius and mixed-product obstructions around fixed estimates of \((\E[T\mid X],\E[Y\mid X])\) in binary-treatment PLMs \citep{jin2025hardnormal}. Because \(\E[Y\mid X]=\mu_0+\beta_0\pi_0\) changes with the target, those anchored radii are not our four certificates. The obstruction concepts are inherited; our cancellation constructions preserve the four certificates and a common variance. Related fields include anchored product bounds \citep{jin2026sharpstructureagnostic}, calibrated inference \citep{vanderlaan2025calibrateddml}, and fixed-pilot asymptotic risk \citep{liu2026dmlinadmissibility}.
+
+\paragraph{Limitations.}
+The general adaptive rule knows the represented pair and \(\rho\); it is Borel but need not have a finite-query implementation. Lower dictionaries may be exponential. Faster box and Hilbert rates require their full-class geometry and envelopes. Selection across different public pairs and effective optimization remain open. Constants depend on fixed \(\rho\); the joint envelope transition is unresolved. No causal, inference, or empirical performance guarantee is supplied.
+
+\paragraph{Conclusion.}
+Matching O/P bounds close the known calibration rate. Double calibration and empirical complexity estimation attain it without any budget input. The rate persists for dictionary \(\ell_1\) balls, while full boxes and Hilbert balls admit faster rates. The sharp enclosure cost prevents a same-envelope transfer of the dictionary lower to Hilbert balls.
+
+\clearpage
+\subsection*{Reproducibility statement}
+This paper is theoretical.  The appendices give all proofs, reductions,
+constants, and audits.  Figure~\ref{fig:summary} is generated analytically by
+\nolinkurl{figures/+generate_theory_summary.py}; from the source-tree root, run
+% Portable command: <PYTHON_EXECUTABLE> figures/+generate_theory_summary.py
+\texttt{<PYTHON\_EXECUTABLE>}\ \texttt{figures/+generate\_theory\_summary.py}.
+It contains no empirical or simulated performance evidence.
+
+\subsection*{AI use statement}
+Generative AI assisted discovery, literature work, proof drafting and auditing,
+symbolic checks, figures, and editing.  The authors reviewed all AI-assisted work
+and take responsibility for the final content, including text, mathematical
+claims, proofs, and artifacts produced with AI assistance.  No
+AI-generated empirical evidence is reported.
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\appendix
+\input{appendices/A_model_quantifiers}
+\input{appendices/B_upper_proof}
+\input{appendices/C_q_p_lower}
+\input{appendices/D_o_lower}
+\input{appendices/E_ab_lower}
+\input{appendices/F_m_lower}
+\input{appendices/G_lower_assembly_constants}
+\input{appendices/H_boundary}
+\input{appendices/I_assumptions_measurability}
+\input{appendices/J_proof_audit}
+\input{appendices/K_proof_location_index}
+\input{appendices/L_same_pair_lower}
+\input{appendices/M_budget_adaptation}
+\input{appendices/N_hilbert_adaptation}
+\input{appendices/O_convex_union_geometry}
+\input{appendices/P_approximation_adaptation}
+\input{appendices/Q_stochastic_adaptation}
+
+\end{document}

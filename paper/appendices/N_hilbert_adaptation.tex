@@ -1,0 +1,257 @@
+\section{Adaptation on full affine Hilbert balls}
+\label{app:hilbert-adaptation}
+
+The geometry in this appendix allows overlapping features and infinite
+rank.  Let $B_{\mathcal H}$ denote the closed unit ball of a real RKHS.
+Assume that, for $\nu\in\{\mu,\pi\}$,
+\begin{equation}
+ \cG_\nu=c_\nu+R_\nu B_{\mathcal H_\nu},\qquad R_\nu\ge0,
+ \label{eq:hilbert-full-balls}
+\end{equation}
+with the pointwise envelope and supplied sequential-M1 cores of
+Appendix~\ref{app:model}.  These are full affine balls; the two RKHSs and
+their centers can differ.  A zero radius gives a singleton.  The centers,
+radii, and kernels specify the geometric subclass, but need not be
+additional inputs to the estimator.
+
+\begin{theorem}[Adaptation on full affine Hilbert balls]
+\label{thm:hilbert-adaptation}
+For every represented pair satisfying \eqref{eq:hilbert-full-balls},
+there is one Borel rule $\delta_{\Gamma,\rho,n}:\mathcal Z^{2n}\to[-3,3]$
+such that, simultaneously for all $(a,s,b,t)\in[0,1]^4$ and every
+$P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)$,
+\begin{equation}
+ \E_P|\delta_{\Gamma,\rho,n}-\beta(P)|
+ \le C_\rho(q+ab)\le C_\rho(q+W).
+ \label{eq:hilbert-adaptation-rate}
+\end{equation}
+The rule uses none of the four certificates.  Its bound is independent of
+the dimensions, ranks, and overlap of the two feature spaces.  In fact,
+the upper bound does not use the localized-complexity inequalities.
+\end{theorem}
+
+\begin{proof}
+Write $N=2n$, $f_X=(f(X_1),\ldots,f(X_N))'$, and
+$\|z\|_N^2=z'z/N$.  First recover the geometry from the supplied cores.
+For each side set
+\begin{equation}
+ \begin{aligned}
+ \widetilde c_\nu(x)
+  &=\tfrac12\{\sup_j g_{\nu,j}(x)+\inf_j g_{\nu,j}(x)\},\qquad
+  z_{\nu,j}=g_{\nu,j}-\widetilde c_\nu,\\
+ u_{\nu,\pm}(x,y)&=\sup_j\{z_{\nu,j}(x)\pm z_{\nu,j}(y)\},\qquad
+ \ell_\nu(x,y)=\tfrac14\{u_{\nu,+}(x,y)^2-u_{\nu,-}(x,y)^2\}.
+ \end{aligned}
+ \label{eq:hilbert-core-recovery}
+\end{equation}
+Every extremum is finite and Borel.  Pointwise sequential M1 preserves
+the supremum of every finite linear combination of evaluations.  For a
+kernel $k_\nu$ representing $\mathcal H_\nu$, symmetry of its ball gives
+\[
+ \widetilde c_\nu=c_\nu,\qquad
+ u_{\nu,\pm}(x,y)
+   =R_\nu\|k_\nu(x,\cdot)\pm k_\nu(y,\cdot)\|_{\mathcal H_\nu}.
+\]
+Polarization therefore shows that
+\begin{equation}
+ \ell_\nu(x,y)=R_\nu^2k_\nu(x,y),\qquad
+ |c_\nu(x)|+\sqrt{\ell_\nu(x,x)}\le B_{\mathcal G}.
+ \label{eq:hilbert-kernel-envelope}
+\end{equation}
+These statements also hold when $R_\nu=0$.  Thus the recovered $\ell_\nu$
+is a Borel positive semidefinite kernel, whether or not a kernel was
+supplied separately.
+
+If $N<16B_0^2/v_-$, define $\delta=0$.  Its loss is at most three,
+which is absorbed by $C_\rho q$.  Otherwise form the matrices
+\begin{equation}
+ \begin{aligned}
+ H_\nu&=[\ell_\nu(X_i,X_j)/N]_{i,j},\qquad
+ C_X=[c_{\mu,X},c_{\pi,X}],\\
+ M_X&=I_N-C_X(C_X'C_X)^\dagger C_X',\qquad
+ H=M_X(H_\mu+H_\pi)M_X,\\
+ \lambda_N&=\frac{16B_{\mathcal G}^2B_0^2}{Nv_-},\qquad
+ A_X=M_X(I_N+H/\lambda_N)^{-1}M_X.
+ \end{aligned}
+ \label{eq:hilbert-contraction}
+\end{equation}
+Here $\dagger$ denotes the Moore--Penrose inverse.  The center projection
+is Borel, for example by taking the limit of
+$C_X(C_X'C_X+k^{-1}I_2)^{-1}C_X'$ as $k\to\infty$.
+All other operations are Borel and the displayed ordinary inverse always
+exists.  For $D_A=T'A_XT/N$, the rule is
+\begin{equation}
+ \delta=\Pi_{[-3,3]}
+ \left\{\frac{T'A_XY/N}{D_A\vee(v_-/4)}\right\}.
+ \label{eq:hilbert-rule}
+\end{equation}
+It is defined on every sample, including singular designs and zero
+kernels.  In particular, it does not estimate the approximation errors.
+
+Since $H=M_XHM_X$, the matrices $M_X$ and $H$ commute.  Hence
+$A_X$ is symmetric, $0\preceq A_X\preceq I_N$, and it annihilates both
+center vectors.  The envelope in \eqref{eq:hilbert-kernel-envelope} gives
+$\operatorname{tr}H\le2B_{\mathcal G}^2$, so, on every sample,
+\begin{equation}
+ \begin{aligned}
+ \operatorname{tr}(I_N-A_X)
+ &=\operatorname{rank}(I_N-M_X)
+   +\operatorname{tr}\{H(H+\lambda_N I_N)^{-1}\}\\
+ &\le2+2B_{\mathcal G}^2/\lambda_N
+ \le Nv_-/(4B_0^2).
+ \end{aligned}
+ \label{eq:hilbert-trace}
+\end{equation}
+For either side,
+\begin{equation}
+ A_XH_\nu A_X
+ =A_XM_XH_\nu M_XA_X
+ \preceq A_XHA_X\preceq(\lambda_N/4)I_N,
+ \label{eq:hilbert-residual-matrix}
+\end{equation}
+where the last inequality is $x/(1+x)^2\le1/4$ for $x\ge0$.
+The evaluation operator $f\mapsto R_\nu f_X/\sqrt N$ has Gram matrix
+$H_\nu$.  Because $A_Xc_{\nu,X}=0$, it follows that, with
+$e_N=\sqrt{\lambda_N}/2$,
+\begin{equation}
+ \sup_{g\in\cG_\mu}\|A_Xg_X\|_N\le e_N,\qquad
+ \sup_{h\in\cG_\pi}\|A_Xh_X\|_N\le e_N.
+ \label{eq:hilbert-comparator-residual}
+\end{equation}
+No population covariance inverse or eigenvalue-decay condition enters
+these inequalities.
+
+For the risk calculation, first take fixed full-class comparators $g,h$
+with $\|\mu_0-g\|_2\le a$ and $\|\pi_0-h\|_2\le b$.
+Write $r_\mu=\mu_0-g$, $r_\pi=\pi_0-h$ and suppress the subscript on
+$A_X$.  Expanding $\pi_{0,X}'A\mu_{0,X}$ into the four comparator and
+remainder terms, empirical Cauchy--Schwarz followed by expectation
+Cauchy--Schwarz and \eqref{eq:hilbert-comparator-residual} gives
+\begin{equation}
+ \E|\pi_{0,X}'A\mu_{0,X}/N|
+ \le ab+(a+b)e_N+B_{\mathcal G}e_N.
+ \label{eq:hilbert-bias}
+\end{equation}
+For example, the public--public term is at most
+$\|h_X\|_N\|Ag_X\|_N\le B_{\mathcal G}e_N$; the
+remainder--remainder term has expectation at most $ab$.
+
+Conditional on $X_{1:N}$, the $u_i$ are independent and centered.
+Conditional on $(X_{1:N},T_{1:N})$, the $\varepsilon_i$ are likewise
+independent and centered.  Boundedness and contraction therefore imply
+\[
+ \E\{(u'A\mu_{0,X}/N)^2\mid X_{1:N}\}\le B_0^4/N,
+ \qquad
+ \E\{(T'A\varepsilon/N)^2\mid X_{1:N},T_{1:N}\}\le B_0^4/N.
+\]
+Thus $Q_A=T'A(Y-\beta_0T)/N$ satisfies
+\begin{equation}
+ \E|Q_A|
+ \le ab+(a+b+B_{\mathcal G})e_N+2B_0^2/\sqrt N.
+ \label{eq:hilbert-numerator}
+\end{equation}
+
+It remains to control the denominator under only average residual
+variance.  Put $v_i=\E(u_i^2\mid X_i)$,
+$\overline v=N^{-1}\sum_i v_i$, and $\Omega=\operatorname{diag}(v_i)$.
+Since $0\le v_i\le B_0^2$, \eqref{eq:hilbert-trace} yields
+\[
+ \E(D_A\mid X_{1:N})
+ =\{\pi_{0,X}'A\pi_{0,X}+\operatorname{tr}(A\Omega)\}/N
+ \ge\overline v-v_-/4.
+\]
+Moreover $\E\overline v=v\ge v_-$, so
+$\Pp(\overline v<3v_-/4)\le16B_0^4/(Nv_-^2)$.
+Conditional independence and centering give
+\[
+ \begin{aligned}
+ \operatorname{Var}(u'Au\mid X_{1:N})
+ &=\sum_i A_{ii}^2\operatorname{Var}(u_i^2\mid X_i)
+   +4\sum_{i<j}A_{ij}^2v_iv_j
+ \le2B_0^4\operatorname{tr}(A^2)\le2B_0^4N,\\
+ \operatorname{Var}(2u'A\pi_{0,X}\mid X_{1:N})
+ &\le4B_0^4N.
+ \end{aligned}
+\]
+Using $\operatorname{Var}(U+V)\le2\operatorname{Var}U+2\operatorname{Var}V$
+therefore gives $\operatorname{Var}(D_A\mid X_{1:N})\le12B_0^4/N$;
+no assumption about third moments being zero is needed.  On
+$\{\overline v\ge3v_-/4\}$ the conditional mean is at least $v_-/2$.
+Another Chebyshev bound consequently proves
+\begin{equation}
+ \Pp(D_A<v_-/4)\le208B_0^4/(Nv_-^2).
+ \label{eq:hilbert-denominator}
+\end{equation}
+On the complementary event the floor is inactive and clipping cannot
+increase the error, so $|\delta-\beta_0|\le4|Q_A|/v_-$.
+On the bad event the clipped loss is at most six.  Combining
+\eqref{eq:hilbert-numerator}--\eqref{eq:hilbert-denominator} gives the
+explicit finite-sample bound
+\begin{equation}
+ \E|\delta-\beta_0|
+ \le\frac4{v_-}
+ \left\{ab+(a+b+B_{\mathcal G})e_N+\frac{2B_0^2}{\sqrt N}\right\}
+ +\frac{1248B_0^4}{Nv_-^2}.
+ \label{eq:hilbert-explicit-risk}
+\end{equation}
+For unattained approximation infima, use fixed comparators with errors
+$a+\eta,b+\eta$ throughout and let $\eta\downarrow0$; neither comparator
+is an algorithm input.  Finally $e_N=2B_{\mathcal G}B_0/\sqrt{Nv_-}$,
+$a,b\le1$, and $ab\le W$.  This proves
+\eqref{eq:hilbert-adaptation-rate}, including every zero-budget face.
+\end{proof}
+
+For a finite implementation, let the centers $c_\nu$ and features
+$\phi_\nu:\mathcal X\to\mathbb R^{d_\nu}$ be explicitly evaluable Borel
+functions, and let $Q_\nu$ be a public positive semidefinite matrix.  The full ellipsoid
+\[
+ \cG_\nu=c_\nu+
+ \{\phi_\nu'Q_\nu^{1/2}\theta:\|\theta\|_2\le1\}
+\]
+has kernel $\ell_\nu(x,y)=\phi_\nu(x)'Q_\nu\phi_\nu(y)$, and its
+envelope condition is exactly
+$|c_\nu(x)|+\sqrt{\phi_\nu(x)'Q_\nu\phi_\nu(x)}\le B_{\mathcal G}$.
+The rule then uses finite matrix operations, even if $d_\nu>N$ or the
+features are linearly dependent.  Arbitrary overlap within and between
+the two feature maps is permitted.  Bounded-diagonal RKHS balls give the
+corresponding infinite-rank examples, without any spectral-decay
+assumption.  The same upper proof also applies to classes merely
+\emph{contained} in such balls if the enclosing centers and kernels,
+with the displayed diagonal bound, are supplied as additional public
+geometry; the recovery in \eqref{eq:hilbert-core-recovery} is asserted
+only for the full balls.  An arbitrary bounded $\ell_1$ dictionary does
+not automatically have this Hilbert-ball envelope.
+
+The construction uses classical penalized partialling-out: the centers
+are unpenalized nuisance directions and $H$ supplies the remaining ridge
+smoother.  Partial smoothing splines and partially linear kernel ridge
+regression are established methods
+\citep{heckman1986spline,zhao2016partially}; series residualization also
+uses product approximation-bias arguments
+\citep{cattaneo2018alternative}.  The result here is a bounded
+finite-sample specialization with unknown approximation errors and
+recovery from the represented full balls; no novelty of the underlying
+regression method is claimed.
+
+For completeness, restrict the outer public-pair supremum in
+\eqref{eq:risk} to the full affine Hilbert balls above, including radius
+zero.  On the strict lower-endpoint slack stratum $0<v_-<B_0^2$, its
+minimax risk is $\asymp_\rho q+ab$.  The upper bound is
+Theorem~\ref{thm:hilbert-adaptation}.  For the lower bound,
+Appendices~\ref{app:q-lower} and~\ref{app:ab} both use the identical
+singleton pair $\cG_\mu=\cG_\pi=\{0\}$, with zero difference
+complexities and repeated-zero M1 cores.  Their bounds (C.9) and (E.13)
+therefore hold in this restricted outer class for every $s,t$;
+$\max(c_{q,\rho}q,c_{ab,\rho}ab)\ge
+\tfrac12\min(c_{q,\rho},c_{ab,\rho})(q+ab)$ gives the claim.
+This is an outer-class lower bound, not a lower bound for each prescribed
+nondegenerate Hilbert-ball pair.
+
+Budget-free adaptation is also an established objective: SADE
+Theorem 2.1 and Remark 2.1 of \citet{gu2026tamingbiases} give a
+fixed-outcome-class high-probability bound of order
+\(\sqrt{\tau/n}+a+s^2+\lambda\), without those budget inputs.
+At fixed tail parameter and \(\lambda\lesssim q\), its leading scale
+is \(q+a+s^2\). This one-class guarantee is different from the
+two-class expected-\(L_1\) result \(q+ab\) here. Neither comparison claims a new general
+adaptation principle or an exhaustive exclusion of earlier special cases.

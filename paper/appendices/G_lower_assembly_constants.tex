@@ -1,0 +1,85 @@
+\section{Lower assembly, deterministic equivalence, and constants}
+\label{app:assembly}
+
+Appendix~\ref{app:same-pair} constructs, for every fixed strict-interior
+\(\rho,n,a,s,b,t\), one finite public pair \(\Gamma^\star\) and one
+\(P_X^\star\) supporting the \(q\) family and every active native
+P/O/\(ab\)/M subfamily.  An inactive component inequality reuses the common
+\(q\) splice, so all five component lower inequalities hold in this pair.  The pair may depend
+on the public cell, but it is fixed before data and before the component,
+coordinate, sign, or label.  Define
+\[
+ R^\star=
+ \inf_{\delta_{\Gamma^\star}\ {\rm Borel}}
+ \sup_{P\in\cP(\Gamma^\star)}
+ \E_P\abs{\delta_{\Gamma^\star}-\beta(P)}.
+\]
+Every active component mixture, together with the common \(q\)-splice
+mixture used by inactive components, is supported on
+\(\cP(\Gamma^\star)\), and every
+testing inequality quantifies over the same arbitrary rule after the full pair
+has been disclosed.  Taking the infimum only after the five inequalities gives
+\begin{equation}
+ \risk\ge R^\star\ge
+ \max\{c_{q,\rho}q,c_{ab,\rho}ab,
+ c_{M,\rho}M,c_{O,\rho}O,c_{P,\rho}P\}.
+ \tag{G.1}
+\end{equation}
+Equation (G.1) is therefore a fixed-pair maximum.  It does not combine
+samples or Bayes risks, and it does not switch public pairs.
+
+Let \(S_0=ab+M+O+P\).  Since \(AB\ge ab\), one has \(S_0\le X\).
+Conversely,
+\[
+ AB=ab+at^2+bs^2+s^2t^2.
+\]
+For all budgets in \([0,1]\),
+\[
+ at^2\le t(a\wedge t)=O,\qquad
+ bs^2\le s(b\wedge s)=P,\qquad
+ s^2t^2\le(s\wedge t)^2=M.
+\]
+Indeed, in the first inequality, \(a\le t\) gives
+\(at^2\le at\), while \(a>t\) gives \(at^2\le t^2\); the second is its
+mirror.  The third follows because the larger of \(s,t\) is at most one.
+Therefore
+\begin{equation}
+ S_0\le X\le2S_0.
+ \tag{G.2}
+\end{equation}
+This proof uses no division and covers all zeros and ties, including
+\(a=t\) and \(b=s\).
+
+Set
+\[
+ c_{\min,\rho}=\min\{c_{q,\rho},c_{ab,\rho},
+ c_{M,\rho},c_{O,\rho},c_{P,\rho}\}>0.
+\]
+Since the maximum of five nonnegative numbers is at least their sum divided
+by five, (G.1)--(G.2) imply
+\[
+ \risk\ge\frac{c_{\min,\rho}}5(q+S_0)
+ \ge\frac{c_{\min,\rho}}{10}(q+X).
+ \tag{G.3}
+\]
+One explicit compatible set of constants is
+\begin{align*}
+ d_\rho^\star&=\min\{3,B_0/16,B_0/(16\sqrt{v_-})\},\\
+ m_\rho&=\min\{1/64,v_-/(4B_0),(B_0-\sqrt{v_-})/4\},\\
+ \lambda_\rho&=\min\{1,192c_{\rm rad}/23,128B_{\mathcal G}\},\\
+ c_{q,\rho}&=3d_\rho^\star/8,\\
+ c_{P,\rho}&=\min\{\lambda_\rho m_\rho/(4096v_-),
+                         3d_\rho^\star/32\},\\
+ c_{O,\rho}&=\min\{\lambda_\rho m_\rho/
+ [8192(v_-+m_\rho^2/16)],3d_\rho^\star/32\},\\
+ c_{ab,\rho}&=\min\{3m_\rho/(16384v_-),
+                          3d_\rho^\star/32\},\\
+ c_{M,\rho}&=\min\{\lambda_\rho^2m_\rho/
+ [8192(v_-+m_\rho^2/16)],c_{q,\rho}/4\}.
+\end{align*}
+They are positive for every fixed \(0<v_-<B_0^2\),
+\(B_{\mathcal G}>0\), and \(c_{\rm rad}>0\), but no uniform lower bound
+is claimed as the tuple approaches the variance boundary,
+\(B_{\mathcal G}\downarrow0\), or \(c_{\rm rad}\downarrow0\).
+Equation (G.3) proves the interior lower half of
+Theorem~\ref{thm:main}.

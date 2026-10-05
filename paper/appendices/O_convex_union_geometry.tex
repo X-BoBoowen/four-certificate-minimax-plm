@@ -1,0 +1,221 @@
+\section{Convex dictionary classes and unions of Hilbert balls}
+\label{app:convex-geometry}
+
+This appendix sharpens the class-geometry comparison in
+Proposition~\ref{prop:convex-geometry}. Throughout, all public classes retain
+the model, pointwise envelope, certificates, and sequential-M1 interface
+of Appendix~\ref{app:model}. The general upper bound applies to every such
+pair. The closure argument below does not itself prove adaptation;
+Appendix~\ref{app:stochastic-adaptation} separately gives a rule
+using no budgets for these and all other represented pairs.
+
+\subsection{Two restricted outer minimax fields}
+
+A finite dictionary $\ell_1$ ball is a full class
+\[
+ \mathcal K(d_1,\ldots,d_k)
+ =\left\{\sum_{j=1}^k\theta_jd_j:\sum_{j=1}^k|\theta_j|\le1\right\},
+\]
+where the $d_j$ are bounded Borel functions and the whole class satisfies
+the candidate envelope. We allow $k=0$, giving $\{0\}$.
+For the witnesses below, all nonzero generators can be chosen
+linearly independent, so this is also an injective image of a
+finite-dimensional $\ell_1$ unit ball. Define a segment-union class by
+\[
+ \mathcal U(d_1,\ldots,d_k)=\bigcup_{j=1}^k\{\tau d_j:|\tau|\le1\},
+\]
+with the same zero-class convention. Each nonzero segment is the full
+unit ball of the rank-one kernel $d_j(x)d_j(y)$; the zero class is a
+degenerate ball. Thus these are finite unions of full centered RKHS
+balls of rank at most one, with no uniform bound on their number.
+
+Let $\mathcal R_{\ell_1}$ and $\mathcal R_{\rm union}$ be the risk
+\eqref{eq:risk} with its outer public-pair supremum restricted,
+respectively, to pairs of these two forms. The representations
+are part of the public instance as before.
+\begin{theorem}[The general rate persists under convexification and finite unions]
+\label{thm:convex-geometry}
+For fixed $\rho$ with $0<v_-<B_0^2$, every $n\ge1$ and every
+$(a,s,b,t)\in[0,1]^4$,
+\[
+ \mathcal R_{\ell_1}\asymp_\rho q+X,\qquad
+ \mathcal R_{\rm union}\asymp_\rho q+X.
+\]
+For either field, one public pair and one covariate marginal in each
+budget cell support the five component lower inequalities of
+Proposition~\ref{prop:same-pair-lower}. The same conclusions hold with
+every preassigned atomless marginal as in
+Proposition~\ref{prop:fixed-nu-lower}, with constants independent of that
+marginal. The dictionaries may depend on $n$ and the budget cell.
+At $v_-=B_0^2$ both restricted risks have rate $q$; above that boundary
+the compatible-law field is empty.
+\end{theorem}
+
+\begin{proof}
+The general upper of Proposition~\ref{prop:upper} applies to every fixed
+represented pair in either restriction. For the lower, denote the
+finite symmetric dictionaries of Appendix~\ref{app:same-pair} by
+$D_\mu,D_\pi$; both contain zero. Replace each $D_\nu$ either by
+$K_\nu=\operatorname{conv}(D_\nu)=\operatorname{absconv}(D_\nu)$
+or by $U_\nu=\bigcup_{d\in D_\nu}[-d,d]$. Then
+\[
+ D_\nu\subset U_\nu\subset K_\nu.
+\]
+A redundant smaller P-band amplitude can be discarded from the
+generators: outcome needs only $\kappa_P\phi_j$ on $\mathcal J_P$
+and $\eta_M\phi_j$ on $\mathcal J_M$; propensity needs
+$\gamma_O\phi_j$ on $\mathcal J_O$ and
+$\gamma_M\phi_j$ on $\mathcal J_M$. All allocated frequencies are
+distinct and orthogonal, giving the claimed independence.
+
+\paragraph{Representation and envelope.}
+Enumerating rational coefficient vectors in the $\ell_1$ unit ball
+gives a countable core for $K_\nu$, and enumerating rational parameters
+on its finitely many segments gives one for $U_\nu$. For the zero class,
+repeat zero. Coefficient
+convergence implies pointwise-everywhere convergence, so both cores
+satisfy sequential M1. Every convex combination of $D_\nu$ obeys its
+same pointwise envelope $H_\nu\le B_{\mathcal G}$. These representations
+are fixed before Nature chooses a law or hard label.
+
+\paragraph{Full-class complexity.}
+For every linear functional $L$ on this finite span,
+\begin{equation}
+ \Delta K_\nu=\operatorname{conv}(D_\nu-D_\nu),\qquad
+ \sup_{f\in\Delta K_\nu}|Lf|
+ =\max_{d,d'\in D_\nu}|L(d-d')|.
+ \label{eq:convex-global-support}
+\end{equation}
+This is the standard convex-hull invariance of global Rademacher
+complexity \citep[Theorem 12(2)]{bartlett2002rademacher}:
+a convex combination cannot exceed the largest absolute functional
+value, and the extreme generating differences are included.
+In particular, for every positive radius $r$ the full localized
+supremum for $\Delta K_\nu$, and hence for $\Delta U_\nu$, is bounded
+by the finite measurable \emph{global} supremum on the right of
+\eqref{eq:convex-global-support}, with
+$Lf=n^{-1}\sum_i\epsilon_i f(X_i)$.
+Monotonicity of outer expectation supplies the same bound on localized
+complexity.
+
+The calculations in Appendix~\ref{app:same-pair} already apply Massart's
+inequality to exactly this global finite difference class, including
+cross-band differences. Their constants, radii, and all zero-budget
+cases therefore remain valid without change. No equality of
+\emph{localized} complexities is used: localization need not commute
+with convexification.
+
+\paragraph{Approximation and compatible laws.}
+Every original in-class nuisance truth remains in both enlarged
+classes. Every off-class truth $c\phi_j$ is orthogonal to
+$\operatorname{span}(D_\nu)$ on that side, because its frequency is
+absent from that dictionary. For every $f\in K_\nu$,
+\begin{equation}
+ \|c\phi_j-f\|_2^2=c^2+\|f\|_2^2,\qquad
+ \inf_{f\in K_\nu}\|c\phi_j-f\|_2
+ =\inf_{f\in U_\nu}\|c\phi_j-f\|_2=|c|.
+ \label{eq:convex-off-band}
+\end{equation}
+The equalities use $0\in U_\nu$. Thus the P propensity, O outcome,
+and both $ab$ approximation distances are unchanged; q and M have
+their original represented truths.
+
+Consequently all the original raw laws, including the common scalar
+family, remain compatible with each new pair. Neither the observation
+laws nor their mixture distances change. The testing inequality applies
+to any Borel rule knowing the whole new pair, since its public
+evaluations are fixed functions of the observations and reveal no
+hidden label. The component inequalities and inactive-component q
+splice can therefore be combined inside the same new pair exactly
+as in Appendix~\ref{app:same-pair}.
+
+The fixed-marginal construction in Appendix~\ref{app:fixed-nu} uses the
+same finite orthogonal bands under the preassigned atomless law. The
+support-function identity is pointwise, and
+\eqref{eq:convex-off-band} uses only that preserved orthogonality.
+Hence the same enlargement proves its two restricted versions, without
+adding marginal-dependent constants.
+
+Finally, the saturation upper is pairwise and the zero pair belongs
+to both restrictions. Appendix~\ref{app:boundary} thus supplies the
+matching q lower at saturation and emptiness above it.
+\end{proof}
+
+The theorem is a closure strengthening of the existing hard families,
+not a new convexification technique. In particular, convexity and
+symmetry alone do not give the full-Hilbert-ball rate. Nor can the
+single-ball guarantee be applied to an unknown component of an
+arbitrarily large finite union with a constant independent of that
+union. The result does not give a matching formula as a function of
+a separately prescribed number of components, or a lower bound for
+every fixed dictionary.
+
+\subsection{The envelope cost of an enclosing Hilbert ball}
+
+The following elementary geometric calculation explains why replacing
+a dictionary by an enclosing Hilbert ball can change the fixed
+regularity field.
+\begin{lemma}[Exact enclosure cost for orthogonal sign dictionaries]
+\label{lem:hilbert-enclosure}
+Let $\phi_1,\ldots,\phi_p$ be Borel functions orthonormal in
+$L_2(\nu)$, with $|\phi_j(x)|\le1$ everywhere and
+$|\phi_j|=1$ $\nu$-almost surely, and let $h_j\ge0$.
+Suppose a full affine RKHS ball $c+RB_{\mathcal H}$ contains
+$\{0,\pm h_j\phi_j:1\le j\le p\}$.
+Assume its kernel $k$ is Borel, put $\ell=R^2k$, and suppose
+$\int\ell(x,x)\,d\nu(x)<\infty$. Then
+\begin{equation}
+ \int\ell(x,x)\,d\nu(x)\ge\sum_{j=1}^p h_j^2,\qquad
+ \sup_x\sqrt{\ell(x,x)}\ge
+       \left(\sum_{j=1}^ph_j^2\right)^{1/2}.
+ \label{eq:hilbert-enclosure-cost}
+\end{equation}
+The normalized kernel
+$\ell_0(x,y)=\sum_jh_j^2\phi_j(x)\phi_j(y)$ and zero center attain
+both bounds. For equal amplitudes $h$, the smallest enclosing Hilbert
+pointwise radius is $h\sqrt p$, whereas the dictionary and its
+$\ell_1$ hull have pointwise envelope $h$.
+\end{lemma}
+
+\begin{proof}
+If $R=0$, containment of zero makes $c=0$, and containment of the
+signed functions forces every $h_j=0$; the claim is immediate.
+Otherwise use the normalized RKHS $\mathcal H_\ell$, whose unit
+ball is $RB_{\mathcal H}$. The half-difference of the two residuals
+$h_j\phi_j-c$ and $-h_j\phi_j-c$ shows that
+$h_j\phi_j$ belongs to this unit ball, regardless of the center.
+
+Every function in the RKHS of a Borel kernel is Borel: each function
+is the norm limit of a sequence of finite linear combinations of
+kernel sections, hence a pointwise limit. The diagonal integral
+makes the embedding into $L_2(\nu)$ bounded. Let $r_j$ be the Riesz
+representer of the continuous linear functional
+$f\mapsto\int\phi_j f\,d\nu$ on $\mathcal H_\ell$. Testing at
+$h_j\phi_j$ gives $\|r_j\|_{\mathcal H_\ell}\ge h_j$.
+Choose a finite orthonormal basis $e_1,\ldots,e_m$ for
+$\operatorname{span}\{r_1,\ldots,r_p\}$. Two finite Bessel inequalities
+give
+\[
+ \sum_j\|r_j\|_{\mathcal H_\ell}^2
+ =\sum_{a=1}^m\sum_j\left|\int\phi_j e_a\,d\nu\right|^2
+ \le\int\sum_{a=1}^m e_a(x)^2\,d\nu(x)
+ \le\int\ell(x,x)\,d\nu(x).
+\]
+No separability of the whole RKHS or vector-valued integral is needed.
+This proves \eqref{eq:hilbert-enclosure-cost}.
+
+For $\ell_0$, the nonzero functions $h_j\phi_j$ are unit-norm
+orthogonal kernel features. Its unit ball contains the signed
+dictionary and, by convexity, its whole $\ell_1$ hull.
+Its diagonal is at most $\sum_jh_j^2$ everywhere and equals that
+value $\nu$-almost surely, proving sharpness, including zero amplitudes.
+\end{proof}
+
+Thus the full-ball envelope of Appendix~\ref{app:hilbert-adaptation}
+is a substantive geometric condition. For the active M family,
+the number of equal-amplitude orthogonal features is exponential
+in $n(s\wedge t)^2$. A fixed dictionary envelope and a legal
+localized-complexity certificate do not supply an enclosing
+Hilbert ball with the same fixed $B_{\mathcal G}$: for fixed
+$s\wedge t>0$ and sufficiently large $n$, the M-band sum of squared
+amplitudes exceeds $B_{\mathcal G}^2$.

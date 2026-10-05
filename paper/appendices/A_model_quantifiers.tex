@@ -1,0 +1,213 @@
+\section{Full model, measurable access, and minimax quantifiers}
+\label{app:model}
+
+\subsection{Measurable experiment and statistical target}
+
+Fix once and for all a nonempty infinite standard Borel measurable space
+\((\mathcal X,\mathcal A)\).  This fixed nonempty infinite standard Borel measurable space is shared by every public pair and law below.  Equip
+\[
+ \mathcal Z=\mathcal X\times\mathbb R\times\mathbb R
+\]
+with the product sigma-field
+\(\mathcal A\otimes\mathcal B(\mathbb R)\otimes
+\mathcal B(\mathbb R)\).  The coordinates
+\(X:\mathcal Z\to\mathcal X\), \(T,Y:\mathcal Z\to\mathbb R\) are
+measurable, and all conditional expectations are ordinary versions on this
+probability space.  Public represented functions are jointly supplied with
+measurable evaluation maps \(x\mapsto g_j(x)\).  This standard-Borel
+condition is part of the theorem field before \(n\), the budget tuple, the
+public pair, and the compatible law are chosen.  It excludes pathological
+nonstandard measurable spaces and finite ambient spaces from the matching
+I-stratum theorem, while including countably infinite and uncountable
+standard Borel spaces used in ordinary ML models.
+
+For a fixed regularity tuple
+\[
+ \rho=(B_0,B_{\mathcal G},v_-,v_+,c_{\rm rad}),\qquad
+ B_0\ge3,\quad B_{\mathcal G}>0,\quad
+ 0<v_-\le v_+,\quad c_{\rm rad}>0,
+\]
+a law in \(\cP(\Gamma)\) satisfies \eqref{eq:plm},
+\(\E(u\mid X)=0\), \(\E(\varepsilon\mid X,T)=0\), and
+\(v:=\E u^2\in[v_-,v_+]\).  The conditional variance
+\(\operatorname{Var}(T\mid X)=\E(u^2\mid X)\) may vary with \(X\)
+and may vanish on subsets of the covariate space.  It also satisfies
+\[
+ |Y|,|T|,|\beta_0|,|\mu_0(X)|,|\pi_0(X)|,|u|,|\varepsilon|
+ \le B_0,\qquad \beta_0\in[-3,3].
+\]
+The target is the statistical coefficient \(\beta_0\) in this conditional
+mean model.  Causal interpretation would require additional assumptions and
+is not asserted.
+
+Every admissible public pair also satisfies the fixed pointwise candidate
+envelope
+\[
+ \sup_{g\in\cG_\mu\cup\cG_\pi}|g(x)|\le B_{\mathcal G}
+ \qquad\text{for every }x\in\mathcal X.
+ \tag{A.0}
+\]
+Every function in the supplied countable representations obeys the same
+bound.  Thus each public difference class has envelope \(2B_{\mathcal G}\).
+This condition is part of the fixed theorem field before the outer public-pair
+supremum; it is not inferred from approximation or localized complexity.
+
+\subsection{Positive-radius public complexity and M1 access}
+
+For a public class \(\cG\), let
+\(\Delta\cG=\{g-g':g,g'\in\cG\}\).  For any class \(\mathcal H\) and
+\(r\ge0\), put
+\[
+ Z_{\mathcal H}(r):=
+   \sup_{\substack{h\in\mathcal H\\ \norm h_{L_2(P_X)}\le r}}
+   \abs{\frac1n\sum_{i=1}^n\epsilon_i h(X_i)},\qquad
+ \mathfrak R^{*}_{n,P_X}(r;\mathcal H)
+ :=\E^{*}_{X_{1:n},\epsilon_{1:n}} Z_{\mathcal H}(r).
+\]
+Here \(X_{1:n}\sim P_X^n\), the \(\epsilon_i\)'s are independent Rademacher
+signs independent of the sample, and the outer expectation \(\E^*Z\) is the
+infimum of \(\E U\) over all measurable majorants \(U\ge Z\).  When
+\(Z_{\mathcal H}(r)\) is measurable, outer and ordinary expectation agree.
+If \(\cG^{\rm rep}=\{g_j:j\in\mathbb N\}\), its countable represented difference core is
+\(\Delta\cG^{\rm rep}=\{g_j-g_k:j,k\in\mathbb N\}\).  Its supremum is an ordinary measurable random variable, and we write its ordinary-expectation
+complexity as \(\mathfrak R_{n,P_X}(r;\Delta\cG^{\rm rep})\).  Pointwise
+set inclusion and monotonicity of outer expectation give
+\[
+ \mathfrak R_{n,P_X}(r;\Delta\cG^{\rm rep})
+ \le \mathfrak R^{*}_{n,P_X}(r;\Delta\cG).
+\]
+Equality is not required, and sequential M1 alone does not provide it.  At
+\(r=0\) the unquotiented quantities above remain defined.  No
+star-shapedness or scaling closure is assumed or used.  The stochastic
+constraints are exactly
+\begin{align}
+ \sup_{r\ge s,\ r>0}
+ \frac{\mathfrak R^{*}_{n,P_X}(r;\Delta\cG_\mu)}{3r}
+ &\le c_{\rm rad}s,\nonumber\\
+ \sup_{r\ge t,\ r>0}
+ \frac{\mathfrak R^{*}_{n,P_X}(r;\Delta\cG_\pi)}{3r}
+ &\le c_{\rm rad}t.
+ \tag{A.1}
+\end{align}
+No positive-radius quotient at \(r=0\) is defined or used.  When a declared
+stochastic budget is zero, (A.1) directly forces the corresponding full-class
+outer complexity, and hence every represented-core complexity, to vanish at
+each positive radius.  Later upper-proof calls therefore use core base radius
+zero directly; they never evaluate a radius-zero quotient.
+
+M1 means that the learner receives the represented public instance
+\[
+ \Gamma=(\cG_\mu,\cG_\pi,\mathbf g_\mu,\mathbf g_\pi),\qquad
+ \mathbf g_\nu=(g_{\nu,j})_{j\in\mathbb N},\quad \nu\in\{\mu,\pi\},
+\]
+where \(\mathbf g_\nu\) is an ordered countable representation of
+\(\cG_\nu\).  It also receives the fixed
+tuple including \(B_{\mathcal G}\), and the four declared budgets before
+observing data.  The representation has measurable evaluations, obeys the
+same envelope, and has the following sequential property: for every
+full-class element \(g\in\cG\), there is a sequence \(g_{j_k}\) from the
+representation that converges pointwise everywhere to \(g\) on \(\mathcal X\).
+The common envelope and dominated convergence make the represented and
+full-class population \(L_2(P_X)\) approximation infima equal; finite-sample
+continuity gives the corresponding empirical fit and calibration transfers.
+Empirical approximate minimizers select the first represented index within
+\(n^{-12}\) of a countable infimum.
+Scalar coefficients use \(\mathbb Q\cap[-3,3]\); finite-dimensional convex
+objectives use objective-dense rational parameterizations.  Countable
+infima, first qualifying indices, finite arithmetic, and clipping are
+measurable, so every fitted rule is Borel.  M1 does not supply nuisance truths,
+population best approximants, realized errors, a hard label, or an
+optimization oracle.
+
+\begin{definition}[Indexed compatible-law class]
+\label{def:indexed-compatible-laws}
+Fix \(\rho,n,a,s,b,t\), and let
+\(\Gamma=(\cG_\mu,\cG_\pi,\mathbf g_\mu,\mathbf g_\pi)\) be a represented
+public instance obeying the envelope and measurable sequential-M1 interface
+above.  We call \((\cG_\mu,\cG_\pi)\) its class-pair projection.  The indexed compatible-law class
+\(\mathcal P_{\rho,n,a,s,b,t}(\Gamma)\) is the set of probability laws
+\(P\) on \(\mathcal Z\) for which there are
+\(\beta_0\in[-3,3]\),
+\(\mathcal A/\mathcal B(\mathbb R)\text{-measurable functions }\mu_0,\pi_0:\mathcal X\to\mathbb R\),
+and residuals
+\[
+ u=T-\pi_0(X),\qquad
+ \varepsilon=Y-\beta_0T-\mu_0(X),
+\]
+such that the PLM representation \eqref{eq:plm}, the conditional-centering
+conditions
+\(\E(u\mid X)=0\) and \(\E(\varepsilon\mid X,T)=0\) hold
+\(P\)-almost surely, and the average residual-variance condition
+\(v:=\E_P u^2\in[v_-,v_+]\) holds.  The shared law and target envelopes are
+\[
+ |Y|,|T|,|\beta_0|,|\mu_0(X)|,|\pi_0(X)|,|u|,|\varepsilon|
+ \le B_0,
+\]
+and the public classes and their representations retain the pointwise
+candidate envelope (A.0), measurable evaluation maps, and the
+pointwise-everywhere sequential-M1 approximation property.  Under this
+law's covariate marginal \(P_X\), the approximation-budget conditions are
+\[
+ \inf_{g\in\cG_\mu}\norm{g-\mu_0}_2\le a,
+ \qquad
+ \inf_{g\in\cG_\pi}\norm{g-\pi_0}_2\le b,
+\]
+and the localized-complexity conditions are
+\[
+ \sup_{r\ge s,\ r>0}
+ \frac{\mathfrak R^{*}_{n,P_X}(r;\Delta\cG_\mu)}{3r}
+ \le c_{\rm rad}s,
+ \qquad
+ \sup_{r\ge t,\ r>0}
+ \frac{\mathfrak R^{*}_{n,P_X}(r;\Delta\cG_\pi)}{3r}
+ \le c_{\rm rad}t.
+\]
+The target \(\beta(P)\) is uniquely identified: if two such conditional-mean
+PLM representations describe the same law, their conditional-mean difference
+is \(\gamma T+f(X)=0\) almost surely.  Conditional centering identifies
+\(\pi_0(X)=\E(T\mid X)\), hence the same residual \(u\), in both
+representations.  Multiplying the difference by \(u\) and taking
+expectations gives \(0=\gamma\E u^2\), since
+\(\E\{f(X)u\}=\E\{\pi_0(X)u\}=0\).  Because
+\(\E u^2\ge v_->0\), \(\gamma=0\), so the two coefficients agree.
+Apart from recording this consequence, this
+definition merely collects the model, envelope, approximation,
+positive-radius complexity, and public measurable-access predicates already
+stated above; it changes none of them.  In the main text and the rest of the
+appendices we suppress the fixed indices \(\rho,n,a,s,b,t\) and write
+\(\cP(\Gamma)\).
+\end{definition}
+
+\subsection{Q1 order and allowed sample-size dependence}
+
+For each integer \(n\ge1\) and budget tuple, define
+\(\GammaSet_{\rho,n}(a,s,b,t)\) as the collection of represented public
+pairs on this same fixed ambient space satisfying the candidate-envelope and
+measurable sequential-M1 fields above and having
+\(\mathcal P_{\rho,n,a,s,b,t}(\Gamma)\ne\varnothing\).  The ambient space is not a coordinate
+of \(\Gamma\) and is not varied by the outer supremum.
+Q1 is the order printed in \eqref{eq:risk}:
+\[
+ \sup_{\Gamma\in\GammaSet_{\rho,n}(a,s,b,t)}
+ \inf_{\delta_\Gamma\ {\rm Borel}}
+ \sup_{P\in\cP(\Gamma)}
+ \E_P|\delta_\Gamma(Z_{1:2n})-\beta(P)|.
+\]
+The public pair and a lower hard family may depend on \(n\) and the declared
+budgets, but they are fixed before the data and before any latent label,
+coordinate, or sign is drawn.  Dependence on realized data is prohibited.
+No single class pair is required to serve all sample sizes or all budget
+cells.  For each fixed \(\Gamma\), the decision rule may depend on
+\(\Gamma,\rho,a,s,b,t\) but not on \(P\), proof-only comparators, or
+realized errors.  Hence the outer public-pair supremum is taken only after the
+fixed-pair rule and its uniform law bound are established.
+
+The total sample size is \(N=2n\), while \(q=n^{-1/2}\); replacing \(q\) by
+\(N^{-1/2}\) changes only a fixed factor.  Risk is expected absolute error.
+All interior constants may depend on fixed \(\rho\), including
+\(B_{\mathcal G}\), but not on
+\(n,a,s,b,t,\Gamma,P\).  At \(c_{\rm rad}=0\), (A.1) collapses every legal
+difference class in \(L_2(P_X)\), and the positive-budget nuisance lower is
+false.  Thus the theorem is pointwise for \(c_{\rm rad}>0\), with constants
+that may degenerate as \(c_{\rm rad}\downarrow0\); it is not uniform at that
+boundary.

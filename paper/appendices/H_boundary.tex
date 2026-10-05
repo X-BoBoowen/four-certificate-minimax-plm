@@ -1,0 +1,86 @@
+\section{Complete proof of the empty and saturation strata}
+\label{app:boundary}
+
+Because \(\abs u\le B_0\), every legal law satisfies
+\(\E u^2\le B_0^2\).  Thus no law exists when \(v_->B_0^2\).
+The theorem records this as emptiness and does not assign a numerical risk
+through a convention for a supremum over the empty set.
+
+Now let \(v_-=B_0^2\).  Since \(\E u^2\ge B_0^2\) and
+\(0\le B_0^2-u^2\), we have \(\E(B_0^2-u^2)=0\).
+Thus \(u^2=B_0^2\) almost surely.  Since
+\(\E(u\mid X)=0\),
+\[
+ \Pp(u=B_0\mid X)=\Pp(u=-B_0\mid X)=1/2.
+ \tag{H.1}
+\]
+Both values \(T=\pi_0(X)\pm B_0\) must lie in \([-B_0,B_0]\).  The
+intersection of these two constraints is \(\pi_0(X)=0\).  Hence
+\(T=u\), \(\E T^2=B_0^2\), and conditional centering gives
+\[
+ \E(T\mu_0(X))=0,\qquad \E(T\varepsilon)=0,\qquad
+ \beta_0=\frac{\E(TY)}{B_0^2}.
+ \tag{H.2}
+\]
+For every nonempty public pair, the public Borel estimator
+\[
+ \widehat\beta=
+ \Pi_{[-3,3]}\left\{\frac1{2nB_0^2}
+       \sum_{i=1}^{2n}T_iY_i\right\}
+ \tag{H.3}
+\]
+therefore satisfies, by Cauchy--Schwarz and \(\abs{TY}\le B_0^2\),
+\[
+ \E\abs{\widehat\beta-\beta_0}
+ \le\sqrt{\operatorname{Var}\left(
+ \frac1{2nB_0^2}\sum_{i=1}^{2n}T_iY_i\right)}
+ \le\frac1{\sqrt{2n}}.
+ \tag{H.4}
+\]
+Projection cannot increase loss because \(\beta_0\in[-3,3]\).
+
+For the outer lower bound, place a point-mass covariate law on the same fixed
+ambient space (so \(X\) is constant), take
+\(\cG_\mu=\cG_\pi=\{0\}\), and \(T=\pm B_0\) equiprobably.  Put
+\[
+ \delta_n=\frac{3}{32\sqrt n},\qquad \theta\in\{-\delta_n,\delta_n\},
+\]
+and let \(Y=(B_0/2)R\), where \(R\in\{-1,1\}\) and
+\[
+ \Pp_\theta(R=1\mid T=t)=\frac12+\frac{\theta t}{B_0}.
+ \tag{H.5}
+\]
+Then \(\E(Y\mid T)=\theta T\), so \(\beta=\theta\), both nuisances vanish,
+and the outcome residual is conditionally centered and bounded.  The public
+pair is finite M1 and legal for every declared budget.
+
+For one observation the Bernoulli shift magnitude is \(\delta_n\), so the
+cross-label Bhattacharyya coefficient (Hellinger affinity) is
+\(\sqrt{1-4\delta_n^2}\), while its square is \(1-4\delta_n^2\).
+Affinities tensorize, and Cauchy--Schwarz gives
+\(\operatorname{TV}^2(P,Q)\le1-\{\int\sqrt{dP\,dQ}\}^2\).  Consequently,
+\[
+ \operatorname{TV}^2\le4N\delta_n^2=72/1024<1/4.
+\]
+Thus TV is below \(1/2\).  The target separation is
+\(2\delta_n=3/(16\sqrt n)\).  Lemma~\ref{lem:testing-tools} therefore yields
+\[
+ \risk(a,s,b,t)\ge\frac{3}{128\sqrt n}.
+ \tag{H.6}
+\]
+\subsection{Uniform one-sided envelope bound}
+\label{app:envelope-proof}
+We prove Proposition~\ref{prop:envelope-bridge}. Put \(h=B_0^2-v_-\).
+On \(\pi_0\ge0\), the bounds on \(u,T\) give \(-B_0\le u\le B_0-\pi_0\).
+Taking conditional expectations in
+\((u+B_0)(B_0-\pi_0-u)\ge0\), and treating \(\pi_0<0\) symmetrically, gives
+\(\E(u^2\mid X)\le B_0(B_0-|\pi_0|)\). Thus \(B_0\E|\pi_0|\le h\).
+Also \(v_-\le\E T^2=\E u^2+\E\pi_0^2\le B_0^2\) and
+\(\E(TY)=\beta_0\E T^2+\E(\pi_0\mu_0)\), so
+\(|\E(TY)-\beta_0B_0^2|\le3h+h\).
+Since \(|TY/B_0^2|\le1\), the expected absolute centered empirical error
+is at most \(N^{-1/2}\). Clipping cannot increase loss. At saturation
+\(h=0\), this is exactly (H.4).
+
+The upper bound (H.4) is pairwise for every legal nonempty pair; (H.6) needs
+only this one pair because the pair supremum is outermost.  The matching interior lower constants are not continued to saturation. Proposition~\ref{prop:envelope-bridge} gives the uniform one-sided bound for this same fixed-denominator estimator before saturation; it uses only the integrated bound \(B_0\E|\pi_0|\le B_0^2-v_-\), not a pointwise bound on \(\pi_0\).

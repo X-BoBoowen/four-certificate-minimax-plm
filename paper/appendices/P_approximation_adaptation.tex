@@ -1,0 +1,650 @@
+\section{Adaptation to unknown approximation budgets}
+\label{app:approximation-adaptation}
+
+This appendix keeps the represented-pair model of
+Appendix~\ref{app:model} and strengthens the order of its estimator
+quantifiers. Here the stochastic certificates $s,t$ remain known;
+Appendix~\ref{app:stochastic-adaptation} subsequently removes those inputs.
+No additional
+geometry of either public class is assumed, and the residual variance is
+bounded below only on average. The construction uses double calibration,
+with a scalar correction direction as in the methodological approach of
+\citet{liu2023doublecalibration}. Their sparse-GLM theorem is not invoked
+for the present classes. Here a single represented propensity candidate
+is restricted to a known empirical neighborhood of an initial fit; a
+free vector is then chosen by constrained minimum distance. No convexity
+of the public classes is needed.
+
+\begin{theorem}[Adaptation to both approximation budgets]
+\label{thm:approximation-adaptation}
+Fix $(\Gamma,\rho,n,s,t)$ as in
+Definition~\ref{def:indexed-compatible-laws}. There is one Borel rule
+$\delta_{\Gamma,\rho,n,s,t}:\mathcal Z^{2n}\to[-3,3]$ such that,
+simultaneously for every $(a,b)\in[0,1]^2$ and
+$P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)$,
+\begin{equation}
+ \begin{split}
+ \E_P|\delta_{\Gamma,\rho,n,s,t}-\beta(P)|
+ &\le C_\rho\left[q+
+ \min\{a(b+t)+a^2+s^2,\ b(a+s)+(b+t)^2\}\right]\\
+ &\le C_\rho(q+W).
+ \end{split}
+ \label{eq:approximation-adaptation-rate}
+\end{equation}
+The constant is independent of $\Gamma,n,s,t,a,b,P$. The rule does not
+use $a,b$, a population comparator, or the covariate law. It uses the
+known $s,t$. Theorem~\ref{thm:full-budget-adaptation} supplies
+the separate extension that omits all four certificates.
+\end{theorem}
+
+Throughout the proof, $P_1,P_2$ denote the empirical averages on the two
+original halves $\cD_1,\cD_2$, each of size $n$. Write
+$f_X=(f(X_i):i\in\cD_1)$ and
+$\|w\|_n^2=n^{-1}\sum_{i\in\cD_1}w_i^2$. A product inside $P_1$
+can involve such vectors. Put
+\begin{equation}
+ q=n^{-1/2},\qquad h^2=\frac{\log(en)}n,
+ \qquad\tau=n^{-12},\qquad\zeta=n^{-6}.
+ \label{eq:approximation-scales}
+\end{equation}
+In particular $h^2\le2q$, and $\zeta,\sqrt\tau\le q$.
+Every unspecified constant below depends only on $\rho$.
+
+\subsection{Initial fits and an independent proof of the scalar pilot bound}
+\label{app:approximation-pilot}
+
+The initial treatment fit on a sample is the first represented
+$\tau$-approximate minimizer of the empirical squared loss for $T$.
+The initial outcome fit is the represented component of the first
+$\tau$-approximate minimizer of the squared loss for $Y-\gamma T-g$,
+over represented $g$ and $\gamma\in\mathbb Q\cap[-3,3]$.
+These objectives use neither approximation budget. The fits on the
+whole of $\cD_2$ are denoted by $\widehat\pi,\widehat\mu$.
+
+The initial-fit bounds (B.7) and (B.9) in
+Appendix~\ref{app:upper-initial}, used at $z=4\log(en)$, imply
+\begin{equation}
+ \begin{split}
+ \E\|\widehat\pi-\pi_0\|_2^2
+ &\le C_\rho(b^2+t^2+h^2),\\
+ \E\|\widehat\mu-\mu_0\|_2^2
+ &\le C_\rho(a^2+s^2+h^2).
+ \end{split}
+ \label{eq:approximation-fit-moments}
+\end{equation}
+Indeed their squared bounds at this one confidence level have these
+orders, their failures are $O_\rho(n^{-4})$, and the fitted functions
+and the true functions have fixed envelopes. The contribution of the
+complements is therefore $O_\rho(n^{-4})\le C_\rho h^2$. No
+unproved integration of a fitted tail is used here.
+
+For the scalar pilot alone, split $\cD_2$ deterministically into an
+internal training block of size $k=\lfloor n/2\rfloor$ and a validation
+block of size $m=n-k$. Fit $g^{\rm tr},h^{\rm tr}$ on the internal
+training block by the preceding rules. Let $P_{\rm va}$ be the
+internal validation average, and define
+\begin{align*}
+ \widehat D_{\rm va}&=P_{\rm va}T(T-h^{\rm tr}),&
+ \widehat A_{\rm va}&=P_{\rm va}(T-h^{\rm tr})(Y-g^{\rm tr}),\\
+ \widehat V_{\rm va}&=P_{\rm va}T^2,&
+ \widehat B_{\rm va}&=P_{\rm va}T(Y-g^{\rm tr}).
+\end{align*}
+With $\Pi=\Pi_{[-3,3]}$, the pilot is
+\begin{equation}
+ \bar\beta=
+ \begin{cases}
+  \Pi(\widehat A_{\rm va}/\widehat D_{\rm va}),
+       &\widehat D_{\rm va}\ge v_-/2,\\
+  \Pi\{\widehat B_{\rm va}/(\widehat V_{\rm va}\vee(v_-/2))\},
+       &\widehat D_{\rm va}<v_-/2.
+ \end{cases}
+ \label{eq:approximation-pilot-rule}
+\end{equation}
+It is $\cD_2$-measurable. The full-half fits may reuse these data.
+
+\begin{lemma}[Two second-moment bounds for one pilot]
+\label{lem:approx-adapt-pilot}
+For $n$ larger than a constant depending only on $\rho$, the pilot
+\eqref{eq:approximation-pilot-rule} satisfies, with
+$c=\beta_0-\bar\beta$,
+\begin{equation}
+ |c|\le6,\qquad
+ \E c^2\le C_\rho
+ \min\{a^2+s^2+h^2,\ b^2+t^2+h^2\}.
+ \label{eq:approximation-pilot-moment}
+\end{equation}
+\end{lemma}
+\begin{proof}
+First take two fixed bounded anchors $g,h_0$ and a fresh sample of
+size $m$. Let $a_0=\|\mu_0-g\|_2$, $b_0=\|\pi_0-h_0\|_2$.
+Write $D,A,V,B$ for the population counterparts of the four empirical
+moments in \eqref{eq:approximation-pilot-rule}. Conditional centering
+gives
+\[
+ \begin{aligned}
+ D&=v+\E\{\pi_0(\pi_0-h_0)\},&
+ A&=\beta_0D+\E\{(\pi_0-h_0)(\mu_0-g)\},\\
+ V&\ge v_-,& B&=\beta_0V+\E\{T(\mu_0-g)\}.
+ \end{aligned}
+\]
+On the primary branch the clipped error is at most
+\[
+ \frac2{v_-}\{ |\widehat A-A|+3|\widehat D-D|+a_0b_0\}.
+\]
+On the fallback it is at most
+\[
+ \frac2{v_-}\{ |\widehat B-B|+3|\widehat V-V|+B_0a_0\},
+\]
+because $|V-(\widehat V\vee(v_-/2))|\le|V-\widehat V|$.
+Every centered empirical moment has second moment at most $C_\rho/m$.
+If $D<3v_-/4$, then $B_0b_0\ge v_-/4$, so the squared fallback
+bias is bounded by $C_\rho a_0^2b_0^2$. If $D\ge3v_-/4$,
+Chebyshev gives
+$\Pr(\widehat D<v_-/2)\le C_\rho/m$; clipped squared loss on this
+event is at most 36. Squaring the pointwise branch inequalities thus
+proves
+\begin{equation}
+ \E|\delta_{g,h_0}-\beta_0|^2
+ \le C_\rho\{m^{-1}+a_0^2b_0^2\}.
+ \label{eq:approximation-anchor-mse}
+\end{equation}
+No independence of the branch selection and empirical moments is
+required.
+
+Condition now on the internal training block and insert its anchors.
+Both anchor errors are bounded by $B_0+B_{\mathcal G}$, whence
+$a_0^2b_0^2\le (B_0+B_{\mathcal G})^2\min(a_0^2,b_0^2)$.
+The initial-fit moment bounds at size $k$, proved at the single
+confidence level $4\log(ek)$ exactly as above, complete the proof of
+\eqref{eq:approximation-pilot-moment} after averaging
+\eqref{eq:approximation-anchor-mse}.
+
+For completeness, these size-$k$ fits require no new complexity
+certificate. For a countable localized difference core, adding
+independent signed observations and using conditional Jensen gives
+\[
+ \mathfrak R_{k,P_X}(r;\Delta\cG^{\rm rep})
+ \le\frac nk\mathfrak R_{n,P_X}(r;\Delta\cG^{\rm rep}).
+\]
+For $n\ge4$, $n/k\le3$, so the original core inequalities imply the
+size-$k$ inequalities with a changed fixed process constant.
+The joint-fit localization in Appendix~\ref{app:upper-initial} then
+applies with the same changed constant. Moreover
+$\log(ek)/k\le C h^2$ and $m^{-1}\le C h^2$.
+The tolerance $\tau=n^{-12}\le k^{-12}$ is no larger than the
+one permitted there. The core supremum is countable throughout; no
+equality between full outer and represented localized complexities is
+being asserted.
+\end{proof}
+
+\subsection{Comparison costs and the order of fixed constants}
+\label{app:approximation-constants}
+
+For a fixed compatible law choose a represented propensity comparator
+$h_0$ with $\|\pi_0-h_0\|_2\le b+\zeta$. Its existence follows from
+Lemma~\ref{lem:sequential-density-transfer}; it is only a proof device.
+Define
+\[
+ B_{\rm cmp}=P_1(h_0-\widehat\pi)^2.
+\]
+There is a fixed $C_{\rm cmp}$, depending only on $\rho$, such that
+\begin{equation}
+ \Pr\{B_{\rm cmp}>C_{\rm cmp}((b+t)^2+h^2)\}
+ \le C_\rho n^{-4},\qquad
+ \E B_{\rm cmp}\le C_\rho((b+t)^2+h^2).
+ \label{eq:approximation-comparator-cost}
+\end{equation}
+Here is a direct transfer proof. The $\cD_2$ treatment-fit event at
+$4\log(en)$ has
+$\|\widehat\pi-\pi_0\|_2^2\le C_\rho(b^2+t^2+h^2)$.
+Given $\cD_2$, the function $f=\widehat\pi-h_0$ is fixed with
+envelope $2B_{\mathcal G}$. Conditional scalar Bernstein,
+Lemma~\ref{lem:bernstein}, gives
+$P_1f^2\le2\|f\|_2^2+C_\rho h^2$, except with conditional
+probability $2(en)^{-4}$. Combine this with
+$\|f\|_2^2\le2\|\widehat\pi-\pi_0\|_2^2+2(b+\zeta)^2$.
+This proves the tail assertion because $\zeta\le h$.
+For its expectation assertion use
+$\E P_1f^2=\E\|f\|_2^2$ and
+\eqref{eq:approximation-fit-moments}. The selected $\cD_2$ index is
+fixed under this conditioning, so no fitted main-half index is inserted
+into a pointwise empirical-process event.
+
+All constants in the procedure can now be frozen in a noncircular order.
+First fix the initial-fit constants, $C_{\rm cmp}$, and the constants
+of Lemma~\ref{lem:localized-process} for the two difference cores and
+the bounded multipliers $u,\varepsilon,\mu_0,\pi_0$ used below.
+These constants depend only on their fixed envelopes and $\rho$.
+Take
+\[
+ R=2(B_0+B_{\mathcal G}+1),\qquad
+ M=8B_0+B_{\mathcal G}+1,\qquad L=8B_0.
+\]
+Choose a fixed $K$ large enough that the uniform true-benchmark
+process bounds in \eqref{eq:approximation-eta-event} and
+\eqref{eq:approximation-true-residual-event} below are at most half
+their displayed tolerances. Their proofs use only the process constants
+already fixed, the bound $|c|\le6$, and quadratic absorption.
+Choose $K_A\ge12C_{\rm cmp}$ and put
+\begin{equation}
+ \kappa_\mu=K(s^2+h^2),\qquad
+ \kappa_\pi=K(t^2+h^2),\qquad A_t=K_A(t^2+h^2).
+ \label{eq:approximation-tolerances}
+\end{equation}
+Finally choose $n_\rho\ge4$ so that all the confidence levels
+$4\log(en)$, and their size-$k$ counterparts, are in the process
+tail ranges, and the scalar denominator event below has its stated
+margin for $n\ge n_\rho$. This last choice changes none of the other
+constants. All these choices precede the budgets, pair, law, and data.
+For $n<n_\rho$ define the rule to be zero, whose loss is absorbed by
+$C_\rho q$. In what follows $n\ge n_\rho$.
+
+\subsection{The two calibration programs}
+\label{app:approximation-programs}
+
+Let
+\[
+ \mathcal F_X=\sigma(\cD_2,X_i:i\in\cD_1),\qquad
+ \mathcal F_T=\sigma(\mathcal F_X,T_i:i\in\cD_1).
+\]
+The first program constructs an outcome correction without using the
+main-half treatments or outcomes. For an $n$-vector $m$ define
+\[
+ H^{\rm pil}_\pi(m)=
+ \sup_{f\in\Delta\cG_\pi^{\rm rep}}
+ \{|P_2[(Y-\bar\beta T)f]-P_1(mf)|-P_1f^2\}.
+\]
+Retain $m\in\mathbb Q^n$ satisfying
+\begin{equation}
+ H^{\rm pil}_\pi(m)<\kappa_\pi,\qquad \|m\|_n<M.
+ \label{eq:approximation-eta-program}
+\end{equation}
+If this set is nonempty, let $\widehat\eta$ be its first point whose
+$\|m-\widehat\mu_X\|_n^2$ is less than the feasible countable
+infimum plus $\tau$. Otherwise output zero and set $\widehat\eta=0$
+for analytical vector conventions. Write
+$d=\widehat\eta-\widehat\mu_X$. Both vectors are
+$\mathcal F_X$-measurable.
+
+For the second program write $(h_j)_{j\ge1}$ for the supplied
+propensity core. Enumerate all pairs $(j,z)\in\mathbb N\times\mathbb Q^n$.
+For each pair set
+\[
+ \pi^c=(h_j)_X+z,\qquad r=T_X-\pi^c,
+ \qquad D=P_1(Tr),\qquad B_j=P_1(h_j-\widehat\pi)^2.
+\]
+For $\nu\in\{\mu,\pi\}$ define
+$H_\nu(r)=\sup_{f\in\Delta\cG_\nu^{\rm rep}}
+\{|P_1(rf)|-P_1f^2\}$. Retain exactly the pairs satisfying
+\begin{equation}
+ \begin{gathered}
+ B_j<A_t,\qquad D>v_-/2,\qquad
+ \|r\|_n<R,\qquad\|\pi^c\|_n<R,\\
+ H_\mu(r)<\kappa_\mu,\qquad H_\pi(r)<\kappa_\pi,\\
+ |P_1(rd)|<Lh\|d\|_n+\tau,\\
+ |P_1(r\pi^c)|<Lh\|\pi^c\|_n+\tau,\\
+ |P_1(rz)|<Lh\|z\|_n+\tau.
+ \end{gathered}
+ \label{eq:approximation-propensity-program}
+\end{equation}
+Only the free-vector objective $\|z\|_n^2$ is minimized: choose the
+first retained pair whose objective is less than its countable feasible
+infimum plus $\tau$. Denote the selected candidate function by
+$\widehat h$, and its other quantities by
+$\widehat z,\widehat\pi^c,\widehat r,\widehat D$.
+If either program is empty, output zero; define $\widehat r=0$ there
+for the conditional noise arguments. Otherwise output
+\begin{equation}
+ \delta=\Pi_{[-3,3]}\left[
+ \bar\beta+
+ \frac{P_1\{\widehat r(Y-\bar\beta T-\widehat\eta)\}}
+      {\widehat D}\right]
+ =\Pi_{[-3,3]}
+ \frac{P_1\{\widehat r(Y-\widehat\eta)\}}{\widehat D}.
+ \label{eq:approximation-rule}
+\end{equation}
+The denominator is positive on every feasible sample. The second
+equality follows from its definition, not from an approximate moment
+identity. Neither program uses $a,b$.
+
+Each program is Borel. The cores are countable; all suprema in the
+constraints are countable and are continuous in the calibrated vector
+by the common difference envelope. All other constraints are continuous
+in the finite-dimensional vector, for a fixed represented index.
+Countable feasible-set decisions, countable infima, and first strict
+approximate minimizers are consequently Borel. The strict inequalities
+and the scalar $+\tau$ terms provide open neighborhoods even when a
+calibrated direction is zero. Thus a strictly feasible real vector can
+be approximated by retained rational vectors with objective converging
+to its own objective. No exact minimizer is required. The initial fits
+and the scalar pilot are Borel by their countable selection conventions
+and explicit ratios, respectively. In particular $\widehat r$ is
+$\mathcal F_T$-measurable: no main-half outcome is used to choose it.
+
+\subsection{Feasibility, margins, and two comparisons for the same program}
+\label{app:approximation-feasibility}
+
+Fix a law and represented comparators $g,h_0$ whose approximation
+errors are at most $a+\zeta,b+\zeta$, respectively. Write
+\[
+ \eta_0=(\mu_0+c\pi_0)_X,\quad
+ r_\eta=\widehat\eta-\eta_0,\quad
+ e_\pi=(\widehat\pi-\pi_0)_X,\quad
+ r_\pi=(\pi_0-h_0)_X.
+\]
+The random function defining $\eta_0$ depends on $\cD_2$ only
+through the bounded scalar $c$; its vector also uses the main covariates.
+Before inserting that scalar,
+form uniform process events using the exact identity
+\begin{equation}
+ \begin{split}
+ P_2[(Y-\bar\beta T)f]-P_1(\eta_0f)
+ ={}&P_2(\varepsilon f)+cP_2(uf)\\
+ &+(P_2-P_1)(\mu_0f)+c(P_2-P_1)(\pi_0f).
+ \end{split}
+ \label{eq:approximation-eta-identity}
+\end{equation}
+Lemma~\ref{lem:localized-process}, applied to the fixed bounded
+multipliers displayed here and to the square process, gives a finite
+intersection of events, of failure $O_\rho(n^{-4})$, on which the
+absolute value of the right side minus $P_1f^2$ is bounded by
+\[
+ C_\rho(t+h)\|f\|_2-\|f\|_2^2+C_\rho(t^2+h^2)
+ \le C_\rho(t^2+h^2)
+\]
+uniformly over the propensity difference core. The chosen $K$ therefore
+supplies the event
+\begin{equation}
+ G_\eta=\{H^{\rm pil}_\pi(\eta_0)\le\kappa_\pi/2\}
+ \in\mathcal F_X,\qquad
+ \Pr(G_\eta^c)\le C_\rho n^{-4}.
+ \label{eq:approximation-eta-event}
+\end{equation}
+Also $\|\eta_0\|_n\le7B_0<M$, with strict norm margin.
+On $G_\eta$ the first program is consequently nonempty and its
+comparison with $\eta_0$ yields
+\begin{equation}
+ \begin{gathered}
+ \|d\|_n\le\|\eta_0-\widehat\mu_X\|_n+\sqrt\tau,\qquad
+ \|r_\eta\|_n\le2\|\eta_0-\widehat\mu_X\|_n+\sqrt\tau,\\
+ |P_1(r_\eta f)|\le2P_1f^2+3\kappa_\pi/2
+ \quad(f\in\Delta\cG_\pi^{\rm rep}).
+ \end{gathered}
+ \label{eq:approximation-eta-comparison}
+\end{equation}
+The vector norms of $d,r_\eta$ are bounded by fixed constants even
+outside this event, using the norm constraint and the fallback
+convention. Moreover \eqref{eq:approximation-fit-moments}, the first
+pilot moment bound, and independence of the main covariates give
+\begin{equation}
+ \E1_{G_\eta}(\|d\|_n^2+\|r_\eta\|_n^2)
+ \le C_\rho(a^2+s^2+h^2).
+ \label{eq:approximation-eta-moments}
+\end{equation}
+Independence between $\bar\beta$ and the full-half fits is unnecessary.
+The same moment bound also holds without $1_{G_\eta}$: both vector
+norms are uniformly bounded on its complement, whose probability is
+$O_\rho(n^{-4})\le C_\rho h^2$.
+
+The same process lemma and quadratic absorption, now with multiplier
+$u$ on the main half, give
+\begin{equation}
+ H_\mu(u_X)\le\kappa_\mu/2,\qquad
+ H_\pi(u_X)\le\kappa_\pi/2
+ \label{eq:approximation-true-residual-event}
+\end{equation}
+except with probability $C_\rho n^{-4}$. For scalar constraints,
+conditionally on $\mathcal F_X$ and any of the four vectors
+\[
+ w=d,\quad w=(\pi_0)_X,\quad
+ w=-e_\pi=(\pi_0-\widehat\pi)_X,\quad w=r_\pi,
+\]
+weighted Hoeffding gives, at confidence $4\log(en)$,
+\begin{equation}
+ |P_1(uw)|\le\sqrt8 B_0h\|w\|_n
+ \le (L/2)h\|w\|_n,
+ \label{eq:approximation-scalar-margin}
+\end{equation}
+with conditional failure at most $2(en)^{-4}$ for each vector.
+These statements also hold for the random vector $-e_\pi$: conditioning
+fixes the full-half fit and main covariates, and leaves the $u_i$
+independent, centered, and bounded. No coordinate bound on $w$ is
+needed for weighted Hoeffding. If $w=0$, the added $\tau>0$ in the
+program still makes its scalar constraint strict.
+
+Finally bounded scalar Bernstein and $\E(Tu)=v\ge v_-$ yield
+$P_1(Tu)>3v_-/4$ except with probability $C_\rho n^{-4}$, by the
+choice of $n_\rho$. Let $G$ be the finite intersection of $G_\eta$,
+the two events in \eqref{eq:approximation-true-residual-event}, the four
+scalar events \eqref{eq:approximation-scalar-margin}, this denominator
+event, and the comparison-cost event in
+\eqref{eq:approximation-comparator-cost}. Then
+\begin{equation}
+ G\in\mathcal F_T,\qquad \Pr(G^c)\le C_\rho n^{-4}.
+ \label{eq:approximation-good-event}
+\end{equation}
+All uniform class events precede every fitted-index substitution.
+
+On $G$, consider the following two representations of the same real
+vector $(\pi_0)_X$ in the second program. First take the represented
+candidate $h_j=\widehat\pi$ and $z=-e_\pi$. Its comparison cost is
+zero, and $\pi^c=(\pi_0)_X$, $r=u_X$. All its constraints have the
+strict margins just proved, including
+$\|u\|_n,\|\pi_0\|_n\le B_0<R$. Thus the second program is
+nonempty for every $a,b$.
+
+For the other comparison suppose only in the proof that $b\le t+h$.
+Then
+\[
+ (b+t)^2+h^2\le(2t+h)^2+h^2\le6(t^2+h^2).
+\]
+The cost event and $K_A\ge12C_{\rm cmp}$ give
+\begin{equation}
+ B_{\rm cmp}\le A_t/2.
+ \label{eq:approximation-local-comparator}
+\end{equation}
+Take the fixed candidate $h_j=h_0$ and $z=r_\pi$. Again
+$\pi^c=(\pi_0)_X$, $r=u_X$, and every constraint is strictly
+feasible. In each comparison the represented index is a legitimate
+index of the program, and its real free vector can be approximated
+by rational vectors. Minimization of the same free-vector objective
+therefore gives, on $G$,
+\begin{equation}
+ \begin{aligned}
+ \|\widehat z\|_n&\le\|e_\pi\|_n+\sqrt\tau
+       &&\text{for all }b,\\
+ \|\widehat z\|_n&\le\|r_\pi\|_n+\sqrt\tau
+       &&\text{if }b\le t+h.
+ \end{aligned}
+ \label{eq:approximation-two-comparisons}
+\end{equation}
+The algorithm does not test this condition and does not choose between
+the two analytical comparisons.
+
+Put $\Delta=\widehat\pi^c-(\pi_0)_X$. The empirical neighborhood
+constraint and the first line of
+\eqref{eq:approximation-two-comparisons} imply
+\[
+ \|\Delta\|_n
+ \le\|e_\pi\|_n+\|(\widehat h-\widehat\pi)_X\|_n
+       +\|\widehat z\|_n
+ \le2\|e_\pi\|_n+\sqrt{A_t}+\sqrt\tau.
+\]
+Consequently
+\begin{equation}
+ \E1_G\|\Delta\|_n^2\le C_\rho(b^2+t^2+h^2).
+ \label{eq:approximation-propensity-moment}
+\end{equation}
+On every feasible sample,
+$\|\widehat z\|_n\le\|\widehat\pi^c\|_n+\|\widehat h_X\|_n
+<R+B_{\mathcal G}$; this uniform bound is useful for scalar terms.
+
+\subsection{Two outcome analyses of the same rule}
+\label{app:approximation-outcome-bound}
+
+Conditional on $\mathcal F_T$, the $\varepsilon_i$ are independent
+and centered, and $\|\widehat r\|_n<R$ on feasible samples. Thus
+\begin{equation}
+ \E|P_1(\varepsilon\widehat r)|\le C_\rho q.
+ \label{eq:approximation-outcome-noise}
+\end{equation}
+Likewise conditioning on $\mathcal F_X$ gives $C_\rho q$ bounds for
+$P_1(ur_\eta)$, $P_1[u(\mu_0-\widehat\mu)]$, and
+$P_1[u(\mu_0-g)]$. Their empirical coefficient norms are uniformly
+bounded. Good-event indicators can first be dropped from nonnegative
+absolute values. The denominator can be bounded below pointwise by
+$v_-/2$ before applying these bounds. No conditioning on a selected
+main-half outcome is used.
+
+On $G$ the raw, unclipped output has the exact identity
+\begin{equation}
+ \widehat D(\delta^{\rm raw}-\beta_0)
+ =P_1(\varepsilon\widehat r)
+  +P_1\{(\mu_0-\widehat\mu)\widehat r\}
+  -P_1(d\widehat r).
+ \label{eq:approximation-outcome-identity}
+\end{equation}
+Split $\mu_0-\widehat\mu=(\mu_0-g)+(g-\widehat\mu)$ and
+use $\widehat r=u_X-\Delta$. The centered fixed-comparator term
+costs $C_\rho q$. Cauchy--Schwarz and
+\eqref{eq:approximation-propensity-moment} bound the other
+fixed-comparator term by $C_\rho(a+\zeta)(b+t+h)$ in expectation.
+The outcome-class constraint in
+\eqref{eq:approximation-propensity-program}, uniform before the
+selected represented index is inserted, gives
+\[
+ |P_1\{(g-\widehat\mu)\widehat r\}|
+ \le P_1(g-\widehat\mu)^2+\kappa_\mu.
+\]
+Its expectation is at most $C_\rho(a^2+s^2+h^2)$ by the initial
+fit moment bound and the fixed-comparator error. The correction
+constraint and \eqref{eq:approximation-eta-moments} give
+$\E1_G|P_1(d\widehat r)|\le C_\rho h(a+s+h)+\tau$.
+Use $ah\le(a^2+h^2)/2$, $sh\le(s^2+h^2)/2$, and $h^2\le2q$.
+Clipping cannot increase the error, and clipped loss on $G^c$ is at
+most six. We obtain
+\begin{equation}
+ \E|\delta-\beta_0|
+ \le C_\rho\{q+a(b+t)+a^2+s^2\}.
+ \label{eq:approximation-outcome-rate}
+\end{equation}
+
+Keeping $\mu_0-\widehat\mu$ together instead in
+\eqref{eq:approximation-outcome-identity} gives a second bound for
+this very same rule. The centered term again costs $C_\rho q$;
+Cauchy--Schwarz bounds the $\Delta$ term by
+$C_\rho(a+s+h)(b+t+h)$, and the correction term by
+$C_\rho h(a+s+h)+\tau$. Therefore
+\begin{equation}
+ \E|\delta-\beta_0|
+ \le C_\rho\{q+(a+s+h)(b+t+2h)\}.
+ \label{eq:approximation-product-rate}
+\end{equation}
+The floor $h$ has not been replaced by $q$ in this display.
+
+\subsection{The propensity analysis and the proof of the theorem}
+\label{app:approximation-propensity-bound}
+
+If $b>t+h$, the product bound already gives the required propensity
+rate: $b+t+2h\le4b$ and
+$bh\le(b^2+h^2)/2$. Thus
+\begin{equation}
+ \E|\delta-\beta_0|
+ \le C_\rho\{q+b(a+s)+(b+t)^2\}
+ \qquad(b>t+h).
+ \label{eq:approximation-propensity-large-b}
+\end{equation}
+It remains to analyze $b\le t+h$, where the second comparison in
+\eqref{eq:approximation-two-comparisons} is available.
+
+Because $\mu_0-\widehat\eta=-r_\eta-c\pi_0$, direct substitution
+in \eqref{eq:approximation-rule} gives
+\begin{equation}
+ \widehat D(\delta^{\rm raw}-\beta_0)
+ =P_1(\varepsilon\widehat r)-P_1(r_\eta\widehat r)
+       -cP_1(\pi_0\widehat r).
+ \label{eq:approximation-propensity-identity}
+\end{equation}
+Let $f_1=(\widehat h-\widehat\pi)_X$ and
+$f_0=(\widehat\pi-h_0)_X$. Both are represented propensity
+differences, and
+$\Delta=f_1+\widehat z+f_0-r_\pi$. The two calibration
+inequalities in \eqref{eq:approximation-eta-comparison} give
+\begin{equation}
+ \begin{split}
+ |P_1(r_\eta\Delta)|
+ \le{}&2A_t+2B_{\rm cmp}+3\kappa_\pi\\
+ &+\|r_\eta\|_n(\|\widehat z\|_n+\|r_\pi\|_n).
+ \end{split}
+ \label{eq:approximation-remainder-calibration}
+\end{equation}
+The second comparison for $\widehat z$,
+\eqref{eq:approximation-eta-moments}, and
+$\E\|r_\pi\|_n^2\le(b+\zeta)^2$ bound its good-event
+expectation by
+\begin{equation}
+ C_\rho\{(b+t)^2+h^2+(b+\zeta)(a+s+h)+\sqrt\tau\}.
+ \label{eq:approximation-remainder-bound}
+\end{equation}
+The term $P_1(r_\eta\widehat r)
+=P_1(r_\eta u)-P_1(r_\eta\Delta)$ has only an additional
+$C_\rho q$ contribution, by the conditional noise bound.
+
+For the final term in
+\eqref{eq:approximation-propensity-identity}, use
+$\pi_0=\widehat\pi^c-\Delta$. The propensity difference
+constraints and the two scalar constraints for
+$\widehat\pi^c,\widehat z$ give, pointwise on $G$,
+\begin{equation}
+ \begin{split}
+ |P_1(\pi_0\widehat r)|
+ \le{}&Lh\|\widehat\pi^c\|_n+\tau
+       +A_t+B_{\rm cmp}+2\kappa_\pi\\
+ &+Lh\|\widehat z\|_n+\tau+R\|r_\pi\|_n.
+ \end{split}
+ \label{eq:approximation-self-calibration}
+\end{equation}
+Multiply by $|c|$. Bounded $|c|$, the deterministic cap, and
+\eqref{eq:approximation-comparator-cost} control the cap, comparator,
+and tolerance terms by $C_\rho((b+t)^2+h^2)$ in expectation.
+Uniform norm bounds reduce the two terms proportional to $h$ to
+$C_\rho h\E|c|$. The second bound on the one pilot in
+\eqref{eq:approximation-pilot-moment} gives
+\begin{equation}
+ h\E|c|\le C_\rho h(b+t+h)
+ \le C_\rho((b+t)^2+h^2).
+ \label{eq:approximation-pilot-use-propensity}
+\end{equation}
+Its first bound, together with Cauchy--Schwarz, gives
+\begin{equation}
+ \E|c|\|r_\pi\|_n
+ \le C_\rho(b+\zeta)(a+s+h).
+ \label{eq:approximation-pilot-use-outcome}
+\end{equation}
+The pilot and fits may be dependent; these bounds do not condition
+their shared fitting data on a fitted coefficient.
+
+Combine \eqref{eq:approximation-propensity-identity}--
+\eqref{eq:approximation-pilot-use-outcome}, divide by the imposed
+denominator bound, and use $bh\le(b^2+h^2)/2$, $h^2\le2q$,
+and $\zeta,\sqrt\tau\le q$. Clipping and
+\eqref{eq:approximation-good-event} add at most
+$6\Pr(G^c)=O_\rho(n^{-4})$. It follows that
+\begin{equation}
+ \E|\delta-\beta_0|
+ \le C_\rho\{q+b(a+s)+(b+t)^2\}
+ \qquad(b\le t+h).
+ \label{eq:approximation-propensity-small-b}
+\end{equation}
+The two cases \eqref{eq:approximation-propensity-large-b} and
+\eqref{eq:approximation-propensity-small-b} partition only the proof.
+Their programs, constants, and outputs are identical. Together with
+\eqref{eq:approximation-outcome-rate}, they prove
+\eqref{eq:approximation-adaptation-rate} for all $n\ge n_\rho$.
+The zero output covers smaller $n$, since its loss is at most three
+and $q\ge n_\rho^{-1/2}$. Positive $h$ makes the tolerances and
+empirical neighborhood well defined when $s=0$ or $t=0$. Fixed
+$\zeta$-comparators exist even if an approximation infimum is not
+attained, including when $a=0$ or $b=0$; their remaining terms were
+explicitly absorbed above. This proves
+Theorem~\ref{thm:approximation-adaptation}. \hfill$\square$

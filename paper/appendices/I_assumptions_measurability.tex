@@ -1,0 +1,137 @@
+\section{Assumptions, measurability, and nonclaims}
+\label{app:measurability}
+
+The measurable representation is an access convention, not a smoothness or
+convexity assumption.  The underlying covariate space is the one fixed
+nonempty infinite standard Borel space \((\mathcal X,\mathcal A)\) specified
+in Appendix~\ref{app:model}; the observation space carries the corresponding
+product sigma-field, and the coordinates \(X,T,Y\) and all represented
+evaluation maps are measurable.  Countably infinite and uncountable standard
+Borel hosts contain the measurable finite blocks needed by every lower
+construction.  Finite ambient spaces can have smaller minimax risk, and no
+matching lower claim is made for finite ambient spaces.  The E and S arguments
+themselves remain valid on every nonempty standard Borel space, but the
+headline matching I theorem uses the fixed-infinite field.  Conditional
+expectations are versions on this declared probability space.
+
+The residual restriction is marginal: \(\E u^2\in[v_-,v_+]\).
+Conditional treatment-residual variance may vary and vanish pointwise.
+The upper curvature uses \(\E u^2\), while the lower witnesses in
+Appendices~\ref{app:qp}--\ref{app:assembly} retain constant conditional
+variance.  All declared pointwise envelopes remain in force.
+
+For any preassigned atomless standard Borel marginal \(\nu\),
+Appendix~\ref{app:fixed-nu} and Proposition~\ref{prop:fixed-nu-lower}
+give the same-pair lower and matching minimax bounds with constants
+independent of \(\nu\).  The public pair may depend on \(\nu,n\) and the
+budgets; the rule may know \(\nu\).  The transported saturation witness
+retains the original constants.
+
+Proposition~\ref{prop:envelope-bridge} gives the public rule
+\(\Pi_{[-3,3]}[P_N(TY)/B_0^2]\), whose expected error is at most
+\(1/\sqrt{2n}+4\omega\), where \(\omega=1-v_-/B_0^2\).
+This uniform bridge uses no budgets, M1, or \(v_+\), and still requires
+the bounded model.  No unbounded heteroskedastic extension is claimed.
+
+For every full-class function, sequential M1 supplies a represented sequence
+converging pointwise everywhere inside the fixed \(B_{\mathcal G}\) envelope.
+It preserves bounded empirical objectives exactly in the limit and preserves
+population \(L_2\) infima by dominated convergence against the
+\(B_0\)-bounded truths.
+This sequential approximation does not make an arbitrary full-class exact localized supremum measurable.  Accordingly, the model-field certificate
+uses outer expectation on each full difference class, while the upper proof uses only the ordinary expectation of measurable countable represented
+difference cores, dominated pointwise by the full-class supremum.  For the
+finite lower classes the supremum is measurable, so outer expectation and
+ordinary expectation are equal.  No equality between a general full-class
+localized complexity and its represented-core complexity is asserted.
+Countable infima, first-within-tolerance indices, finite arithmetic, and
+clipping are Borel.  The branch objectives over rational finite-dimensional
+parameters are objective-dense because the relevant bounded convex functions
+are continuous and coercive on the reduced domain.  M1 means that these
+countable representations and evaluation access are public.  Q1 means that
+for each \(n\) and declared budget cell the pair is fixed before data and any
+latent hard label, after which a pair-specific Borel rule is chosen; neither
+realized-data classes nor one pair fixed across all \(n\) are required.
+
+\subsection{Why the two strengthened fields are necessary}
+
+The finite-space exclusion is substantive.  On a singleton covariate space,
+pair the observations across the two independent halves and put
+\(D_i=T_{1i}-T_{2i}\), \(E_i=Y_{1i}-Y_{2i}\), and
+\(S_n=\sum_iD_i^2\).  The clipped ratio
+\[
+ \widehat\beta=\Pi_{[-3,3]}\left[
+ \frac{\sum_iD_iE_i}{S_n}\mathbf 1\{S_n>0\}\right]
+\]
+is Borel and satisfies, uniformly over every compatible law and public pair,
+\[
+ \E|\widehat\beta-\beta_0|
+ \le B_0\sqrt{\frac{2}{nv_-}}
+ +6\exp\!\left\{-\frac{nv_-^2}{8B_0^4}\right\}.
+ \tag{I.1}
+\]
+Indeed, differencing removes both constant nuisances, the residual numerator
+is conditionally centered with conditional second moment at most
+\(2B_0^2S_n\), and Hoeffding gives
+\(\Pr(S_n<nv_-)\le\exp\{-nv_-^2/(8B_0^4)\}\).  Yet the legal zero singleton
+pair in the cell \((a,s,b,t)=(0,1/2,0,1/2)\) has
+\(X=1/16+1/4=5/16\).  Thus a positive fixed multiple of \(q+X\) cannot be a
+uniform lower bound on that finite ambient space.
+
+The sequential premise is also substantive.  On \([0,1]\) with Lebesgue
+law, let \(R\) consist of \(g_B=\mathbf 1_{[0,1]\setminus B}\), where \(B\)
+ranges over finite unions of rational-endpoint intervals of measure at most
+\(1/2\), and let \(\cG=R\cup\{0\}\).  Every finite-coordinate neighborhood
+of zero meets \(R\), but
+\[
+ \inf_{r\in R}\norm r_2^2\ge\frac12
+ \quad\text{whereas}\quad
+ \inf_{g\in\cG}\norm g_2^2=0.
+ \tag{I.2}
+\]
+No sequence in \(R\) converges pointwise to zero: dominated convergence would
+force \(P(B_k)\to1\), contradicting \(P(B_k)\le1/2\).  Hence a closure phrase
+without the explicit per-element sequence does not supply the comparators
+used in Appendix~\ref{app:upper-initial} or the calibration suprema.
+
+The baseline minimax risk permits known pre-data upper certificates for the four budgets, an arbitrary Borel decision rule,
+expected absolute loss, \(2n\) iid observations, and constants depending on
+fixed \(\rho\), including fixed \(B_{\mathcal G}>0\) and
+\(c_{\rm rad}>0\).  It does not establish
+one pair-independent estimator, finite-query optimization,
+a polynomial-time algorithm, a high-probability confidence interval,
+empirical superiority, or universal constants over \(\rho\).  In particular,
+constants may degenerate as \(B_{\mathcal G}\downarrow0\) or
+\(c_{\rm rad}\downarrow0\), where the public class field collapses and the
+headline nuisance lower is not asserted.  The finite lower
+instances satisfy the same M1 interface and do not use inaccessible latent
+labels as learner inputs.  The target is a statistical PLM coefficient; a
+causal or potential-outcomes interpretation would require additional
+identification assumptions and is not claimed.
+Theorem~\ref{thm:approximation-main} and
+Appendix~\ref{app:stochastic-adaptation} strengthen the upper quantifiers:
+for each fixed $(\Gamma,\rho,n)$ one rule attains $q+W$ simultaneously
+over all four unknown budgets. Empirical local Rademacher fixed points
+on an independent covariate block supply the stochastic inputs to the
+double-calibrated rule of Appendix~\ref{app:approximation-adaptation}.
+A positive-radius margin transfers the core's linear certificate to
+the original full outer complexity; the public classes are unchanged.
+Separately,
+Proposition~\ref{prop:histogram-adaptation} and Appendix~\ref{app:budget-adaptation}
+give an all-budget-independent rule and the matching restricted outer-pair
+rate \(q+(a+s^2)(b+t^2)\) for full interval boxes on possibly different
+partitions around arbitrary public center functions. Theorem~\ref{thm:full-box-minimax}
+uses one pair depending on \(\rho,n,s,t\), uniform over \(a,b\).
+Proposition~\ref{prop:hilbert-main} and Appendix~\ref{app:hilbert-adaptation}
+give the smaller matching outer-pair rate \(q+ab\) for full affine Hilbert
+balls, again without budget inputs; zero-radius balls witness its lower.
+Both statements impose geometry beyond M1, and neither asserts a lower
+for every fixed pair. Finite implementations require explicitly evaluable
+centers and the stated partition/width or kernel interface.
+
+
+Antecedents include partially linear and orthogonal estimation
+\citep{robinson1988root,chernozhukov2018doubledebiased,foster2023orthogonal},
+structure-agnostic product bounds \citep{balakrishnan2023fundamentalstructureagnostic},
+two-mixture testing \citep{robins2009semiparametric}, and Gu's four-budget
+question \citep{gu2025structureagnosticplm}.

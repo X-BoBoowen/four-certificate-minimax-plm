@@ -1,0 +1,193 @@
+\section{Complete outcome-oriented O lower certificate}
+\label{app:o}
+
+Assume first \(n\ge16\), \(t^2\ge q\), and \(t(a\wedge t)>0\).
+Let \(w=a\wedge t\), \(N=2n\),
+\[
+\begin{aligned}
+ \lambda_\rho&=\min\left\{1,\frac{192c_{\rm rad}}{23},
+                         128B_{\mathcal G}\right\},&
+ \gamma&=\frac{\lambda_\rho m_\rho t}{4},&
+ \eta&=\frac w{256},\\
+ \Delta&=\frac{\gamma\eta}{v_0+\gamma^2},&
+ p&=\left\lceil e^{64Nt^2}\right\rceil,& A&=B_0/2.
+\end{aligned}
+ \tag{D.1}
+\]
+Use the fixed-space, finite-support Walsh convention in Appendix~\ref{app:qp}
+with this value of \(p\), and write \(z=\sigma\phi_j\).  Both labels have the common
+propensity \(\pi=z\gamma\) and use the channel (C.6) at mean \(z\gamma\).
+Their target/outcome-nuisance pairs are
+\[
+ (\beta_0,\mu_0)=(0,z\eta),\qquad
+ (\beta_1,\mu_1)=(\Delta,0).
+ \tag{D.2}
+\]
+Given \(X,T=u\), set \(Y=AR\) with
+\[
+ \Pp_\ell(R=r\mid X,T=u)
+ =\frac12\left[1+r\frac{\beta_\ell u+\mu_\ell(X)}A\right].
+ \tag{D.3}
+\]
+
+\subsection{Raw laws, PLM, variance, and envelopes}
+
+For \(u\in\{-L,0,L\}\), write
+\[
+ a_{\pm L}=\frac{v_0+\gamma^2}{2L^2},\quad
+ a_0=1-\frac{v_0+\gamma^2}{L^2},\quad
+ b_u=\frac{\gamma u}{2L^2}.
+\]
+The complete conditional masses are
+\begin{align}
+ P_{0,z}(u,r)&=\tfrac12(a_u+zb_u)(1+rz\eta/A),\nonumber\\
+ P_{1,z}(u,r)&=\tfrac12(a_u+zb_u)(1+r\Delta u/A).
+ \tag{D.4}
+\end{align}
+There are no omitted atoms.  The treatment factors are positive by
+(C.5)--(C.7), while \(\eta<A\) and \(\Delta L<A\), so the outcome factors
+are positive.  Summing over \(r\) and then \(u\) proves normalization for
+each label and sign.
+
+The channel gives \(\E(T\mid X)=z\gamma\) and
+\(\operatorname{Var}(T\mid X)=v_0\) under both labels.  Equation (D.3)
+gives \(\E(Y\mid X,T)=\beta_\ell T+\mu_\ell(X)\), so the PLM residual is
+conditionally centered.  In particular,
+\[
+ \E_0(TY\mid X)=\gamma\eta
+ =\Delta(v_0+\gamma^2)=\E_1(TY\mid X).
+ \tag{D.5}
+\]
+The scales satisfy
+\(\gamma\le m_\rho/4\), \(\eta\le1/256\),
+\(\Delta L\le\eta/4\), and
+\(\Delta\le1/(4096B_0)\).  Hence \(T,u,Y,\varepsilon,\pi,\mu,\beta\) obey
+the original law envelope.  Moreover
+\(\gamma\le\lambda_\rho/256\le B_{\mathcal G}\), so every public
+candidate obeys the declared class envelope.  This proves exact
+class-model membership, not just
+observable-moment matching.
+
+\subsection{One public pair and both budget types}
+
+Before the label, coordinate, or sign is selected, publish
+\[
+ \cG_\mu=\{0\},\qquad
+ \cG_\pi=\{\sigma\gamma\phi_j:j\in[p],\ \sigma\in\{-1,1\}\}.
+ \tag{D.6}
+\]
+Label zero has outcome approximation error \(\eta\le a\); label one has
+zero error.  The outcome stochastic complexity is zero.  Both propensity
+truths lie in \(\cG_\pi\), so propensity approximation is zero.  The
+propensity difference class has at most \(4p^2\) elements and envelope
+\(2\gamma\).  Since \(\log(32p^2)\le258nt^2\), Lemma~\ref{lem:massart}
+gives, for every \(r'\ge t\),
+\[
+ \mathfrak R_{n,P_X}(r';\Delta\cG_\pi)
+ <46\gamma t,\qquad
+ \frac{\mathfrak R_{n,P_X}(r';\Delta\cG_\pi)}{3r'}
+ \le\frac{23\lambda_\rho}{384}t
+ \le\frac{c_{\rm rad}}2t\le c_{\rm rad}t.
+ \tag{D.7}
+\]
+The inequalities hold for every \(r'\ge t\) with \(r'>0\).  At \(t=0\),
+the class is \(\{0\}\) and its complexity is zero at every positive radius.
+The finite pair is M1.  Publishing the dictionary does not publish the
+realized coordinate, sign, or label.
+
+\subsection{Common reference and two independent Gram routes}
+
+The sign average of label zero is
+\[
+ Q_0(u,r)=\tfrac12(a_u+rb_u\eta/A),
+\]
+while label one has
+\(Q_1(u,r)=\tfrac12a_u(1+r\Delta u/A)\).  They agree exactly when
+\[
+ \Delta a_uu=b_u\eta.
+ \tag{D.8}
+\]
+For \(u=\pm L\), (D.8) is
+\(\Delta(v_0+\gamma^2)=\gamma\eta\); at \(u=0\), both sides vanish.
+Thus their common reference is
+\[
+ Q(u,r)=\tfrac12(a_u+rb_u\eta/A).
+ \tag{D.9}
+\]
+It is positive because
+\(\abs{b_u}/a_u\le t/4\) and \(\eta/A\le t/384\).
+
+Put \(e=\eta/A\) and \(d_u=\Delta u/A\).  Direct division yields
+\[
+ h_0(u,r)=\frac{b_u+ra_ue}{a_u+rb_ue},\qquad
+ h_1(u,r)=\frac{b_u}{a_u}.
+ \tag{D.10}
+\]
+The second formula keeps the label-one outcome factor: it cancels exactly
+between numerator and the positive reference.  Both coefficients are
+centered because summing \(Qh_\ell\) over \(r\) leaves \(b_u\), and
+\(\sum_ub_u=0\).  Therefore
+\begin{align}
+ K_0&=\sum_{u,r}\frac{(b_u+ra_ue)^2}{2(a_u+rb_ue)}
+ \le t^2/9,\nonumber\\
+ K_1&=\sum_u\frac{b_u^2}{a_u}
+ =\frac{\gamma^2}{v_0+\gamma^2}\le t^2/256.
+ \tag{D.11}
+\end{align}
+
+Independently, write \(P_{\ell,z}=Q+zC_\ell\), where
+\[
+ C_0=\tfrac12(b_u+ra_ue),\qquad
+ C_1=\tfrac12b_u(1+rd_u).
+\]
+Direct raw-mass multiplication gives
+\[
+ \sum_{u,r}\frac{P_{\ell,z}P_{\ell,z'}}Q
+ =1+zz'\sum_{u,r}\frac{C_\ell^2}Q.
+ \tag{D.12}
+\]
+The two sums are exactly those in (D.11); for label one the positive factor
+\(1+rd_u\) cancels only after multiplication.  Walsh orthogonality then
+gives the full Gram entries \(1+K_\ell\), \(1-K_\ell\), and one according
+as coordinates/signs agree, signs oppose, or coordinates differ.
+
+\subsection{Mixture distance, testing, and all-n closure}
+
+Mix uniformly over the same \(2p\) coordinate/sign choices within each
+label.  Lemma~\ref{lem:testing-tools} and (D.11) give
+\[
+ \chi^2(\overline P_\ell^N,Q^N)
+ \le\frac{e^{NK_\ell}}p
+ \le e^{-(64-1/9)Nt^2}<e^{-511}.
+ \tag{D.13}
+\]
+Therefore the cross-label TV is below \(1/2\).  The target separation obeys
+\[
+ \Delta
+ =\frac{\lambda_\rho m_\rho t(a\wedge t)}
+ {1024(v_0+\gamma^2)}
+ \ge\frac{\lambda_\rho m_\rho}
+ {1024(v_0+m_\rho^2/16)}
+ t(a\wedge t).
+ \tag{D.14}
+\]
+Applying (C.1) inside this one fixed public pair, then the learner infimum
+and outer pair supremum, gives the nonparametric O lower with one eighth of
+(D.14).
+
+If \(t^2<q\), then \(t(a\wedge t)<q\), and (C.9) supplies the claim.  If
+\(n<16\), then \(t(a\wedge t)\le1\le4q\).  If \(a=0\) or \(t=0\), the
+right-hand side is zero.  The cases cover every \(n\ge1\), including
+\(n=16,t^2=q\), so
+\[
+ \risk(a,s,b,t)\ge c_{O,\rho}t(a\wedge t),
+ \quad
+ c_{O,\rho}=
+ \min\left\{\frac{\lambda_\rho m_\rho}
+ {8192(v_0+m_\rho^2/16)},
+             \frac{3d_\rho^\star}{32}\right\}>0.
+ \tag{D.15}
+\]
+The exact variance is \(v_0\) under all components, so singleton intervals
+are covered.  This witness keeps the propensity common and is not a variable
+renaming of the P witness.

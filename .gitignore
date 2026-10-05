@@ -1,0 +1,28 @@
+# TeX build artifacts (canonical PDFs remain tracked)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.xdv
+*.nav
+*.snm
+*.vrb
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Duplicate and auxiliary outputs from the analytic figure generator
+/paper/figures/+rate_ray_data.csv
+/paper/figures/+theory_summary.png
+/paper/figures/+theory_summary.svg
+/paper/figures/theory_summary.svg

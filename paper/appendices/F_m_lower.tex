@@ -1,0 +1,174 @@
+\section{Complete common-stochastic M certificate}
+\label{app:m}
+
+Assume first \(n\ge16\), \(w=s\wedge t>0\), and \(w^2\ge q\).
+Put
+\[
+\begin{aligned}
+ N&=2n,& p&=\left\lceil e^{64Nw^2}\right\rceil,& A&=B_0/2,\\
+ \lambda_\rho&=\min\left\{1,\frac{192c_{\rm rad}}{23},
+                         128B_{\mathcal G}\right\},&
+ \gamma&=\frac{\lambda_\rho m_\rho w}{4},&
+ \eta&=\frac{\lambda_\rho w}{256},\\
+ \Delta&=\frac{\gamma\eta}{v_0+\gamma^2}.
+\end{aligned}
+ \tag{F.1}
+\]
+Use the fixed-space, finite-support Walsh convention in Appendix~\ref{app:qp}
+with this value of \(p\), and write \(z=\sigma\phi_j\).  The two labels share
+\(\pi=z\gamma\) and the treatment channel (C.6).  They have
+\[
+ (\beta_0,\mu_0)=(0,z\eta),\qquad
+ (\beta_1,\mu_1)=(\Delta,0).
+ \tag{F.2}
+\]
+The conditional binary response channel is (D.3).
+
+\subsection{Raw laws, PLM, and one public M1 pair}
+
+For \(u\in\{-L,0,L\}\), let
+\[
+ \alpha_{\pm L}=\frac{v_0+\gamma^2}{2L^2},\quad
+ \alpha_0=1-\frac{v_0+\gamma^2}{L^2},\quad
+ \xi_u=\frac{\gamma u}{2L^2}.
+\]
+The complete raw masses are
+\begin{align}
+ P_{0,z}(u,r)&=\tfrac12(\alpha_u+z\xi_u)(1+rz\eta/A),\nonumber\\
+ P_{1,z}(u,r)&=\tfrac12(\alpha_u+z\xi_u)(1+r\Delta u/A).
+ \tag{F.3}
+\end{align}
+Every factor is positive by (C.5)--(C.7),
+\(\eta<A\), and \(\Delta L<A\); summing proves normalization.
+Both labels have exact treatment residual variance \(v_0\), and the response
+definition gives the PLM conditional mean.  The inequalities
+\(\abs T,\abs u<B_0\), \(\abs Y=B_0/2\),
+\(\eta\le1/256\), and \(\Delta L<1/4096\) certify every envelope.
+In addition, \(\gamma,\eta\le\lambda_\rho/256\le B_{\mathcal G}\),
+so both public dictionaries satisfy the fixed candidate envelope.
+
+Before the latent variables, publish
+\[
+ \cG_\pi=\{\sigma\gamma\phi_j:j\in[p],\ \sigma\in\{-1,1\}\},\qquad
+ \cG_\mu=\{0\}\cup
+ \{\sigma\eta\phi_j:j\in[p],\ \sigma\in\{-1,1\}\}.
+ \tag{F.4}
+\]
+Both labels have zero approximation error.  The pair is finite M1 and is
+identical under both labels.
+
+\subsection{Separate stochastic-budget certificates}
+
+Since \(p\le2e^{64Nw^2}\) and \(nw^2\ge4\),
+\[
+ \log(32p^2)<258nw^2.
+ \tag{F.5}
+\]
+The outcome difference class has fewer than \(8p^2\) elements and envelope
+\(2\eta\).  Lemma~\ref{lem:massart} gives, for every \(r'\ge s>0\),
+\[
+ \frac{\mathfrak R_n(r';\Delta\cG_\mu)}{3r'}
+ <\frac{46\eta w}{3s}
+ =\frac{23\lambda_\rho w^2}{384s}
+ \le\frac{c_{\rm rad}}2s\le c_{\rm rad}s.
+ \tag{F.6}
+\]
+The propensity difference class has at most \(4p^2\) elements and envelope
+\(2\gamma\), so, for every \(r'\ge t>0\),
+\[
+ \frac{\mathfrak R_n(r';\Delta\cG_\pi)}{3r'}
+ <\frac{46\gamma w}{3t}
+ =\frac{23\lambda_\rho m_\rho w^2}{6t}
+ \le\frac{23\lambda_\rho}{384}t
+ \le\frac{c_{\rm rad}}2t\le c_{\rm rad}t.
+ \tag{F.7}
+\]
+The final inequalities use \(w\le s,t\) separately; the notation
+\(w=s\wedge t\) alone is not a budget proof.  All displayed quotients use
+positive radii.  If \(w=0\), both classes collapse to zero and both
+complexities vanish at every positive radius.
+
+\subsection{Common reference and two Gram calculations}
+
+Put \(e=\eta/A\), \(d_u=\Delta u/A\).  The sign averages of (F.3) are
+\[
+ Q_0(u,r)=\tfrac12(\alpha_u+r\xi_ue),\qquad
+ Q_1(u,r)=\tfrac12\alpha_u(1+rd_u).
+\]
+They agree atomwise because
+\[
+ \Delta\alpha_uu=\xi_u\eta:
+ \tag{F.8}
+\]
+at \(u=\pm L\), this is
+\(\Delta(v_0+\gamma^2)=\gamma\eta\); at zero both sides vanish.  Hence
+\[
+ Q(u,r)=\tfrac12(\alpha_u+r\xi_ue)
+ \tag{F.9}
+\]
+is common.  It is positive since
+\(\abs{\xi_u}/\alpha_u<w/16\) and \(e\le w/384\).
+
+The centered likelihood coefficients are
+\[
+ h_0=\frac{\xi_u+r\alpha_ue}{\alpha_u+r\xi_ue},\qquad
+ h_1=\frac{\xi_u}{\alpha_u}.
+ \tag{F.10}
+\]
+Summing \(Qh_\ell\) over \(r\) leaves \(\xi_u\), whose sum is zero.
+The denominator margin gives
+\[
+ K_0=\E_Qh_0^2<w^2/9,\qquad
+ K_1=\sum_u\frac{\xi_u^2}{\alpha_u}
+ =\frac{\gamma^2}{v_0+\gamma^2}<w^2/256.
+ \tag{F.11}
+\]
+
+Independently, write \(P_{\ell,z}=Q+zC_\ell\), with
+\[
+ C_0=\tfrac12(\xi_u+r\alpha_ue),\qquad
+ C_1=\tfrac12\xi_u(1+rd_u).
+\]
+Raw multiplication gives
+\[
+ \sum_{u,r}\frac{P_{\ell,z}P_{\ell,z'}}Q
+ =1+zz'\sum_{u,r}\frac{C_\ell^2}Q.
+ \tag{F.12}
+\]
+The two raw sums equal (F.11) exactly.  Restoring
+\(z=\sigma\phi_j(X)\) produces Gram entries \(1+K_\ell\),
+\(1-K_\ell\), and one by Walsh orthogonality.
+
+\subsection{Mixture distance, testing, and all-n closure}
+
+For uniform coordinate/sign mixtures, (C.3) and (F.11) yield
+\[
+ \chi^2(\overline P_\ell^N,Q^N)
+ \le e^{-(64-1/9)Nw^2}<e^{-511}.
+ \tag{F.13}
+\]
+Thus cross-label TV is below \(1/4\).  The target gap satisfies
+\[
+ \Delta=\frac{\lambda_\rho^2m_\rho w^2}
+ {1024(v_0+\gamma^2)}
+ \ge\frac{\lambda_\rho^2m_\rho w^2}
+ {1024(v_0+m_\rho^2/16)}.
+ \tag{F.14}
+\]
+The expected-loss test within the common public pair gives one eighth of
+(F.14).
+
+If \(w=0\), the claim is trivial.  If \(n<16\), then
+\(w^2\le1\le4q\); if \(n\ge16,w^2<q\), use (C.9).  These branches are
+exhaustive and their lower bounds are compared by a maximum.  Therefore
+\[
+ \risk(a,s,b,t)\ge c_{M,\rho}(s\wedge t)^2,\quad
+ c_{M,\rho}=
+ \min\left\{\frac{\lambda_\rho^2m_\rho}
+ {8192(v_0+m_\rho^2/16)},
+             \frac{c_{q,\rho}}4\right\}.
+ \tag{F.15}
+\]
+This covers \(s=t\), either imbalanced ordering, both zero faces, every
+\(n\), and singleton variance intervals.  A learner may scan the entire
+public dictionary: the TV bound already quantifies over every Borel rule.

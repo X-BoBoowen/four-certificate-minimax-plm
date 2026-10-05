@@ -1,0 +1,388 @@
+\section{Testing calculus, the parametric lower, and the P certificate}
+\label{app:qp}
+
+\subsection{Finite testing tools}
+\label{app:lower-tools}
+
+\begin{lemma}[Expected-loss testing, chi-square, and finite Gram mixtures]
+\label{lem:testing-tools}
+Let \(Q_0,Q_1\) be laws whose component parameters equal
+\(\theta_0,\theta_1\), respectively, with
+\(\Delta=\abs{\theta_1-\theta_0}\).  Then every decision rule satisfies
+\[
+ \max_{\ell=0,1}\E_{Q_\ell}\abs{\widehat\theta-\theta_\ell}
+ \ge\frac{\Delta}{4}\{1-\operatorname{TV}(Q_0,Q_1)\}.
+ \tag{C.1}
+\]
+If \(P\ll Q\), then
+\[
+ \operatorname{TV}(P,Q)
+ \le\frac12\sqrt{\chi^2(P,Q)}.
+ \tag{C.2}
+\]
+Finally, suppose \(P_{\ell,j,\sigma}\), \(j\in[p]\),
+\(\sigma\in\{-1,1\}\), have common reference \(Q\), and their one-observation
+likelihood Gram entries are \(1+K_\ell\) for the same coordinate/sign,
+\(1-K_\ell\) for the same coordinate/opposite sign, and one otherwise.
+For the uniform \(N\)-sample mixture \(\overline P_\ell^N\),
+\[
+ \chi^2(\overline P_\ell^N,Q^N)
+ =\frac{\{(1+K_\ell)^N+(1-K_\ell)^N\}/2-1}{p}.
+ \tag{C.3}
+\]
+\end{lemma}
+\begin{proof}
+Threshold \(\widehat\theta\) at the midpoint.  On a testing error its
+absolute loss is at least \(\Delta/2\).  The sum of the two testing errors is
+at least \(1-\operatorname{TV}(Q_0,Q_1)\), proving (C.1).
+For (C.2), write \(L=dP/dQ\) and apply Cauchy--Schwarz to
+\(\frac12\E_Q\abs{L-1}\).
+
+For (C.3), expand the square of the uniform mixture likelihood.  Product
+independence raises every one-observation Gram entry to the \(N\)-th power.
+Among the \((2p)^2\) ordered pairs there are \(2p\) equal-sign diagonal
+pairs, \(2p\) opposite-sign same-coordinate pairs, and \(4p(p-1)\)
+off-coordinate pairs.  Divide their sum by \(4p^2\) and subtract one.
+\end{proof}
+
+\begin{lemma}[Finite-class complexity]
+\label{lem:massart}
+If a finite class \(\mathcal H\) has cardinality \(M\) and empirical
+envelope \(\max_{h\in\mathcal H}\norm h_n\le R\), then
+\[
+ \E_\epsilon\sup_{h\in\mathcal H}
+ \frac1n\sum_{i=1}^n\epsilon_ih(X_i)
+ \le R\sqrt{\frac{2\log M}{n}}.
+ \tag{C.4}
+\]
+\end{lemma}
+\begin{proof}
+For \(\lambda>0\), the maximum is bounded by the log-sum-exp divided by
+\(\lambda\).  Conditional independence of the signs and
+\(\cosh x\le e^{x^2/2}\) bound its conditional expectation by
+\(\log M/\lambda+\lambda R^2/(2n)\).  Optimize at
+\(\lambda=\sqrt{2n\log M}/R\).  A localized subclass only decreases the
+supremum, so (C.4) is valid at every radius.
+\end{proof}
+
+Every application below takes \(\mathcal H\) to be a symmetric finite
+difference class; hence \(\mathcal H=-\mathcal H\), and the one-sided supremum
+in (C.4) equals its absolute-value version.
+
+\subsection{The exact three-point treatment channel}
+\label{app:three-point}
+
+Fix the strict lower-endpoint slack stratum, write \(v_0=v_-\), and put
+\[
+ m_\rho=\min\left\{\frac1{64},\frac{v_0}{4B_0},
+                 \frac{B_0-\sqrt{v_0}}4\right\},\qquad
+ \lambda_\rho=\min\left\{1,\frac{192c_{\rm rad}}{23},
+                         128B_{\mathcal G}\right\},\qquad
+ L=\sqrt{v_0}+2m_\rho.
+ \tag{C.5}
+\]
+Then \(m_\rho>0\), \(0<\lambda_\rho\le1\),
+\(v_0+m_\rho^2<L^2\),
+\(Lm_\rho\le v_0/4\), and \(L+m_\rho<B_0\).
+For \(\abs m\le m_\rho\), define on \(\{-L,0,L\}\)
+\begin{align}
+ p_L(m)&=\frac{v_0+m^2+Lm}{2L^2},&
+ p_{-L}(m)&=\frac{v_0+m^2-Lm}{2L^2},\nonumber\\
+ p_0(m)&=1-\frac{v_0+m^2}{L^2}.
+ \tag{C.6}
+\end{align}
+All masses are positive: the smaller side numerator is at least
+\(v_0-Lm_\rho\ge3v_0/4\), and the middle numerator is positive by (C.5).
+They sum to one, and direct calculation gives
+\[
+ \E T=m,\qquad \E T^2=v_0+m^2,\qquad
+ \operatorname{Var}(T)=v_0.
+ \tag{C.7}
+\]
+Moreover \(\abs T<B_0\) and \(\abs{T-m}<B_0\).  This is the only treatment
+channel used in the four nonparametric witnesses.
+
+\subsection{A native parametric lower for every budget cell}
+\label{app:q-lower}
+
+Place a point-mass covariate law on the fixed ambient space (so \(X\) is
+constant), let both public classes be \(\{0\}\), take
+\(T=\pm\sqrt{v_0}\) equiprobably, and set
+\[
+ d_\rho^\star=
+ \min\{3,B_0/16,B_0/(16\sqrt{v_-})\},\qquad
+ \delta_n=d_\rho^\star/\sqrt n.
+\]
+For \(\theta\in\{-\delta_n,\delta_n\}\), let \(Y=(B_0/2)R\), where \(R\in\{-1,1\}\) and
+\[
+ \Pp_\theta(R=1\mid T=t)=\frac12+\frac{\theta t}{B_0}.
+ \tag{C.8}
+\]
+Then \(\E(Y\mid T)=\theta T\), so \(\beta=\theta\), both nuisances vanish,
+and \(\varepsilon=Y-\theta T\) is conditionally centered.  The probabilities
+lie in \([7/16,9/16]\);
+\[
+ |\beta|=|\theta|\le d_\rho^\star\le3,\qquad
+ |\varepsilon|\le B_0/2+|\theta|\sqrt{v_0}\le9B_0/16.
+\]
+Thus target membership and all envelopes hold for the raw law before any
+estimator clipping; the treatment residual variance is exactly \(v_0\).
+
+For completeness, this scalar experiment also admits the same
+common-reference audit used below.  On its four \((t,r)\) atoms,
+\[
+ P_\theta(t,r)=\frac14\left(1+\frac{2r\theta t}{B_0}\right),
+ \qquad Q(t,r)=\frac14.
+\]
+Thus \(dP_{\pm\delta_n}/dQ=1\pm h\), where
+\(h(t,r)=2r\delta_nt/B_0\), \(\E_Qh=0\), and
+\[
+ K_q=\E_Qh^2=\frac{4(d_\rho^\star)^2v_0}{nB_0^2}
+ \le\frac1{64n}.
+\]
+The one-observation diagonal and cross Gram entries are \(1+K_q\) and
+\(1-K_q\).  Product independence gives the exact second moment
+\[
+ \chi^2(P_{\pm\delta_n}^{\,N},Q^N)=(1+K_q)^N-1
+ <\frac1{31}<\frac1{16},\qquad N=2n.
+\]
+Indeed \((1+K_q)^N\le e^{1/32}<32/31\), where
+\(e^x<1/(1-x)\) for \(0<x<1\).  Hence each label is within TV
+\(1/(2\sqrt{31})<3/32\) of \(Q^N\), and the cross-label TV is below
+\(3/16<1/4\).  This independently verifies positivity, likelihood
+ratios, both Gram entries, product second moment, and TV conversion for the
+native \(q\) experiment.
+Lemma~\ref{lem:testing-tools} yields
+\begin{equation}
+ \risk(a,s,b,t)\ge c_{q,\rho}q,\qquad
+ c_{q,\rho}=3d_\rho^\star/8>0,
+ \tag{C.9}
+\end{equation}
+for every declared budget cell.  The public singleton pair is fixed before
+the label and is a finite M1 pair.
+
+\subsection{P hard family: raw laws and model certificate}
+\label{app:p-raw}
+
+For every Walsh construction in Appendices C--F, preselect a measurable
+injection
+\[
+ \iota:\bigsqcup_{m\ge1}(\mathbb Z/2\mathbb Z)^m\longrightarrow\mathcal X
+\]
+into the same fixed ambient space.  Such an injection exists because the
+domain is countable and every singleton in an infinite standard Borel space
+is measurable.  When \(p\) directions are required, set
+\(m=\lceil\log_2(p+1)\rceil\), let \(S_m\) be the finite image of the
+\(m\)-th block, and take \(P_X\) uniform on \(S_m\).  Choose \(p\) distinct
+nonzero characters and pull each back through \(\iota_m^{-1}\) on \(S_m\),
+extending it by zero off \(S_m\).  The extended characters are measurable,
+bounded by one, and under this \(P_X\) have mean zero, unit \(L_2(P_X)\)
+norm, and pairwise orthogonal Gram matrix.  Their finite public classes are
+their own sequential M1 representations.  Thus only the finite support law
+and public pair vary; \((\mathcal X,\mathcal A)\) never does.
+
+Assume first \(n\ge16\), \(s^2\ge q\), and \(s(b\wedge s)>0\).  Let
+\[
+ N=2n,\quad w=b\wedge s,\quad
+ p=\left\lceil e^{64Ns^2}\right\rceil,\quad
+ A=B_0/2,
+\]
+and use the \(p\) characters from the convention above.  They are
+Rademacher-valued, mean zero, and orthonormal.  For \(z=\sigma\phi_j\), define
+\[
+ \eta=\frac{m_\rho w}{4},\quad
+ \gamma=\frac{\lambda_\rho s}{256},\quad
+ \Delta=\frac{2\eta\gamma}{v_0},\quad
+ \kappa=\gamma+\Delta\eta.
+ \tag{C.10}
+\]
+The two labels are
+\[
+ (\beta_0,\pi_0,\mu_0)=(0,z\eta,z\gamma),\qquad
+ (\beta_1,\pi_1,\mu_1)=(\Delta,-z\eta,z\kappa).
+ \tag{C.11}
+\]
+Use (C.6) with treatment means \(\pm z\eta\).  Given \(X,T=t\), let
+\(Y=AR\), \(R\in\{-1,1\}\), and
+\[
+ \Pp_\ell(R=r\mid X,T=t)
+ =\frac12\left[1+r\frac{\beta_\ell t+\mu_\ell(X)}A\right].
+ \tag{C.12}
+\]
+The scales satisfy \(\eta\le1/256\), \(\gamma\le1/256\),
+\(\Delta\le1/(2048B_0)\), and \(\kappa\le2\gamma\).
+Also \(\Delta L+\kappa<A\), and
+\(\kappa\le2\gamma\le\lambda_\rho/128\le B_{\mathcal G}\).
+Thus every conditional probability is strict; all variables, nuisances,
+target, \(u\), and \(\varepsilon\) obey the \(B_0\) envelope; and every
+public candidate obeys the \(B_{\mathcal G}\) envelope.
+
+For \(t\in\{-L,0,L\}\), write
+\[
+ a_{\pm L}=\frac{v_0+\eta^2}{2L^2},\quad
+ a_0=1-\frac{v_0+\eta^2}{L^2},\quad
+ b_t=\frac{\eta t}{2L^2}.
+\]
+Suppressing \(X\), the complete six-atom masses are
+\begin{align}
+ P_{0,z}(t,r)&=\tfrac12(a_t+zb_t)(1+rz\gamma/A),\nonumber\\
+ P_{1,z}(t,r)&=\tfrac12(a_t-zb_t)(1+r(\Delta t+z\kappa)/A).
+ \tag{C.13}
+\end{align}
+Their factors are positive, and summing first over \(r\), then \(t\), gives
+one.  Equation (C.7) gives exact residual variance \(v_0\) under both labels.
+Moreover
+\[
+ \E_0(Y\mid X)=\E_1(Y\mid X)=z\gamma,\qquad
+ \E_0(TY\mid X)=\E_1(TY\mid X)=\eta\gamma,
+\]
+because \(\kappa=\gamma+\Delta\eta\) and
+\(\Delta v_0=2\eta\gamma\).  Hence (C.13) defines legal PLMs, not merely
+moment-matched arrays.
+
+\subsection{P public pair and budget certificate}
+\label{app:p-budget}
+
+Before choosing the label, coordinate, or sign, publish
+\[
+ \cG_\pi=\{0\},\qquad
+ \cG_\mu=\{z_{j,\sigma}\gamma,z_{j,\sigma}\kappa:
+                  j\in[p],\ \sigma\in\{-1,1\}\}.
+ \tag{C.14}
+\]
+Both propensity truths have distance \(\eta\le b\) from \(\cG_\pi\), whose
+difference class has zero complexity.  Both outcome truths belong to
+\(\cG_\mu\), so their outcome approximation error is zero.  The outcome
+difference class has at most \(16p^2\) elements and envelope \(2\kappa\).
+Because \(Ns^2\ge8\),
+\[
+ \log(32p^2)\le129Ns^2=258ns^2.
+\]
+Lemma~\ref{lem:massart}, used globally and hence on every localized subset,
+gives, for every \(r'\ge s\),
+\[
+ \mathfrak R_{n,P_X}(r';\Delta\cG_\mu)
+ \le2\kappa\sqrt{\frac{2\log(32p^2)}n}
+ <46\kappa s\le\frac{23\lambda_\rho}{64}s^2.
+\]
+Consequently the normalized all-radii ratio is at most
+\[
+ \frac{23\lambda_\rho}{192}s\le c_{\rm rad}s
+\]
+for every \(r'\ge s\) with \(r'>0\).  At \(s=0\), the class is the
+singleton zero class and its complexity is zero at every positive radius.
+The covariate support and public classes are finite inside the fixed infinite
+ambient space, so listing the classes is a sequential M1 representation.  The exponentially large dictionary is public; the realized
+\((j,\sigma,\ell)\) is not learner input.
+
+\subsection{P common reference and likelihood kernels}
+\label{app:p-kernel}
+
+Averaging (C.13) over \(z=\pm1\), label zero has reference
+\[
+ Q_0(t,r)=\tfrac12(a_t+rb_t\gamma/A).
+\]
+The label-one average equals this atomwise exactly when
+\[
+ \Delta a_tt=b_t(\kappa+\gamma).
+ \tag{C.15}
+\]
+For \(t=\pm L\), multiplying by \(2L^2/t\) turns (C.15) into
+\(\Delta(v_0+\eta^2)=\eta(\kappa+\gamma)\), which follows from (C.10).
+At \(t=0\), both sides are separately zero.  Thus
+\[
+ Q(t,r)=\tfrac12(a_t+rb_t\gamma/A)
+ \tag{C.16}
+\]
+is common to both labels.  It is strictly positive because
+\(\abs{b_t}/a_t\le s/16\) and \(\gamma/A\le s/384\).
+
+Put \(c=\gamma/A\), \(k=\kappa/A\), and \(d_t=\Delta t/A\).
+Dividing the raw masses by (C.16) gives
+\[
+ \frac{dP_{0,z}}{dQ}=1+zh_0,\quad
+ h_0=\frac{b_t+ra_tc}{a_t+rb_tc},
+\]
+\[
+ \frac{dP_{1,z}}{dQ}=1+zh_1,\quad
+ h_1=\frac{ra_tk-b_t(1+rd_t)}{a_t+rb_tc}.
+ \tag{C.17}
+\]
+Both coefficients are centered under \(Q\): summing \(Qh_0\) over \(r\)
+leaves \(b_t\), while summing \(Qh_1\) leaves \(-b_t\), and
+\(\sum_tb_t=0\).  The bounds
+\[
+ \abs{h_0}<s/15,\qquad \abs{h_1}<s/14
+\]
+follow from
+\(\abs{b_t}/a_t\le s/16\), \(c\le s/384\),
+\(k\le s/192\), and \(\abs{d_t}\le s/3072\).  Hence
+\begin{equation}
+ 0\le K_0=\E_Qh_0^2\le s^2/225,\qquad
+ 0\le K_1=\E_Qh_1^2\le s^2/196.
+ \tag{C.18}
+\end{equation}
+
+This likelihood calculation has an independent raw-mass check.  Write
+\(P_{\ell,z}=Q+zC_\ell\), where
+\[
+ C_0(t,r)=\tfrac12(b_t+ra_tc),\qquad
+ C_1(t,r)=\tfrac12\{ra_tk-b_t(1+rd_t)\}.
+\]
+Then \(\sum C_\ell=0\), and direct multiplication gives
+\[
+ \sum_{t,r}\frac{P_{\ell,z}P_{\ell,z'}}Q
+ =1+zz'\sum_{t,r}\frac{C_\ell^2}Q.
+ \tag{C.19}
+\]
+The last sum is exactly \(K_\ell\) in (C.18), without using the likelihood
+formula.  Restoring \(z=\sigma\phi_j(X)\), Walsh orthogonality gives Gram
+entries \(1+K_\ell\), \(1-K_\ell\), and one for equal signs, opposite signs,
+and distinct coordinates, respectively.
+
+\subsection{P mixture distance, testing, and all-n closure}
+\label{app:p-testing}
+
+Let \(\overline P_\ell^N\) be the uniform mixture over the same \(2p\)
+coordinate/sign choices within label \(\ell\).  Lemma~\ref{lem:testing-tools}
+and (C.18) give the exact identity
+\[
+ \chi^2(\overline P_\ell^N,Q^N)
+ =\frac{\{(1+K_\ell)^N+(1-K_\ell)^N\}/2-1}{p}
+ \le e^{-(64-1/196)Ns^2}<e^{-511}.
+ \tag{C.20}
+\]
+Thus each mixture is within TV \(e^{-511/2}/2\) of the same \(Q^N\), and
+\(\operatorname{TV}(\overline P_0^N,\overline P_1^N)<1/2\).  Every
+component in label zero has target zero, and every component in label one
+has
+\[
+ \Delta=\frac{\lambda_\rho m_\rho}{512v_0}s(b\wedge s).
+\]
+For each rule tailored to the fixed public pair, its law supremum dominates
+the finite Bayes average.  Lemma~\ref{lem:testing-tools}, followed by the
+inner infimum and only then the outer pair supremum, gives
+\[
+ \risk(a,s,b,t)\ge
+ \frac{\lambda_\rho m_\rho}{4096v_0}s(b\wedge s)
+\]
+on the nonparametric branch.
+
+The remaining cases use only the already proved scalar risk (C.9), by a
+maximum of two valid lower bounds.  If \(s^2<q\), then
+\(s(b\wedge s)<q\).  If \(n<16\), then
+\(s(b\wedge s)\le1\le4q\).  At \(s=0\) or \(b=0\) the desired term is zero.
+These cases are exhaustive, including \(n=1\) and equality at \(n=16\).
+Therefore, for all \(n\ge1\) and all budgets,
+\begin{equation}
+ \risk(a,s,b,t)\ge c_{P,\rho}s(b\wedge s),\qquad
+ c_{P,\rho}=
+ \min\left\{\frac{\lambda_\rho m_\rho}{4096v_0},
+             \frac{3d_\rho^\star}{32}\right\}>0.
+ \tag{C.21}
+\end{equation}
+ All laws in the nonparametric prior have exact variance \(v_0=v_-\), so
+ (C.21) also covers singleton variance intervals.  No Bayes risks are added;
+ Appendix~\ref{app:same-pair} embeds this active native P witness with q and
+ the other active native families; inactive component inequalities reuse the
+ common q splice before the fixed-pair maximum.

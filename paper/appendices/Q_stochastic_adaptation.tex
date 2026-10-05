@@ -1,0 +1,522 @@
+\section{Adaptation to all four budgets}
+\label{app:stochastic-adaptation}
+
+This appendix removes the stochastic-budget inputs from
+Theorem~\ref{thm:approximation-adaptation}. An independent block of
+covariates supplies two empirical local Rademacher fixed points. The
+construction follows the empirical fixed-point method of
+\citet{bartlett2005local}. Two additional steps are needed for the present
+experiment: controlling the star hull of an arbitrary represented
+difference core without multiplying its declared radius by a logarithm,
+and transferring a resulting linear core certificate to the full outer
+complexity under sequential M1. Neither step assumes that a public class
+is star-shaped.
+
+\begin{theorem}[Adaptation to all four budgets]
+\label{thm:full-budget-adaptation}
+Fix a represented public instance $\Gamma$, the regularity tuple $\rho$,
+and $n\ge1$. There is one Borel rule
+$\delta_{\Gamma,\rho,n}:\mathcal Z^{2n}\to[-3,3]$ such that,
+simultaneously for every $(a,s,b,t)\in[0,1]^4$ and
+$P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)$,
+\begin{equation}
+ \begin{split}
+ \E_P|\delta_{\Gamma,\rho,n}-\beta(P)|
+ &\le C_\rho\left[q+
+ \min\{a(b+t)+a^2+s^2,\ b(a+s)+(b+t)^2\}\right]\\
+ &\le C_\rho(q+W).
+ \end{split}
+ \label{eq:full-budget-adaptation-rate}
+\end{equation}
+The rule uses $\Gamma,\rho,n$ and the observations, but none of
+$a,s,b,t$, the covariate law, or a population comparator. The constant
+is independent of the public instance, the budgets, the law, and $n$.
+Only the average lower bound $\E u^2\ge v_-$ is required.
+\end{theorem}
+
+\subsection{A star-hull bound for an arbitrary countable class}
+\label{app:stochastic-star}
+
+For a countable symmetric class $\mathcal H$ containing zero, write
+\[
+ \operatorname{star}(\mathcal H)
+ =\{\alpha f:f\in\mathcal H,\ 0\le\alpha\le1\}.
+\]
+Every localized supremum over this class equals the corresponding
+supremum with $\alpha\in\mathbb Q\cap[0,1]$. Indeed, any permitted
+real coefficient can be approximated from below by rational
+coefficients, preserving either a population or an empirical upper
+norm constraint and converging in every finite-sample linear process.
+Squares and population quadratic means are also continuous in the
+scaling coefficient, so the same argument makes the square-process
+suprema and ball-inclusion events below measurable. We may use the real star hull
+for its scaling property and the countable rational star hull for
+measurability, without changing a supremum.
+
+\begin{lemma}[Cost of the star hull above the logarithmic floor]
+\label{lem:stochastic-star-cost}
+Let $\mathcal H$ be a countable symmetric class containing zero, with
+envelope one. Let $m\ge1$, $h_m=\sqrt{\log(em)/m}$, and $s\ge0$.
+Suppose that, for a fixed $\kappa\ge0$,
+\[
+ \mathfrak R_{m,P_X}(r;\mathcal H)\le\kappa sr,
+ \qquad r\ge s,\quad r>0.
+\]
+There is a constant $C_\star$, depending only on $\kappa$, such that
+\begin{equation}
+ \mathfrak R_{m,P_X}(r;\operatorname{star}(\mathcal H))
+ \le C_\star(s+h_m)r,
+ \qquad r\ge s\vee h_m.
+ \label{eq:stochastic-star-cost}
+\end{equation}
+No closure of $\mathcal H$ under scaling is assumed.
+\end{lemma}
+\begin{proof}
+Fix $s\vee h_m\le r<1$ and put
+\[
+ J=\lceil\log_2(1/r)\rceil,\qquad R_j=2^jr,
+ \qquad
+ Z_j=\sup_{\substack{f\in\mathcal H\\\|f\|_2\le R_j}}
+ \left|\frac1m\sum_{i=1}^m\epsilon_i f(X_i)\right|,
+ \quad 0\le j\le J.
+\]
+If $\alpha f$ has population norm at most $r$, a function with
+$\|f\|_2\le r$ contributes at most $Z_0$. A function with
+$2^{j-1}r<\|f\|_2\le2^jr$ has $\alpha\le2^{1-j}$.
+Consequently, pointwise in the sample and signs, its star-hull
+supremum is at most
+\begin{equation}
+ \max\{Z_0,\ \max_{1\le j\le J}2^{1-j}Z_j\}.
+ \label{eq:stochastic-star-max}
+\end{equation}
+
+Apply Theorem 2.1 of \citet{bartlett2005local} to the signed
+observations $(X_i,\epsilon_i)$ and the centered symmetric class
+$\{(x,e)\mapsto ef(x):\|f\|_2\le R_j\}$. Its range is
+$[-1,1]$, its variance is at most $R_j^2$, and its Rademacher mean
+is exactly $\mathfrak R_{m,P_X}(R_j;\mathcal H)$: multiplying
+$\epsilon_i$ by a second independent Rademacher sign preserves the
+joint sign distribution. With the source theorem's tuning parameter
+equal to one, it follows that
+\[
+ \Pr\left\{Z_j>4\kappa sR_j+
+ R_j\sqrt{\frac{2x_j}{m}}+\frac{8x_j}{3m}\right\}
+ \le e^{-x_j}.
+\]
+Take $x_j=y+2j+\log4$, for $y\ge0$, and sum these failures.
+After multiplying the outer-shell bounds by $2^{1-j}$, the maximum
+in \eqref{eq:stochastic-star-max} is at most
+\[
+ C\kappa sr+
+ Cr\sqrt{\frac{y+J+1}{m}}+\frac{C(y+1)}m
+\]
+except with probability at most $e^{-y}$. Here
+$\sup_{j\ge1}2^{-j}(y+2j+\log4)\le C(y+1)$.
+Integrating this tail gives
+\[
+ \mathfrak R_{m,P_X}(r;\operatorname{star}(\mathcal H))
+ \le C\kappa sr+Cr\sqrt{\frac{J+1}{m}}+\frac Cm.
+\]
+Since $r\ge h_m$, we have $J+1\le C\log(em)$ and
+$m^{-1}\le rh_m$. This proves
+\eqref{eq:stochastic-star-cost} for $r<1$. For $r\ge1$ the
+localized core and star-hull suprema are their global suprema, which
+are equal; the retained condition $r\ge s\vee h_m$ allows the
+original certificate to prove the assertion directly.
+The argument includes $s=0$. It takes the expectation of a maximum
+using concentration; summing the means of the shells would give an
+unnecessary logarithmic factor.
+\end{proof}
+
+\subsection{An empirical radius and its population certificate}
+\label{app:stochastic-calibration}
+
+For an iid calibration sample $X_1,\ldots,X_m$, let $Q_m$ denote
+its empirical average. Auxiliary Rademacher signs below are averaged
+exactly over their $2^m$ possible values; no additional randomization
+is part of the estimating rule.
+
+\begin{lemma}[Measurable calibration of a countable difference core]
+\label{lem:stochastic-empirical-radius}
+Let $\mathcal F$ be a countable symmetric class containing zero,
+with envelope at most $L$, where $L\ge1$ is known. Suppose that
+\begin{equation}
+ \mathfrak R_{m,P_X}(u;\mathcal F)
+ \le\kappa su,\qquad u\ge s,\quad u>0,
+ \label{eq:stochastic-core-input}
+\end{equation}
+for some $s\ge0$ and fixed $\kappa$. Set
+$\overline{\mathcal F}=\{f/L:f\in\mathcal F\}$,
+$x=6\log(em)$, and, for $r>0$, define
+\begin{align}
+ \widehat\Phi(r)
+ &=2^{-m}\sum_{e\in\{-1,1\}^m}
+ \sup_{f\in\overline{\mathcal F}}
+ \left(1\wedge\sqrt{\frac{2r}{Q_mf^2}}\right)
+ \left|\frac1m\sum_{i=1}^m e_if(X_i)\right|,
+ \label{eq:stochastic-empirical-phi}\\
+ \widehat\psi(r)&=20\widehat\Phi(r)+\frac{31x}{m}.
+ \label{eq:stochastic-empirical-psi}
+\end{align}
+A summand with $Q_mf^2=0$ is defined to be zero. Let
+\begin{equation}
+ \widehat r
+ =\inf\{r\in\mathbb Q:r>0,\ \widehat\psi(r)\le r\},
+ \qquad \widehat R=L\sqrt{\widehat r}.
+ \label{eq:stochastic-radius-rule}
+\end{equation}
+This defines a finite positive Borel statistic, using neither $s$ nor
+$P_X$. With probability at least $1-4e^{-x}$, simultaneously,
+\begin{align}
+ \mathfrak R_{m,P_X}(u;\mathcal F)
+ &\le\frac{\widehat R}{10}\,u
+ &&\text{for every }u\ge\widehat R,
+ \label{eq:stochastic-radius-certificate}\\
+ \widehat R&\le C_{L,\kappa}(s+h_m).
+ \label{eq:stochastic-radius-size}
+\end{align}
+Moreover $\widehat r\ge31x/m$ on every sample.
+\end{lemma}
+\begin{proof}
+Write $\mathcal S=\operatorname{star}(\overline{\mathcal F})$.
+The expression in \eqref{eq:stochastic-empirical-phi} is exactly
+\[
+ \widehat\Phi(r)
+ =\E_\epsilon\sup_{\substack{f\in\mathcal S\\Q_mf^2\le2r}}
+ \left|\frac1m\sum_i\epsilon_if(X_i)\right|.
+\]
+It is Borel for each $r>0$, by its finite sign average and countable
+supremum. Each term before taking the supremum, as a function of
+$\sqrt r$, is Lipschitz with constant at most $\sqrt2$: when
+$Q_mf^2>0$, divide its linear process by $\sqrt{Q_mf^2}$ and use
+Cauchy--Schwarz. Thus $\widehat\Phi$ is continuous on $(0,\infty)$.
+It is nondecreasing and $\widehat\Phi(r)/\sqrt r$ is nonincreasing.
+The same properties hold for $\widehat\psi$, which is positive
+because of its deterministic additive term. It follows that
+$\widehat\psi$ has a unique positive fixed point and that
+$\widehat\psi(r)\le r$ exactly when $r$ is at least this fixed
+point. In particular \eqref{eq:stochastic-radius-rule} equals the
+fixed point and is Borel. The bounds
+\[
+ \frac{31x}{m}\le\widehat r\le20+\frac{31x}{m}
+\]
+follow from $0\le\widehat\Phi(r)\le1$. These observations also
+handle functions with zero empirical norm.
+
+For the lower comparison, define the nonrandom function
+\[
+ \Phi(r)=\mathfrak R_{m,P_X}(\sqrt r;\mathcal S),\qquad
+ \psi_1(r)=10\Phi(r)+\frac{11x}{m},
+\]
+and let $r_1$ be the unique positive fixed point of $\psi_1$.
+Scaling in $\mathcal S$ shows directly that $\Phi$ is nondecreasing
+and $\Phi(r)/\sqrt r$ is nonincreasing. These properties also give
+continuity on $(0,\infty)$ and the asserted fixed-point properties
+of $\psi_1$. We use three primitive results of
+\citet{bartlett2005local}: Corollary 2.2, Lemma 3.6, and Lemma A.4,
+always with envelope one. Their suprema are measurable by the
+rational-star observation above.
+
+Corollary 2.2 at the fixed, population-dependent radius $r_1$ gives
+\[
+ \{f\in\mathcal S:Pf^2\le r_1\}
+ \subseteq\{f\in\mathcal S:Q_mf^2\le2r_1\}
+\]
+except with probability $e^{-x}$, because
+$r_1=10\Phi(r_1)+11x/m$. Apply the lower comparison in Lemma A.4
+with its tuning parameter $1/2$ to the fixed class on the left.
+Its range is $[-1,1]$, so, except with probability $e^{-x}$,
+\[
+ \Phi(r_1)
+ \le2\E_\epsilon
+ \sup_{\substack{f\in\mathcal S\\Pf^2\le r_1}}
+ \left|\frac1m\sum_i\epsilon_if(X_i)\right|+
+ \frac{2x}{m}.
+\]
+Symmetry makes the absolute supremum equal to the source's
+one-sided supremum. On these two events,
+\[
+ r_1=10\Phi(r_1)+\frac{11x}{m}
+ \le20\widehat\Phi(r_1)+\frac{31x}{m}
+ =\widehat\psi(r_1),
+\]
+and therefore $r_1\le\widehat r$. For every
+$v\ge\sqrt{\widehat r}$, the sub-root property implies
+\[
+ \mathfrak R_{m,P_X}(v;\mathcal S)
+ =\Phi(v^2)\le\frac{\psi_1(v^2)}{10}
+ \le\frac{\sqrt{r_1}}{10}v
+ \le\frac{\sqrt{\widehat r}}{10}v.
+\]
+Since $\overline{\mathcal F}\subseteq\mathcal S$, rescaling by
+$L$ yields, for $u\ge L\sqrt{\widehat r}$,
+\[
+ \mathfrak R_{m,P_X}(u;\mathcal F)
+ \le\frac{\sqrt{\widehat r}}{10}u
+ \le\frac{\widehat R}{10}u,
+\]
+which proves \eqref{eq:stochastic-radius-certificate}.
+
+For the upper comparison, \eqref{eq:stochastic-core-input} and
+$L\ge1$ imply
+\[
+ \mathfrak R_{m,P_X}(v;\overline{\mathcal F})
+ \le\kappa sv,\qquad v\ge s,\quad v>0.
+\]
+Lemma~\ref{lem:stochastic-star-cost} supplies a constant $C_\star$
+such that, with $w=s+h_m$,
+\[
+ \Phi(r)\le C_\star w\sqrt r
+ \qquad\text{whenever }\sqrt r\ge s\vee h_m.
+\]
+Freeze
+\begin{equation}
+ D=[120(C_\star+1)]^2,\qquad r_0=Dw^2.
+ \label{eq:stochastic-proof-radius}
+\end{equation}
+These quantities are proof devices; the statistic uses neither of
+them. Since $x/m=6h_m^2\le6w^2$, this choice ensures
+\[
+ 2r_0\ge20\Phi(2r_0)+\frac{26x}{m}.
+\]
+Lemma 3.6 at $2r_0$ consequently gives
+\[
+ \{f\in\mathcal S:Q_mf^2\le2r_0\}
+ \subseteq\{f\in\mathcal S:Pf^2\le4r_0\}
+\]
+except with probability $e^{-x}$. The upper comparison in Lemma A.4,
+again with tuning parameter $1/2$ and range $[-1,1]$, applied to
+the fixed population ball on the right gives, except with
+probability $e^{-x}$,
+\[
+ \E_\epsilon
+ \sup_{\substack{f\in\mathcal S\\Pf^2\le4r_0}}
+ \left|\frac1m\sum_i\epsilon_if(X_i)\right|
+ \le\frac32\Phi(4r_0)+\frac{4x}{3m}.
+\]
+On these two events,
+\[
+ \begin{split}
+ \widehat\psi(r_0)
+ &\le30\Phi(4r_0)+\frac{173x}{3m}\\
+ &\le\{60C_\star\sqrt D+346\}w^2
+ \le Dw^2=r_0.
+ \end{split}
+\]
+Thus $\widehat r\le r_0$ and
+$\widehat R\le L\sqrt D(s+h_m)$. A union bound over the four
+events proves the lemma. This argument uses only the stated ball
+inclusions and Rademacher comparisons. In particular, it does not
+require a loss-class assumption $Pf^2\le BPf$ or a lower bound on
+an unregularized population fixed point. The positive confidence
+term handles that fixed point being arbitrarily small or zero.
+\end{proof}
+
+\subsection{Sequential M1 transfers a linear certificate to the full class}
+\label{app:stochastic-full-transfer}
+
+\begin{lemma}[Transfer with a positive radius margin]
+\label{lem:stochastic-full-transfer}
+For a public class satisfying sequential M1 and the common envelope,
+every sample size $m\ge1$, every $u\ge0$, and every $\eta>0$ satisfy
+\begin{equation}
+ \mathfrak R^*_{m,P_X}(u;\Delta\mathcal G)
+ \le\mathfrak R_{m,P_X}(u+\eta;\Delta\mathcal G^{\rm rep}).
+ \label{eq:stochastic-margin-transfer}
+\end{equation}
+Consequently, if for some $R\ge0$ and $c\ge0$ the core has the
+linear certificate
+\[
+ \mathfrak R_{m,P_X}(v;\Delta\mathcal G^{\rm rep})\le cRv,
+ \qquad v\ge R,\quad v>0,
+\]
+then the same certificate holds for the full outer complexity at
+every $u\ge R$ with $u>0$.
+\end{lemma}
+\begin{proof}
+Fix $f=g-g'\in\Delta\mathcal G$ with $\|f\|_2\le u$.
+Sequential M1 gives represented sequences converging pointwise
+everywhere to $g$ and $g'$. Their differences $f_k$ converge
+pointwise everywhere to $f$ and, by the common envelope and
+dominated convergence, in $L_2(P_X)$. Thus
+$\|f_k\|_2\le u+\eta$ eventually. For every covariate sample
+and every sign vector, the signed sample average of $f_k$ converges
+to that of $f$. Its limit in absolute value is bounded by the core
+supremum at radius $u+\eta$. Taking the supremum over all such
+full-class $f$ proves the pointwise inequality
+\[
+ Z_{\Delta\mathcal G,m}(u)
+ \le Z_{\Delta\mathcal G^{\rm rep},m}(u+\eta).
+\]
+The right side is measurable and is therefore an admissible
+majorant in the definition of outer expectation. This proves
+\eqref{eq:stochastic-margin-transfer}. Under the linear certificate,
+the right side in that display is at most $cR(u+\eta)$; let
+$\eta\downarrow0$. No equality of full and represented localized
+complexities at the same radius is asserted.
+\end{proof}
+
+\subsection{The three-block rule and its risk}
+\label{app:stochastic-wrapper}
+
+We now prove Theorem~\ref{thm:full-budget-adaptation}. All constants
+of Appendix~\ref{app:approximation-adaptation} are frozen for the
+known regularity tuple
+\[
+ \rho'=(B_0,B_{\mathcal G},v_-,v_+,2c_{\rm rad}).
+\]
+Let $m_{\rho'}$ be its fixed lower sample-size threshold, enlarged
+to at least two. If $m=\lfloor2n/3\rfloor<m_{\rho'}$, define the
+rule to be zero. There are only finitely many such $n$, with a
+bound depending only on $\rho$, so its absolute loss, at most
+three, is absorbed by $C_\rho q$. This includes $n=1$.
+
+For the remaining $n$, split the first $3m\le2n$ observations
+deterministically into three disjoint blocks, each of size $m$.
+The first is the calibration block; its treatments and outcomes
+are not used. The second and third supply the two input halves of
+the rule of Theorem~\ref{thm:approximation-adaptation} at sample
+size $m$. Any leftover observations are unused. In particular,
+$m\le n$ and $n/m\le2$.
+
+For each $\nu\in\{\mu,\pi\}$, apply
+\eqref{eq:stochastic-empirical-phi}--\eqref{eq:stochastic-radius-rule}
+on the calibration covariates to
+$\mathcal F_\nu=\Delta\mathcal G_\nu^{\rm rep}$, with
+$L=\max\{1,2B_{\mathcal G}\}$. Denote its output by
+$\widehat R_\nu$. Define
+\begin{equation}
+ C_{\rm cap}=\max\{1,(60c_{\rm rad})^{-1}\},\qquad
+ S=\min\{1,C_{\rm cap}\widehat R_\mu\},\qquad
+ T=\min\{1,C_{\rm cap}\widehat R_\pi\}.
+ \label{eq:stochastic-capped-inputs}
+\end{equation}
+The final rule is the explicit estimator of
+Appendix~\ref{app:approximation-adaptation}, with public instance
+$\Gamma$, regularity tuple $\rho'$, sample size $m$, and stochastic
+inputs $(S,T)$, applied to the last two blocks. Here $T$ in
+\eqref{eq:stochastic-capped-inputs} denotes the scalar stochastic
+input, not a treatment observation.
+
+The estimator just specified is jointly Borel in its two stochastic
+inputs and its observations. To see this directly from Appendix~
+\ref{app:approximation-adaptation}, its initial fits and pilot are
+Borel and do not use those inputs; each calibration tolerance is a
+continuous function of their squares; and its constraints, countable
+feasible-set decisions, countable infima, and first strict approximate
+minimizers are Borel jointly in inputs and observations. The constants
+are fixed for $\rho'$ before either input is selected. Composition
+with \eqref{eq:stochastic-radius-rule} and
+\eqref{eq:stochastic-capped-inputs} therefore gives one Borel rule
+on $\mathcal Z^{2n}$. Its definition contains none of the four
+declared budgets.
+
+Fix now any $(a,s,b,t)$ and compatible $P$, solely for the proof.
+For every fixed population-localized countable core, adding $n-m$
+independent signed observations and applying conditional Jensen
+gives
+\begin{equation}
+ \mathfrak R_{m,P_X}(u;\mathcal F_\nu)
+ \le\frac nm\mathfrak R_{n,P_X}(u;\mathcal F_\nu).
+ \label{eq:stochastic-sample-transfer}
+\end{equation}
+Indeed, condition on the first $m$ covariates and signs; the added
+signed summands have conditional mean zero, and the supremum of
+absolute linear averages is convex. Countability permits ordinary
+conditional expectation. Combining this with core inclusion into
+the full class and the original certificate gives
+\[
+ \mathfrak R_{m,P_X}(u;\mathcal F_\mu)\le6c_{\rm rad}su
+ \quad(u\ge s,\ u>0),
+\]
+and the corresponding inequality with $t$ for $\mathcal F_\pi$.
+Thus Lemma~\ref{lem:stochastic-empirical-radius} applies with
+$\kappa=6c_{\rm rad}$. There is an event $E$ measurable with
+respect to the calibration covariates, of probability at least
+$1-8(em)^{-6}$, on which both output certificates hold and
+\begin{equation}
+ \widehat R_\mu\le C_\rho(s+h_m),\qquad
+ \widehat R_\pi\le C_\rho(t+h_m).
+ \label{eq:stochastic-both-sizes}
+\end{equation}
+One may take $E$ to be the intersection of the four fixed-radius
+events constructed for each core in the proof of that lemma. This
+description makes its measurability explicit, without a supremum
+over random population radii.
+
+On $E$, Lemma~\ref{lem:stochastic-full-transfer} turns each output
+core certificate into the same full outer certificate. If $S<1$,
+then $S=C_{\rm cap}\widehat R_\mu\ge\widehat R_\mu$, so for
+every $u\ge S$,
+\[
+ \mathfrak R^*_{m,P_X}(u;\Delta\mathcal G_\mu)
+ \le\frac{\widehat R_\mu}{10}u
+ \le6c_{\rm rad}Su=3c'_{\rm rad}Su.
+\]
+If $S=1$, use $s\le1$ in the original certificate and
+\eqref{eq:stochastic-sample-transfer}: for every $v\ge1$,
+\[
+ \mathfrak R_{m,P_X}(v;\mathcal F_\mu)
+ \le6c_{\rm rad}sv\le6c_{\rm rad}v.
+\]
+The positive-margin transfer of
+Lemma~\ref{lem:stochastic-full-transfer}, followed by letting the
+margin tend to zero, gives the required full outer bound
+$6c_{\rm rad}u$ for every $u\ge1$. The same two cases apply to
+$T$ and the propensity class. This argument uses ordinary Jensen
+only for countable cores; it does not require a conditional-Jensen
+identity for nonmeasurable full-class suprema.
+
+It follows that, for every calibration realization in $E$,
+\begin{equation}
+ P\in\mathcal P_{\rho',m,a,S,b,T}(\Gamma).
+ \label{eq:stochastic-conditional-certificate}
+\end{equation}
+The approximation budgets in this assertion are the original $a,b$:
+neither public class, either approximation infimum, nor the law has
+changed. Only the sample size, the stochastic certificates, and the
+fixed complexity constant have changed. Also, from
+\eqref{eq:stochastic-both-sizes},
+\[
+ S\le C_\rho(s+h_m),\qquad T\le C_\rho(t+h_m)
+ \quad\text{on }E.
+\]
+
+Condition on the calibration covariates. Independence of the three
+blocks leaves the other two blocks iid with joint law $P^{2m}$.
+For realizations in $E$, apply
+Theorem~\ref{thm:approximation-adaptation} using
+\eqref{eq:stochastic-conditional-certificate}. Its conditional
+expected absolute loss is bounded by
+\[
+ C_\rho\left[m^{-1/2}+
+ \min\{a(b+T)+a^2+S^2,\ b(a+S)+(b+T)^2\}\right].
+\]
+Quadratic absorption gives, on this same event,
+\begin{align*}
+ a(b+T)+a^2+S^2
+ &\le C_\rho\{a(b+t)+a^2+s^2+h_m^2\},\\
+ b(a+S)+(b+T)^2
+ &\le C_\rho\{b(a+s)+(b+t)^2+h_m^2\}.
+\end{align*}
+For the first inequality use $ah_m\le(a^2+h_m^2)/2$.
+For the second use $bh_m\le(b^2+h_m^2)/2$ and
+$b^2\le(b+t)^2$. Since $m$ is a fixed proportion of $n$,
+\[
+ m^{-1/2}\le Cq,\qquad
+ h_m^2=\frac{\log(em)}m\le Cq.
+\]
+Both the output and the target lie in $[-3,3]$, so the contribution
+from $E^c$ is at most $48(em)^{-6}\le Cq$. Averaging proves the
+first inequality in \eqref{eq:full-budget-adaptation-rate}.
+The second follows from $a^2+s^2\le(a+s)^2$ and the definition
+of $W$.
+
+All radii in the calibration rule are strictly positive because of
+the confidence term. Zero declared $s$ or $t$ enters the proof only
+through its original positive-radius certificate, which then
+vanishes; Lemma~\ref{lem:stochastic-star-cost} and all subsequent
+steps still apply. No radius-zero quotient, additional variance
+assumption, or fitted-index substitution into an unproved process
+event occurs. This completes the proof of
+Theorem~\ref{thm:full-budget-adaptation}.

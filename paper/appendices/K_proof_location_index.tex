@@ -1,0 +1,123 @@
+\section{Proof-location index and theorem dependency graph}
+\label{app:proof-index}
+
+\begin{center}
+\small
+\begin{tabular}{L{0.26\linewidth}L{0.64\linewidth}}
+\toprule
+Claim & Self-contained locator \\
+\midrule
+Model, M1, and minimax order & Appendix~\ref{app:model} and
+Appendix~\ref{app:measurability}. \\
+Sequential full-to-represented transfer &
+Lemma~\ref{lem:sequential-density-transfer}; applications in
+Appendices~\ref{app:upper-initial}, \ref{app:upper-o-calibration}, and
+\ref{app:upper-r-calibration}. \\
+Localized processes, joint class, and initial fits &
+Appendix~\ref{app:model}'s outer-expectation full-class certificate and
+countable-core localization; Lemmas~\ref{lem:bernstein} and
+\ref{lem:localized-process}, including the maximum-shell/confidence/range argument; joint localization and initial fits in Appendix~\ref{app:upper-initial}. \\
+O definition/calibration/oracle & Appendices
+\ref{app:upper-o-calibration}--\ref{app:upper-o-oracle}. \\
+R definition/calibration/oracle & Appendices
+\ref{app:upper-r-calibration}--\ref{app:upper-r-oracle}. \\
+Selector, fallback, and Q1 lift & Appendix~\ref{app:upper-selector}. \\
+Testing, finite Gram, Massart & Lemmas~\ref{lem:testing-tools} and
+\ref{lem:massart}; all lower amplitudes include the fixed positive
+\(\lambda_\rho\) where required. \\
+Fixed-space Walsh embedding & Appendix~\ref{app:p-raw}, opening convention;
+Appendices~\ref{app:qp}--\ref{app:m} use its measurable finite blocks and zero extensions. \\
+Equal-variance channel and target-capped \(q\) &
+Appendices~\ref{app:three-point} and \ref{app:q-lower}. \\
+P certificate & Appendices~\ref{app:p-raw}--\ref{app:p-testing}. \\
+O certificate & Appendix~\ref{app:o}, equations (D.1)--(D.15). \\
+\(ab\) certificate & Appendix~\ref{app:ab}, equations (E.1)--(E.13). \\
+\(M\) certificate & Appendix~\ref{app:m}, equations (F.1)--(F.15). \\
+Same-public-pair lift & Proposition~\ref{prop:same-pair-lower} and
+Appendix~\ref{app:same-pair}: common host, full classes, cross-band
+complexity, membership, arbitrary-rule reduction, and all-\(n\) splice. \\
+Lower assembly & Appendices~\ref{app:assembly} and \ref{app:same-pair}. \\
+Uniform envelope bridge & Proposition~\ref{prop:envelope-bridge} and its
+proof in Appendix~\ref{app:envelope-proof}: clipped empirical \(TY/B_0^2\), risk at most
+\(1/\sqrt{2n}+4(1-v_-/B_0^2)\), without budgets, M1, or \(v_+\). \\
+Fixed atomless marginal & Appendix~\ref{app:fixed-nu} and
+Proposition~\ref{prop:fixed-nu-lower}: same-pair \(q+X\) lower and matching
+minimax law, constants independent of the preassigned \(\nu\), known
+\(\nu\) permitted; saturation constants preserved. \\
+E/S boundary & Appendix~\ref{app:boundary}, equations (H.1)--(H.6). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Sharp box adaptation: Proposition~\ref{prop:histogram-adaptation} and
+Appendix~\ref{app:budget-adaptation}. Complexity controls the first two
+singleton-mass moments; trimming reduces each public residual to
+\(O_\rho(r^2+q)\). A cross moment and a controlled fallback yield \(q+AB\)
+without budgets. Theorem~\ref{thm:full-box-minimax} matches this by four
+rescaled cancellation families and the scalar family on one pair.
+
+Hilbert adaptation: Proposition~\ref{prop:hilbert-main} and
+Appendix~\ref{app:hilbert-adaptation}. Core support functions recover the
+normalized kernels; center projection and ridge residualization preserve
+average variance and yield \(q+ab\). The zero pair witnesses its restricted
+outer lower. Both structured results allow distinct nuisance geometries
+and give faster rates than the general all-budget-adaptive rule.
+
+Convex and union comparison: Proposition~\ref{prop:convex-geometry} and
+Appendix~\ref{app:convex-geometry}. Convexification preserves the global
+difference support function, while orthogonality preserves approximation
+distances. The same five lower families yield \(q+X\) for full dictionary
+\(\ell_1\) balls and finite unions of rank-at-most-one balls.
+Lemma~\ref{lem:hilbert-enclosure} gives the sharp enclosing-ball envelope
+cost. Theorem~\ref{thm:approximation-main} supplies the upper
+without any budget inputs.
+
+General-class approximation adaptation:
+Theorem~\ref{thm:approximation-adaptation} in
+Appendix~\ref{app:approximation-adaptation}. The fixed-anchor pilot
+has two second-moment bounds. Conditional transfer gives a known local
+propensity cap; two real-vector comparisons establish feasibility and
+the free-residual bounds. Double calibration, the pilot bounds and a
+proof-only budget partition give both directional rates for the same
+Borel rule, without $a,b$.
+Appendix~\ref{app:stochastic-adaptation} then removes $s,t$:
+Lemma~\ref{lem:stochastic-star-cost} controls the star hull,
+Lemma~\ref{lem:stochastic-empirical-radius} calibrates both radii,
+and Lemma~\ref{lem:stochastic-full-transfer} transfers their linear
+certificates to the full classes. A three-block split, capped inputs
+and joint Borel selection prove Theorem~\ref{thm:approximation-main}.
+
+The dependency DAG is
+\[
+\begin{gathered}
+\left.
+\begin{gathered}
+\text{outer-expectation full-class certificate}
+\longrightarrow\text{countable-core localization}\\
+\longrightarrow\text{positive-radius localized process}\\
+\text{sequential M1 transfer}
+\end{gathered}
+\right\}\\
+\longrightarrow\text{joint localization}\longrightarrow\text{initial fits}\\
+\longrightarrow
+\begin{cases}\text{O calibration}\longrightarrow\text{O tail},\\
+\text{R calibration}\longrightarrow\text{R tail},\end{cases}\\
+\{\text{O tail},\text{R tail},\text{fallback},\text{selector}\}\\
+\longrightarrow\text{fixed-pair upper}\longrightarrow\text{Q1 upper},\\
+\text{fixed-space Walsh embedding}+\text{four disjoint frequency bands}\\
++\text{target-capped scalar channel}+\text{three-point channel}\\
++\text{testing tools}\longrightarrow
+\{q,\text{every active native P/O/}ab\text{/M family}\}
+\subset\mathcal P(\Gamma^\star)\\
+\text{inactive named components}\longrightarrow\text{common q splice}\\
+\text{five component inequalities}\longrightarrow\text{fixed-pair maximum lower}
+\longrightarrow\text{interior characterization},\\
+\text{fixed atomless marginal transport}\longrightarrow\text{fixed-marginal lower},\\
+\text{envelope slack}\longrightarrow\text{uniform envelope bridge},\\
+\text{envelope equality}\longrightarrow\text{propensity identification}\\
+\longrightarrow\text{saturation theorem}.
+\end{gathered}
+\]
+The graph locates the argument dependencies; the cited statements and their
+proofs supply the mathematical justification.
+No project-internal file or historical terminal is a proof dependency.

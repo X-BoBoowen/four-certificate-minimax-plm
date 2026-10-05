@@ -1,0 +1,709 @@
+\section{Sharp adaptation on full interval boxes}
+\label{app:budget-adaptation}
+
+This appendix proves Proposition~\ref{prop:histogram-adaptation} for full
+interval boxes with separate countable partitions and arbitrary bounded
+Borel centers. Throughout, $N=2n$, $q=n^{-1/2}$, $A=a+s^2$, $B=b+t^2$,
+and all model and sequential-M1 conventions are those of
+Appendix~\ref{app:model}. The covariate law is arbitrary and unknown.
+The estimator is fixed for each $(\Gamma,\rho,n)$ before choosing any
+of the four certificates or a compatible law, and attains $q+AB$.
+
+\subsection{Public centers and separate represented groupings}
+
+For each $\nu\in\{\mu,\pi\}$, let $(C_{\nu j})_{j\ge1}$ be a
+countable Borel partition, and let $c_\nu$ be a bounded Borel function.
+The two partitions can differ, and a center need not be constant on
+its partition cells. Consider the full interval boxes
+\begin{equation}
+ \begin{aligned}
+ \cG_\nu&=
+ \left\{c_\nu+\sum_j\theta_j\ind_{C_{\nu j}}:
+       \theta_j\in[-h_{\nu j},h_{\nu j}]\text{ for every }j\right\},\\
+ h_{\nu j}&\ge0,\qquad |c_\nu(x)|+h_{\nu j}\le B_{\mathcal G}
+               \quad(x\in C_{\nu j}).
+ \end{aligned}
+ \label{eq:adaptation-boxes}
+\end{equation}
+Each class contains \emph{every independent} coordinate choice displayed in
+\eqref{eq:adaptation-boxes}; inclusion in a box would not suffice.
+These classes admit sequential-M1 cores: approximate the normalized
+coordinates on the first $k$ cells by rational numbers in $[-1,1]$, and
+use zero normalized coordinates elsewhere. Any supplied sequential-M1
+core may be used in the construction.
+
+Neither the centers nor the partitions are required as additional inputs.
+The original cores recover both centers and widths by
+\begin{equation}
+ \begin{aligned}
+ c_\nu(x)&=\tfrac12\left\{\sup_{\ell\ge1}g_{\nu,\ell}(x)
+                         +\inf_{\ell\ge1}g_{\nu,\ell}(x)\right\},\\
+ h_\nu(x)&=\tfrac12\left\{\sup_{\ell\ge1}g_{\nu,\ell}(x)
+                         -\inf_{\ell\ge1}g_{\nu,\ell}(x)\right\}.
+ \end{aligned}
+ \label{eq:adaptation-midpoint}
+\end{equation}
+These countable extrema are Borel and finite. Pointwise sequential M1
+transfers the full-class extrema $c_\nu(x)\pm h_{\nu j}$ to the core,
+which proves the equality. Define a separate equivalence relation for
+each side using its \emph{centered} core:
+\begin{equation}
+ i\sim_\nu k\quad\Longleftrightarrow\quad
+ g_{\nu,\ell}(X_i)-c_\nu(X_i)
+   =g_{\nu,\ell}(X_k)-c_\nu(X_k)
+ \quad\text{for every }\ell\ge1.
+ \label{eq:adaptation-equivalence}
+\end{equation}
+Each relation is Borel. Equality of all centered core evaluations
+implies equality of every centered full-class evaluation, by sequential
+M1. Two different cells on side $\nu$ are separated whenever either
+has positive width: vary that coordinate while holding the other fixed.
+Thus its groups are its occupied partition cells, except that its
+zero-width cells merge. Every centered public function on that side
+vanishes on the merged cells. No common refinement is taken.
+
+Set the public constants
+\begin{equation}
+ \alpha=\min\left\{\frac18,\frac{v_-}{8B_0^2}\right\}>0,
+ \qquad m=\lfloor\alpha N\rfloor.
+ \label{eq:adaptation-trimming-fraction}
+\end{equation}
+For each side, let $J_\nu$ contain the $m$ singleton rows with largest
+widths $h_\nu(X_i)$, or every singleton row if fewer than $m$ exist.
+Resolve equal widths by increasing sample index. Let $\mathsf A_\nu$
+have block $I_k-\mathbf1_k\mathbf1_k'/k$ on a group of size $k\ge2$,
+block $[0]$ on a row in $J_\nu$, and block $[1]$ on every other
+singleton. Then
+\begin{equation}
+ \mathsf A_\nu'=\mathsf A_\nu,\qquad \mathsf A_\nu^2=\mathsf A_\nu,
+ \qquad 0\preceq\mathsf A_\nu\preceq I_N,\qquad
+ (\mathsf A_\nu)_{ii}\ge\tfrac12\ind_{\{i\notin J_\nu\}}.
+ \label{eq:adaptation-projection}
+\end{equation}
+Every matrix entry is Borel: if
+$m_{\nu i}=\sum_k\ind_{\{i\sim_\nu k\}}$, it is
+$(\mathsf A_\nu)_{ik}=\ind_{\{i=k\}}\ind_{\{i\notin J_\nu\}}-
+ \ind_{\{i\sim_\nu k\}}\ind_{\{m_{\nu i}\ge2\}}/m_{\nu i}$.
+Also, $(\mathsf A_\nu)_{ik}\le0$ when $i\ne k$, and
+$\|\mathsf A_\nu z\|_\infty\le2\|z\|_\infty$.
+For a function $f$, write $f_X=(f(X_1),\ldots,f(X_N))'$,
+$\|z\|_N^2=z'z/N$, and $\|z\|_{N,1}=N^{-1}\sum_i|z_i|$.
+For a public function $g_\nu=c_\nu+z_\nu$, its centered part obeys
+$|z_\nu|\le h_{\nu j}$ on $C_{\nu j}$, and
+$\mathsf A_\nu(z_\nu)_X$ vanishes
+on repeated groups and trimmed rows, retaining its original values on
+the remaining singleton rows. In particular $|J_\nu|\le\alpha N$.
+
+\subsection{Localized complexity controls singleton amplitudes}
+
+The occupancy bound below controls the total singleton amplitude.
+Trimming converts this control into a squared residual bound of order
+$r^4+N^{-1}$.
+
+\begin{lemma}[An occupancy consequence of the full-box certificate]
+\label{lem:adaptation-occupancy}
+Fix either class in \eqref{eq:adaptation-boxes}, suppress its index
+(including in $\mathsf A=\mathsf A_\nu$), and
+let $r\in[0,1]$ be its stochastic upper certificate in (A.1). Set
+$p_j=P_X(C_j)$ and
+\[
+ K_\rho=\max\left\{\frac{3\sqrt3}{2}c_{\rm rad},
+                         27B_{\mathcal G}c_{\rm rad}^2\right\}.
+\]
+Then, for every $n\ge1$, including $r=0$,
+\begin{equation}
+ \sum_jp_jh_j(1-p_j)^{2n-1}
+ \le \sum_jp_jh_j e^{-np_j}\le K_\rho r^2.
+ \label{eq:adaptation-singleton-mass}
+\end{equation}
+Consequently every fixed centered public function $z$ satisfies
+\begin{equation}
+ \E\|\mathsf A z_X\|_{N,1}\le K_\rho r^2,
+ \qquad
+ \E\|\mathsf A z_X\|_N^2\le B_{\mathcal G}K_\rho r^2.
+ \label{eq:adaptation-residual-moments}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $\lambda_j=np_j$ and $L=\sum_jp_jh_j e^{-\lambda_j}$. Independent
+interval coordinates imply that $\Delta\cG$ contains the damped sign cube
+\[
+ f_\sigma=2\sum_j\sigma_jh_j e^{-\lambda_j/2}\ind_{C_j},
+ \qquad \sigma_j\in\{-1,1\}.
+\]
+Each such function has squared population norm at most
+$4B_{\mathcal G}L$. For the sample of size $n$ used in the complexity
+certificate, let $S_j=\sum_{i=1}^n\epsilon_i\ind_{\{X_i\in C_j\}}$.
+Then
+\[
+ \E S_j^2=\lambda_j,\qquad
+ \E S_j^4=np_j+3n(n-1)p_j^2\le\lambda_j+3\lambda_j^2.
+\]
+H\"older's inequality in the form
+$\E S_j^2\le(\E|S_j|)^{2/3}(\E S_j^4)^{1/3}$ gives, for
+$\lambda_j>0$,
+\[
+ \E|S_j|\ge\frac{(\E S_j^2)^{3/2}}{(\E S_j^4)^{1/2}}
+ \ge\frac{\lambda_j}{\sqrt{1+3\lambda_j}};
+\]
+the lower bound is also valid when $\lambda_j=0$. Maximizing the signs
+coordinatewise produces the measurable random variable
+$2n^{-1}\sum_jh_je^{-\lambda_j/2}|S_j|$, which is bounded above by
+the full localized supremum at radius $2\sqrt{B_{\mathcal G}L}$.
+Since $e^{\lambda/2}/\sqrt{1+3\lambda}\ge1/\sqrt3$ for
+$\lambda\ge0$, monotonicity of outer expectation and Tonelli's theorem
+give a complexity lower bound $2L/\sqrt3$.
+
+For $r>0$, evaluate (A.1) at
+$R=r\vee2\sqrt{B_{\mathcal G}L}$ to obtain
+\[
+ \frac{2L}{\sqrt3}\le3c_{\rm rad}r
+       \max\{r,2\sqrt{B_{\mathcal G}L}\}.
+\]
+If the maximum is $r$, this bounds $L$ by
+$(3\sqrt3/2)c_{\rm rad}r^2$; otherwise, squaring after division by
+$\sqrt L$ gives $L\le27B_{\mathcal G}c_{\rm rad}^2r^2$.
+If $r=0$ and $L>0$, the same cube at its positive containing radius
+contradicts the zero-budget requirement in (A.1), so $L=0$.
+No radius-zero quotient is used.
+
+Since $2n-1\ge n$, $(1-p_j)^{2n-1}\le e^{-np_j}$. The expected
+empirical amplitude on cells occupied exactly once in the full sample
+is exactly
+\[
+ \E\left[\frac1N\sum_{i=1}^Nh(X_i)
+          \ind_{\{\#\{k:X_k\in C(X_i)\}=1\}}\right]
+ =\sum_jp_jh_j(1-p_j)^{2n-1},
+\]
+where $h(x)=h_j$ on $C_j$ and $C(x)$ denotes the cell of $x$. Merged zero-width cells
+contribute zero. This proves the first residual bound; the second
+follows pointwise from $|z|^2\le B_{\mathcal G}|z|$ on the surviving
+singleton groups. The unknown probabilities are used only in this
+proof.
+\end{proof}
+
+\begin{lemma}[Squared residual bound after trimming]
+\label{lem:adaptation-trimmed-residual}
+Under Lemma~\ref{lem:adaptation-occupancy}, put
+\[
+ H=\frac1N\sum_{i=1}^Nh(X_i)
+       \ind_{\{\text{the own cell of }X_i\text{ occurs once}\}},
+ \qquad
+ R_N(r)=\alpha^{-1}
+       \sqrt{K_\rho^2r^4+\frac{2B_{\mathcal G}^2}{N}}.
+\]
+Then
+\begin{equation}
+ \E H^2\le K_\rho^2r^4+\frac{2B_{\mathcal G}^2}{N},
+ \qquad
+ \E\|\mathsf A z_X\|_N^2\le R_N(r)^2
+ \label{eq:adaptation-trimmed-moments}
+\end{equation}
+for every fixed centered public function $z$.
+\end{lemma}
+
+\begin{proof}
+If $N_j$ denotes the number of observations in cell $j$, then
+$H=N^{-1}\sum_jh_j\ind_{\{N_j=1\}}$. Replacing one observation changes
+only its source and destination cells' contributions, each by at most
+its width. Thus the replacement changes $H$ by at most
+$2B_{\mathcal G}/N$. Efron--Stein and
+Lemma~\ref{lem:adaptation-occupancy} give
+\[
+ \operatorname{Var}(H)\le2B_{\mathcal G}^2/N,
+ \qquad \E H\le K_\rho r^2,
+\]
+proving the first assertion. Zero-width cells contribute zero, so merging
+them in the represented equivalence relation does not change $H$.
+
+If any singleton remains after trimming, let $h_{\max}$ be its largest
+width. The $m$ trimmed rows and a remaining row attaining $h_{\max}$ all
+have widths at least $h_{\max}$. Therefore
+\[
+ (m+1)h_{\max}\le NH,\qquad
+ h_{\max}\le\frac{NH}{m+1}\le\frac H\alpha,
+\]
+because $m+1>\alpha N$. This also covers $m=0$. If every singleton was
+trimmed, the residual is zero. Otherwise, $\mathsf A z_X$ vanishes on
+all repeated groups and trimmed rows, and has absolute entries at most
+$h_{\max}$ on its remaining rows. Hence
+$\|\mathsf A z_X\|_N^2\le H^2/\alpha^2$, proving the second assertion.
+At $r=0$, $\E H=0$ also implies $H=0$ almost surely.
+\end{proof}
+
+\subsection{One stabilized rule for the two partitions}
+
+Put $\mathsf B=\mathsf A_\pi\mathsf A_\mu$. This matrix need not be
+symmetric or positive semidefinite. Its operator norm is at most one,
+and the off-diagonal entries of each factor are nonpositive. Thus
+\begin{equation}
+ \mathsf B_{ii}
+ =\sum_k(\mathsf A_\pi)_{ik}(\mathsf A_\mu)_{ki}
+ \ge\frac14\ind_{\{i\notin J_\pi\cup J_\mu\}},
+ \qquad
+ \mathsf B_{ii}=0\quad(i\in J_\pi\cup J_\mu).
+ \label{eq:adaptation-product-matrix}
+\end{equation}
+For sample vectors $T,Y,c_\mu,c_\pi$, define
+\begin{align}
+ D&=(T-c_\pi)'\mathsf B T/N,&
+ U&=(T-c_\pi)'\mathsf B(Y-c_\mu)/N,\nonumber\\
+ S_\mu&=T'\mathsf A_\mu T/N,&
+ V_\mu&=T'\mathsf A_\mu(Y-c_\mu)/N.
+ \label{eq:adaptation-affine-moments}
+\end{align}
+
+\begin{proposition}[All-four-certificate adaptation on full boxes]
+\label{prop:affine-histogram-adaptation}
+For every fixed sequential-M1 pair of the form
+\eqref{eq:adaptation-boxes}, the Borel rule
+\begin{equation}
+ \widehat\beta_{\rm box}=
+ \begin{cases}
+ \Pi_{[-3,3]}(U/D),&D\ge v_-/32,\\
+ \Pi_{[-3,3]}\{V_\mu/(S_\mu\vee(v_-/4))\},&D<v_-/32
+ \end{cases}
+ \label{eq:adaptation-affine-rule}
+\end{equation}
+uses only $(\Gamma,\rho,n)$ and satisfies, with a constant depending
+only on $\rho$, simultaneously for every $(a,s,b,t)\in[0,1]^4$ and
+every $P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)$,
+\begin{equation}
+ \E_P|\widehat\beta_{\rm box}-\beta(P)|
+ \le C_\rho\{q+(a+s^2)(b+t^2)\}.
+ \label{eq:adaptation-sharp-risk}
+\end{equation}
+This includes every $n\ge1$, every zero-budget boundary, and every
+regularity tuple with a nonempty compatible-law class.
+\end{proposition}
+
+\begin{proof}
+Write $\mu_X=(\mu_0)_X$, $\pi_X=(\pi_0)_X$, and define the proof
+quantities
+\[
+ d_\mu=\mu_X-c_\mu,\qquad d_\pi=\pi_X-c_\pi,\qquad
+ F_\nu=\|\mathsf A_\nu d_\nu\|_N,\qquad J=\E(F_\mu F_\pi).
+\]
+For any $\eta>0$, take fixed approximation comparators
+$g_\mu=c_\mu+z_\mu$, $g_\pi=c_\pi+z_\pi$ with errors at most
+$a+\eta$, $b+\eta$. Contraction and Minkowski's inequality, applied in
+$L_2(P^N)$ to their empirical residual norms, give
+\[
+ (\E F_\mu^2)^{1/2}\le a+\eta+R_N(s),
+ \qquad
+ (\E F_\pi^2)^{1/2}\le b+\eta+R_N(t).
+\]
+The rule does not use these comparators. Letting $\eta\downarrow0$
+handles unattained approximation infima and yields
+\begin{equation}
+ J\le\{a+R_N(s)\}\{b+R_N(t)\}.
+ \label{eq:adaptation-affine-moments-bound}
+\end{equation}
+
+\paragraph{Primary bias and noise.}
+The conditional-mean part of the primary score satisfies
+\begin{equation}
+ |d_\pi'\mathsf B d_\mu|/N
+ =|\langle\mathsf A_\pi d_\pi,\mathsf A_\mu d_\mu\rangle_N|
+ \le F_\pi F_\mu.
+ \label{eq:adaptation-bias}
+\end{equation}
+Its full decomposition is
+\[
+ U-\beta_0D=d_\pi'\mathsf B d_\mu/N
+       +u'\mathsf B d_\mu/N
+       +(T-c_\pi)'\mathsf B\varepsilon/N.
+\]
+Conditional on $X_{1:N}$, independence and centering of the $u_i$ give
+\[
+ \E\{(u'\mathsf B d_\mu/N)^2\mid X_{1:N}\}
+ \le B_0^2\|\mathsf B d_\mu\|^2/N^2
+ \le B_0^2(B_0+B_{\mathcal G})^2/N.
+\]
+Conditional on $(X_{1:N},T_{1:N})$, the independent centered
+$\varepsilon_i$ give the same bound for the other noise term, using
+$\|\mathsf B'(T-c_\pi)\|\le\|T-c_\pi\|$. Consequently
+\begin{equation}
+ \E|U-\beta_0D|
+ \le J+2B_0(B_0+B_{\mathcal G})/\sqrt N.
+ \label{eq:adaptation-score}
+\end{equation}
+On the primary branch the clipped loss is at most
+$32|U-\beta_0D|/v_-$.
+
+\paragraph{Denominators under average conditional variance.}
+Put $v_i=\E(u_i^2\mid X_i)$,
+$\overline v=N^{-1}\sum_i v_i$, and
+$\Omega=\operatorname{diag}(v_i)$. Since $0\le v_i\le B_0^2$,
+$\E\overline v\ge v_-$, and $|J_\nu|\le\alpha N$,
+\begin{align}
+ \Pp(\overline v<3v_-/4)&\le\frac{16B_0^4}{Nv_-^2},
+ \label{eq:adaptation-average-variance}\\
+ \operatorname{tr}(\mathsf B\Omega)/N
+ &\ge\tfrac14(\overline v-2\alpha B_0^2),\nonumber\\
+ \operatorname{tr}(\mathsf A_\mu\Omega)/N
+ &\ge\tfrac12(\overline v-\alpha B_0^2).
+ \label{eq:adaptation-trimmed-traces}
+\end{align}
+In particular, on $\overline v\ge3v_-/4$,
+\begin{equation}
+ \operatorname{tr}(\mathsf B\Omega)/N\ge v_-/8,\qquad
+ \E(S_\mu\mid X_{1:N})\ge5v_-/16.
+ \label{eq:adaptation-denominator-means}
+\end{equation}
+The second inequality also uses
+$\pi_X'\mathsf A_\mu\pi_X\ge0$. Neither calculation assumes a
+pointwise lower bound on $v_i$.
+
+For any symmetric covariate-measurable matrix $H$, independence and
+centering give
+\begin{align*}
+ \operatorname{Var}(u'Hu\mid X_{1:N})
+ &=\sum_iH_{ii}^2\operatorname{Var}(u_i^2\mid X_i)
+       +4\sum_{i<k}H_{ik}^2v_iv_k\\
+ &\le2B_0^4\|H\|_{\rm F}^2.
+\end{align*}
+The random part of $NS_\mu$ is
+$u'\mathsf A_\mu u+2u'\mathsf A_\mu\pi_X$. The two variances are at
+most $2B_0^4N$ and $4B_0^4N$. Applying
+$\operatorname{Var}(Q+L)\le2\operatorname{Var}Q+
+2\operatorname{Var}L$, which does not assume vanishing third moments,
+therefore gives
+\begin{equation}
+ \operatorname{Var}(S_\mu\mid X_{1:N})\le12B_0^4/N.
+ \label{eq:adaptation-denominator}
+\end{equation}
+
+For the nonsymmetric cross moment, put
+\[
+ d_X=\E(D\mid X_{1:N})
+ =\operatorname{tr}(\mathsf B\Omega)/N
+       +d_\pi'\mathsf B\pi_X/N.
+\]
+Let $H=(\mathsf B+\mathsf B')/2$ and
+$\ell_X=\mathsf B\pi_X+\mathsf B'd_\pi$. The random part of $ND$ is
+$u'Hu+u'\ell_X$, with
+\[
+ \|H\|_{\rm op}\le1,\qquad \|H\|_{\rm F}^2\le N,\qquad
+ \|\ell_X\|\le(2B_0+B_{\mathcal G})\sqrt N.
+\]
+The same calculation yields
+\begin{equation}
+ \operatorname{Var}(D\mid X_{1:N})\le C_D/N,\qquad
+ C_D=4B_0^4+2B_0^2(2B_0+B_{\mathcal G})^2.
+ \label{eq:adaptation-cross-denominator}
+\end{equation}
+Define
+\[
+ \mathcal E=
+ \{\overline v<3v_-/4\}\cup
+ \{S_\mu<v_-/4\}\cup
+ \{|D-d_X|>v_-/32\}.
+\]
+On $\overline v\ge3v_-/4$, the conditional-mean gap in the second
+event is at least $v_-/16$. Conditional Chebyshev and the preceding
+bounds, counting the low-$\overline v$ event only once, give
+\begin{equation}
+ \Pp(\mathcal E)\le
+ \frac{3088B_0^4+1024C_D}{Nv_-^2}.
+ \label{eq:adaptation-exceptional-cost}
+\end{equation}
+Clipping limits its contribution to loss to six times this probability.
+
+\paragraph{Fallback bias is controlled by the same product.}
+On $\mathcal E^c$, choosing fallback implies $d_X<v_-/16$.
+Equation~\eqref{eq:adaptation-denominator-means} then forces
+\[
+ v_-/16\le|d_\pi'\mathsf B\pi_X|/N
+ \le B_0F_\pi.
+\]
+Thus the remaining fallback event is contained in
+$\{F_\pi\ge\kappa\}$, where $\kappa=v_-/(16B_0)$.
+
+The fallback score decomposes as
+\[
+ V_\mu-\beta_0S_\mu
+ =\pi_X'\mathsf A_\mu d_\mu/N
+       +u'\mathsf A_\mu d_\mu/N
+       +T'\mathsf A_\mu\varepsilon/N.
+\]
+Its bias is pointwise at most $B_0F_\mu$, and conditioning as above
+bounds its total expected absolute noise by
+$B_0(2B_0+B_{\mathcal G})/\sqrt N$. Therefore
+\[
+ \E\!\left[B_0F_\mu
+       \ind_{\{\text{fallback}\}\cap\mathcal E^c}\right]
+ \le B_0\E\{F_\mu\ind_{\{F_\pi\ge\kappa\}}\}
+ \le(B_0/\kappa)J.
+\]
+Absolute noise terms can be bounded without their event indicators;
+branch selection need not be independent of the scores. Divide by
+$S_\mu\ge v_-/4$ on $\mathcal E^c$, and combine with the primary
+branch and exceptional-event bounds to obtain
+\begin{align}
+ \E|\widehat\beta_{\rm box}-\beta_0|
+ \le{}&
+ \left(\frac{32}{v_-}+\frac{64B_0^2}{v_-^2}\right)J
+ +\frac{6(3088B_0^4+1024C_D)}{Nv_-^2}\nonumber\\
+ &+\left\{\frac{64B_0(B_0+B_{\mathcal G})}{v_-}
+       +\frac{4B_0(2B_0+B_{\mathcal G})}{v_-}\right\}N^{-1/2}.
+ \label{eq:adaptation-explicit-risk}
+\end{align}
+Let
+$C_*=\max\{1,K_\rho/\alpha,\sqrt2B_{\mathcal G}/\alpha\}$.
+Then $R_N(r)\le C_*(r^2+N^{-1/2})$, and
+\eqref{eq:adaptation-affine-moments-bound}, with all four budgets at
+most one, gives
+\[
+ J\le C_*^2\{(a+s^2)(b+t^2)+5N^{-1/2}\}.
+\]
+Since $N=2n$, this proves \eqref{eq:adaptation-sharp-risk}.
+
+Countable extrema, countable centered-core equalities, finite group
+sizes, width comparisons with the specified tie rule, matrix operations,
+and clipping are Borel. The trimming fraction uses only $\rho$; no
+certificate, comparator, or covariate probability enters the rule.
+The floor in \eqref{eq:adaptation-trimming-fraction} and
+Lemma~\ref{lem:adaptation-trimmed-residual} include all small samples
+and zero budgets. This proves simultaneous adaptation.
+\end{proof}
+
+With explicitly evaluable own-partition labels, centers, and widths,
+the same construction uses finite block operations and sorting.
+The original sequential-M1 interface establishes Borel existence,
+without asserting finite-query computation for an arbitrary
+representation. Full independent coordinate choices are hypotheses of
+the occupancy argument; the proposition does not cover arbitrary
+represented public classes.
+
+Block residualization is classical \citep{cattaneo2018alternative}.
+The present guarantee uses the full-box certificate to choose which
+singleton rows to retain and controls the resulting cross-moment fallback;
+it does not claim a new partial-regression principle.
+
+\subsection{Matching lower bound over full-box pairs}
+
+Let $\GammaSet^{\rm box}_{\rho,n}(a,s,b,t)$ be the members of
+$\GammaSet_{\rho,n}(a,s,b,t)$ whose class-pair projection has the
+full-box form \eqref{eq:adaptation-boxes}. Define the restricted
+outer-pair minimax risk by
+\begin{equation}
+ \mathcal R^{\rm box}_{\rho,n}(a,s,b,t)
+ =\sup_{\Gamma\in\GammaSet^{\rm box}_{\rho,n}(a,s,b,t)}
+   \inf_{\delta_\Gamma\ {\rm Borel}}
+   \sup_{P\in\mathcal P_{\rho,n,a,s,b,t}(\Gamma)}
+       \E_P|\delta_\Gamma(Z_{1:2n})-\beta(P)|.
+ \label{eq:adaptation-box-minimax-risk}
+\end{equation}
+The infimum here can use the declared budgets. The upper rule in
+Proposition~\ref{prop:affine-histogram-adaptation} has the stronger
+property of being fixed before all four budgets.
+
+\begin{theorem}[Restricted full-box minimax rate]
+\label{thm:full-box-minimax}
+On the strict lower-endpoint slack stratum $0<v_-<B_0^2$, there are
+constants $c_{{\rm box},\rho},C_{{\rm box},\rho}>0$ such that
+\begin{equation}
+ c_{{\rm box},\rho}\{q+(a+s^2)(b+t^2)\}
+ \le \mathcal R^{\rm box}_{\rho,n}(a,s,b,t)
+ \le C_{{\rm box},\rho}\{q+(a+s^2)(b+t^2)\}
+ \label{eq:adaptation-box-minimax-rate}
+\end{equation}
+for every $n\ge1$ and every $(a,s,b,t)\in[0,1]^4$. For each fixed
+$(\rho,n,s,t)$, the lower bound is witnessed by one represented full-box
+pair and one covariate marginal that work for every $(a,b)\in[0,1]^2$.
+It is not a lower bound for every fixed full-box pair. At
+$v_-=B_0^2$, the restricted minimax rate is $q$; at $v_->B_0^2$ the
+compatible-law field is empty.
+\end{theorem}
+
+\begin{proof}
+The upper bound follows from
+Proposition~\ref{prop:affine-histogram-adaptation}. For the lower, write
+$v_0=v_-$ and use $m_\rho,L$ from (C.5). Put
+\[
+ \begin{gathered}
+ \epsilon_\rho=\min\{1,c_{\rm rad},B_{\mathcal G}\}>0,\qquad
+ p=2^{N+6},\qquad d=N+7,\\
+ H_\mu=\epsilon_\rho s^2/128,\qquad
+ H_\pi=\epsilon_\rho t^2/128.
+ \end{gathered}
+\]
+Embed $(\mathbb Z/2\mathbb Z)^d$ measurably into the fixed infinite
+standard Borel space, as in Appendix~\ref{app:p-raw}; denote its image
+by $S$ and let $P_X^*$ be uniform on $S$. There are $2^d-1\ge p$
+nonzero Walsh characters, so choose $p$ distinct characters
+$\phi_1,\ldots,\phi_p$, extended by zero off $S$.
+
+Publish the zero-centered full interval boxes with width $H_\nu$ on
+every singleton $\{x\}$, $x\in S$, and width zero on $\mathcal X\setminus S$.
+Rational normalized coordinates give a countable pointwise-everywhere
+dense representation. This fixes $\Gamma^*=\Gamma^*(\rho,n,s,t)$
+before any approximation budget, hard-family component, label,
+coordinate, or sign is selected.
+
+\paragraph{Both public complexity certificates.}
+For either side with stochastic budget $r\in\{s,t\}$, the full
+difference class has pointwise envelope $2H_\nu$. Its localized outer
+Rademacher complexity is therefore at most $2H_\nu$ at every radius.
+When $r>0$ and $R\ge r$,
+\[
+ \frac{\mathfrak R^*_{n,P_X^*}(R;\Delta\mathcal G_\nu)}{3R}
+ \le\frac{2H_\nu}{3r}
+ =\frac{\epsilon_\rho r}{192}\le c_{\rm rad}r.
+\]
+When $r=0$, that side is the singleton zero class, and its complexity
+vanishes at every positive radius. Also
+$H_\nu\le\epsilon_\rho/128\le B_{\mathcal G}$. These are certificates
+for both full boxes in every family below, regardless of which
+nuisance truth is represented.
+
+\paragraph{Four legal families inside the same pair.}
+Write $z=\sigma\phi_j$. We use the exact treatment channel (C.6),
+which has the specified conditional mean and residual variance exactly
+$v_0$ by (C.7). Given $(X,T)$, use the binary response channel (C.12)
+with response amplitude $B_0/2$.
+
+Two label templates suffice. The P template has parameters
+$\eta,\gamma\ge0$ and
+\[
+ \begin{gathered}
+ \Delta=\frac{2\eta\gamma}{v_0},\qquad
+ \kappa=\gamma+\Delta\eta,\\
+ (\beta,\pi,\mu)_0=(0,z\eta,z\gamma),\quad
+ (\beta,\pi,\mu)_1=(\Delta,-z\eta,z\kappa).
+ \end{gathered}
+\]
+The O template has parameters $\eta,\gamma\ge0$ and
+\[
+ \begin{gathered}
+ \Delta=\frac{\gamma\eta}{v_0+\gamma^2},\\
+ (\beta,\pi,\mu)_0=(0,z\gamma,z\eta),\quad
+ (\beta,\pi,\mu)_1=(\Delta,z\gamma,0).
+ \end{gathered}
+\]
+Their complete conditional masses are respectively (C.13) and (D.4).
+Choose their amplitudes as follows:
+\begin{equation}
+\begin{array}{c|c|c|c}
+ \text{term}&\text{template}&\eta&\gamma\\ \hline
+ ab&{\rm P}&m_\rho b/4&a/512\\
+ bs^2&{\rm P}&m_\rho b/4&\epsilon_\rho s^2/256\\
+ at^2&{\rm O}&a/256&\epsilon_\rho m_\rho t^2/4\\
+ s^2t^2&{\rm O}&\epsilon_\rho s^2/256&
+                        \epsilon_\rho m_\rho t^2/4
+\end{array}
+\label{eq:adaptation-box-witness-scales}
+\end{equation}
+In both P rows,
+$2\eta^2/v_0\le m_\rho^2/(8v_0)<1$, so $\kappa\le2\gamma$.
+In the $ab$ row, the zero candidates give approximation errors at
+most $\kappa\le a/256\le a$ and $\eta\le b$.
+In the $bs^2$ row, both outcome truths belong to the outcome box
+because $\kappa\le H_\mu$, while zero gives propensity error at most
+$b$. In both O rows,
+$\gamma\le\epsilon_\rho t^2/256\le H_\pi$, so propensity is represented.
+The $at^2$ row has outcome error at most $\eta\le a$ using zero;
+in the last row both outcome truths are represented since
+$\eta\le H_\mu$. Exact approximation distances are unnecessary.
+
+Every treatment mean has absolute value at most $m_\rho/4$.
+The channel inequalities (C.5)--(C.7) ensure strict treatment
+probabilities and $|T|,|u|<B_0$. Uniformly over these four rows,
+\[
+ 0\le\Delta\le\frac1{2048B_0},\qquad |\mu|\le\frac1{128},
+ \qquad |\beta T+\mu|\le\frac{17}{2048}<\frac1{64}.
+\]
+The binary response probabilities are consequently strict, and
+$|\varepsilon|\le B_0/2+1/64<B_0$.
+The remaining target, nuisance, and response envelopes follow from
+these same bounds. Thus every component is a legal PLM, with exact
+residual variance $v_0$, not merely a moment-matched array.
+
+\paragraph{Common reference and mixture distance for every sample size.}
+For the P template, the sign averages of the two labels coincide
+atomwise by (C.15)--(C.16): their required identity is
+\[
+ \Delta(v_0+\eta^2)=\eta(\kappa+\gamma),
+\]
+which follows from $\kappa=\gamma+\Delta\eta$ and
+$\Delta v_0=2\eta\gamma$. For the O template, (D.8)--(D.9) give the
+same conclusion from $\Delta(v_0+\gamma^2)=\gamma\eta$.
+Let $Q$ denote the resulting common law of the treatment and binary
+response sign. It is strictly positive because it averages strictly
+positive component masses. Only the component laws are required to
+have exact residual variance $v_0$.
+
+For either label, its two sign laws can be written
+\[
+ P_{\ell,z}=Q(1+z h_\ell),\qquad
+ h_\ell=\frac{P_{\ell,+}-P_{\ell,-}}{2Q},\qquad
+ \E_Qh_\ell=0,\quad |h_\ell|<1.
+\]
+Put $K_\ell=\E_Qh_\ell^2\le1$ and
+$\mathbb Q=P_X^*\otimes Q$. A full one-observation likelihood is
+$1+\sigma\phi_j(X)h_\ell(T,Y)$, where the binary sign is identified
+with $Y/(B_0/2)$. Walsh orthogonality gives Gram entries
+$1+K_\ell$, $1-K_\ell$, and one, as in Lemma~\ref{lem:testing-tools}.
+
+Choose $(j,\sigma)$ once uniformly from $[p]\times\{-1,1\}$ and then
+sample $N$ iid observations from that component. For each label's
+resulting mixture, (C.3) gives
+\[
+ \chi^2(\overline P_\ell^{\,N},\mathbb Q^N)
+ =\frac{\{(1+K_\ell)^N+(1-K_\ell)^N\}/2-1}{p}
+ \le\frac{2^{N-1}-1}{2^{N+6}}<\frac1{128}.
+\]
+The cross-label total variation is at most $1/\sqrt{128}<1/4$.
+Equation (C.1) therefore yields a lower risk of at least $\Delta/8$
+for every row of \eqref{eq:adaptation-box-witness-scales}, for all
+$n\ge1$. A zero term has zero
+separation and causes no exception. The public pair is already fixed,
+and all public evaluations are deterministic functions of $X$, so
+disclosing the entire represented pair does not change this
+full-observation comparison.
+
+The four gaps are bounded below by their corresponding terms times
+\[
+ k_\rho=\frac{\epsilon_\rho^2m_\rho}
+                {1024(v_0+m_\rho^2/16)}>0.
+\]
+Indeed the P gaps are
+$m_\rho ab/(1024v_0)$ and
+$\epsilon_\rho m_\rho bs^2/(512v_0)$; the O gaps are
+$\epsilon_\rho m_\rho at^2/\{1024(v_0+\gamma^2)\}$ and
+$\epsilon_\rho^2m_\rho s^2t^2/\{1024(v_0+\gamma^2)\}$.
+
+\paragraph{Parametric term and assembly.}
+Keep the same $P_X^*$ and make it independent of the scalar experiment
+(C.8), with both nuisances zero, $T=\pm\sqrt{v_0}$ equiprobably, and
+$\beta=\pm d_\rho^\star/\sqrt n$. The zero truths belong to both
+published boxes, whose complexity certificates have already been
+verified. The independent covariate factor leaves the calculation
+leading to (C.9) unchanged, so this same fixed pair has lower risk
+$3d_\rho^\star q/8$.
+
+For every rule on $\Gamma^*$, its compatible-law supremum is therefore
+at least
+\[
+ \frac18\min\{3d_\rho^\star,k_\rho\}
+       \max\{q,ab,bs^2,at^2,s^2t^2\}.
+\]
+Taking the learner infimum and using that the maximum of five
+nonnegative numbers is at least their sum divided by five proves the
+lower bound with
+\[
+ c_{{\rm box},\rho}
+ =\frac1{40}\min\{3d_\rho^\star,k_\rho\}>0.
+\]
+The construction fixes the same $\Gamma^*$ and $P_X^*$ for every
+$(a,b)$; only the compatible hard laws vary. The outer supremum in
+\eqref{eq:adaptation-box-minimax-risk} then gives the stated result.
+
+At $v_-=B_0^2$, (H.3)--(H.4) give the $q$ upper bound for every
+nonempty pair, and the zero singleton pair used in (H.5)--(H.6) is a
+full interval box and supplies the $q$ lower bound. When $v_->B_0^2$,
+the law field is empty by Appendix~\ref{app:boundary}; no numerical
+risk is assigned to that empty field.
+\end{proof}
